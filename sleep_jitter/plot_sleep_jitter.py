@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt
 import numpy as np
 
-XTIMER_BACKOFF = 45
+XTIMER_BACKOFF = 30
 file = f"sleep_jitter/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
 root = ET.parse(file).getroot()
 
@@ -42,7 +42,9 @@ values_std = [np.std(v) for v in values]
 ax = plt.subplot(212)
 ax.set_title(f"... for range {str(start)}-{str(end)} [us]")
 ax.set_xticks(np.arange(0, 1001, 50))
-ax.plot(keys, [np.mean(v) for v in values])
+# for XTIMER_BACKOFF=30
+mark = [47]
+ax.plot(keys, [np.mean(v) for v in values], '-D', markevery=mark)
 # ax.errorbar(keys, values_mean, values_std)
 ax.axhline(0, color="black")
 
