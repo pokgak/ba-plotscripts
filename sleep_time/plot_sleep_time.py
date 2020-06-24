@@ -5,7 +5,10 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-file = "diff_sleeptime/xunit_test3.xml"
+XTIMER_BACKOFF=30
+# file = "sleep_time/xunit_test3.xml"
+# file = "sleep_time/xunit_50repeat.xml"
+file = f"sleep_time/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
 root = ET.parse(file).getroot()
 
 # # gpio overhead
@@ -28,12 +31,15 @@ for d in root.find("testcase[@name='Measure Sleep Delay Microseconds Template']"
 # full range
 keys = list(sleep_delays.keys())
 values = list(sleep_delays.values())
+values_mean = [np.mean(v) for v in values]
+values_std = [np.std(v) for v in values]
 ax = plt.subplot(311)
-ax.set_title("Difference Sleep Time / Sleep Time FULL [us]")
+ax.set_title(f"Difference Sleep Time / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
 ax.plot(keys, [np.mean(v) for v in values])
+# ax.errorbar(keys, values_mean, values_std)
 ax.set_xticks(np.arange(0, 1001, 100))
 
-# [0:100]
+# [0:60]    from default value used in xtimer, XTIMER_BACKOFF=30 (XTIMER_BACKOFF * 2)
 start = 0
 end = 100
 keys = list(sleep_delays.keys())[start:end]
@@ -41,7 +47,7 @@ values = list(sleep_delays.values())[start:end]
 values_mean = [np.mean(v) for v in values]
 values_std = [np.std(v) for v in values]
 ax = plt.subplot(312)
-ax.set_title(f"Difference Sleep Time / Sleep Time for range {str(start)}-{str(end)} [us]")
+ax.set_title(f"... for range {str(start)}-{str(end)} [us]")
 ax.set_xticks(np.arange(0, 1001, 10))
 ax.errorbar(keys, values_mean, values_std)
 
@@ -53,9 +59,10 @@ values = list(sleep_delays.values())[start:end]
 values_mean = [np.mean(v) for v in values]
 values_std = [np.std(v) for v in values]
 ax = plt.subplot(313)
-ax.set_title(f"Difference Sleep Time / Sleep Time for range {str(start)}-{str(end)} [us]")
+ax.set_title(f"... for range {str(start)}-{str(end)} [us]")
 ax.set_xticks(np.arange(0, 1001, 10))
 ax.errorbar(keys, values_mean, values_std)
 
-plt.savefig("diff_sleeptime/microseconds-sleep-time.pdf")
-plt.show()
+plt.subplots_adjust(hspace=0.8)
+plt.savefig(f"sleep_time/sleep-time-xtimer-backoff-{XTIMER_BACKOFF}.png")
+# plt.show()
