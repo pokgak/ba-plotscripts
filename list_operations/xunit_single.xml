@@ -1,0 +1,56 @@
+<testsuite name="tests_gpio_overhead" tests="1" errors="0" failures="0" skipped="0" time="182.132">
+    <testcase classname="tests_gpio_overhead.List Operations" name="Set Until 1000 Timer Template" time="178.702">
+        <properties>
+            <property name="set-1-timer" value="[{'diff': 2.408300000000113e-05}]" />
+            <property name="set-2-timer" value="[{'diff': 4.6570000000000986e-05}]" />
+            <property name="set-3-timer" value="[{'diff': 6.886099999999992e-05}]" />
+            <property name="set-4-timer" value="[{'diff': 9.107000000000212e-05}]" />
+            <property name="set-5-timer" value="[{'diff': 0.00011480599999999855}]" />
+            <property name="set-6-timer" value="[{'diff': 0.0001396110000000013}]" />
+            <property name="set-7-timer" value="[{'diff': 0.00016326399999999977}]" />
+            <property name="set-8-timer" value="[{'diff': 0.00018838899999999714}]" />
+            <property name="set-9-timer" value="[{'diff': 0.00021297300000000172}]" />
+            <property name="set-10-timer" value="[{'diff': 0.00024013900000000032}]" />
+            <property name="set-11-timer" value="[{'diff': 0.00026652699999999904}]" />
+            <property name="set-12-timer" value="[{'diff': 0.0002971249999999988}]" />
+            <property name="set-13-timer" value="[{'diff': 0.0003209859999999988}]" />
+            <property name="set-14-timer" value="[{'diff': 0.0003529859999999996}]" />
+            <property name="set-15-timer" value="[{'diff': 0.00037858300000000004}]" />
+            <property name="set-16-timer" value="[{'diff': 0.0004127219999999973}]" />
+            <property name="set-17-timer" value="[{'diff': 0.0004406110000000005}]" />
+            <property name="set-18-timer" value="[{'diff': 0.00047586100000000103}]" />
+            <property name="set-19-timer" value="[{'diff': 0.0005026950000000009}]" />
+            <property name="set-20-timer" value="[{'diff': 0.0005420969999999983}]" />
+            <property name="set-21-timer" value="[{'diff': 0.0005691529999999993}]" />
+            <property name="set-22-timer" value="[{'diff': 0.0006078620000000007}]" />
+            <property name="set-23-timer" value="[{'diff': 0.0006365969999999992}]" />
+            <property name="set-24-timer" value="[{'diff': 0.0006783890000000015}]" />
+            <property name="set-25-timer" value="[{'diff': 0.0007065839999999997}]" />
+            <property name="set-26-timer" value="[{'diff': 0.0007501669999999995}]" />
+            <property name="set-27-timer" value="[{'diff': 0.0007802360000000001}]" />
+            <property name="set-28-timer" value="[{'diff': 0.0008261249999999987}]" />
+            <property name="set-29-timer" value="[{'diff': 0.0008545969999999986}]" />
+            <property name="set-30-timer" value="[{'diff': 0.0009029580000000023}]" />
+            <property name="set-31-timer" value="[{'diff': 0.0009328329999999992}]" />
+            <property name="set-32-timer" value="[{'diff': 0.0009830139999999973}]" />
+            <property name="set-33-timer" value="[{'diff': 0.0010123609999999998}]" />
+            <property name="set-34-timer" value="[{'diff': 0.001065903}]" />
+            <property name="set-35-timer" value="[{'diff': 0.0010974439999999995}]" />
+            <property name="set-36-timer" value="[{'diff': 0.0011516799999999987}]" />
+            <property name="set-37-timer" value="[{'diff': 0.001183791}]" />
+            <property name="set-38-timer" value="[{'diff': 0.0012381379999999997}]" />
+            <property name="set-39-timer" value="[{'diff': 0.0012703890000000002}]" />
+            <property name="set-40-timer" value="[{'diff': 0.0013286940000000018}]" />
+            <property name="set-41-timer" value="[{'diff': 0.0013607919999999996}]" />
+            <property name="set-42-timer" value="[{'diff': 0.0014214159999999983}]" />
+            <property name="set-43-timer" value="[{'diff': 0.0014540969999999997}]" />
+            <property name="set-44-timer" value="[{'diff': 0.0015172499999999978}]" />
+            <property name="set-45-timer" value="[{'diff': 0.0015499859999999997}]" />
+            <property name="set-46-timer" value="[{'diff': 0.0016138609999999977}]" />
+            <property name="set-47-timer" value="[{'diff': 0.0016471800000000016}]" />
+            <property name="set-48-timer" value="[{'diff': 0.0017145419999999995}]" />
+            <property name="set-49-timer" value="[{'diff': 0.001747528}]" />
+            <property name="set-50-timer" value="[{'diff': 0.001816485999999999}]" />
+        </properties>
+    </testcase>
+</testsuite>

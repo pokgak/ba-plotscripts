@@ -5,7 +5,6 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-lines = []
 XTIMER_BACKOFFS=[60, 40, 30]
 for i, backoff in enumerate(XTIMER_BACKOFFS, start=1):
     file = f"sleep_time/xunit_XTIMER_BACKOFF_{backoff}.xml"
@@ -30,5 +29,5 @@ for i, backoff in enumerate(XTIMER_BACKOFFS, start=1):
     plt.xticks(np.arange(0, len(values) + 1, 20))
 
 plt.legend(title='XTIMER_BACKOFF')
-plt.savefig(f"sleep_time/sleep-time-xtimer-backoffs.png")
+plt.savefig(f"sleep_time/sleep-time-xtimer-backoffs-errorbar.png")
 # plt.show()

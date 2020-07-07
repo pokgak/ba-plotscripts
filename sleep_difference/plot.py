@@ -4,12 +4,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 XTIMER_BACKOFF = 30
-file = f"sleep_jitter/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
+file = f"sleep_difference/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}_with_random_wait.xml"
 root = ET.parse(file).getroot()
 
 # microseconds sleep
 sleep_jitter = {}
-for d in root.find("testcase[@name='Measure Sleep Jitter Microseconds Template']").findall(".//property"):
+for d in root.find("testcase[@name='Measure Sleep Difference Microseconds Template']").findall(".//property"):
     duration = d.get("name").split('-')[2]
     sleep_jitter[duration] = []
     values = eval(d.get("value"))
@@ -26,7 +26,7 @@ print(f"Max values_mean: {max(values_mean)}")
 print(f"Min values_mean: {min(values_mean)}")
 values_std = [np.std(v) for v in values]
 ax = plt.subplot(211)
-ax.set_title(f"Jitter / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
+ax.set_title(f"Difference / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
 ax.plot(keys, [np.mean(v) for v in values])
 # ax.errorbar(keys, values_mean, values_std)
 ax.set_xticks(np.arange(0, 1001, 100))
@@ -63,5 +63,5 @@ ax.axhline(0, color="black")
 # ax.axhline(0, color="black")
 
 plt.subplots_adjust(hspace=0.8)
-plt.savefig(f"sleep_jitter/microseconds-sleep-jitter-xtimer-backoff-{XTIMER_BACKOFF}.png")
+plt.savefig(f"sleep_difference/microseconds-sleep-difference-xtimer-backoff-{XTIMER_BACKOFF}_with_random_wait.png")
 plt.show()
