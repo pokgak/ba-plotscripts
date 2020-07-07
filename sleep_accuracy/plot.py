@@ -9,7 +9,7 @@ XTIMER_BACKOFF=40
 # file = "sleep_time/xunit_test3.xml"
 # file = "sleep_time/xunit_50repeat.xml"
 # file = f"sleep_time/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
-file = f"sleep_accuracy/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
+file = f"sleep_accuracy/xunit_xtimer_usleep_set_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
 root = ET.parse(file).getroot()
 
 # # gpio overhead
@@ -25,8 +25,8 @@ root = ET.parse(file).getroot()
 
 # microseconds sleep
 sleep_delays = {}
-for d in root.find("testcase[@name='Measure Sleep Delay Microseconds Template']").findall(".//property"):
-    duration = d.get("name")[len('sleep-delay-'):]
+for d in root.find("testcase[@name='Measure Xtimer Usleep Accuracy Microseconds Template']").findall(".//property"):
+    duration = d.get("name").split('-')[-1]
     sleep_delays[duration] = [float(v["diff"]) - (int(duration) / 1000_000) for v in eval(d.get("value"))]    # diff from sleep time
 
 # full range
@@ -34,36 +34,24 @@ keys = list(sleep_delays.keys())
 values = list(sleep_delays.values())
 values_mean = [np.mean(v) for v in values]
 values_std = [np.std(v) for v in values]
-ax = plt.subplot(211)
-ax.set_title(f"Difference Sleep Time / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
-ax.plot(keys, [np.mean(v) for v in values])
-# ax.errorbar(keys, values_mean, values_std)
-ax.set_xticks(np.arange(0, 1001, 100))
+plt.plot(keys, [np.mean(v) for v in values], label="xtimer_usleep")
 
-# [0:60]    from default value used in xtimer, XTIMER_BACKOFF=30 (XTIMER_BACKOFF * 2)
-start = 0
-end = 100
-keys = list(sleep_delays.keys())[start:end]
-values = list(sleep_delays.values())[start:end]
+sleep_delays = {}
+for d in root.find("testcase[@name='Measure Xtimer Set Accuracy Microseconds Template']").findall(".//property"):
+    duration = d.get("name").split('-')[-1]
+    sleep_delays[duration] = [float(v["diff"]) - (int(duration) / 1000_000) for v in eval(d.get("value"))]    # diff from sleep time
+
+# full range
+keys = list(sleep_delays.keys())
+values = list(sleep_delays.values())
 values_mean = [np.mean(v) for v in values]
 values_std = [np.std(v) for v in values]
-ax = plt.subplot(212)
-ax.set_title(f"... for range {str(start)}-{str(end)} [us]")
-ax.set_xticks(np.arange(0, 1001, 10))
-ax.errorbar(keys, values_mean, values_std)
+plt.plot(keys, [np.mean(v) for v in values], label="xtimer_set")
 
-# [600:700]
-# start = 600
-# end = 700
-# keys = list(sleep_delays.keys())[start:end]
-# values = list(sleep_delays.values())[start:end]
-# values_mean = [np.mean(v) for v in values]
-# values_std = [np.std(v) for v in values]
-# ax = plt.subplot(313)
-# ax.set_title(f"... for range {str(start)}-{str(end)} [us]")
-# ax.set_xticks(np.arange(0, 1001, 10))
-# ax.errorbar(keys, values_mean, values_std)
+plt.legend()
+plt.xticks(np.arange(0, 1001, 100))
+plt.title(f"Difference Sleep Time / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
 
-plt.subplots_adjust(hspace=0.5)
-plt.savefig(f"sleep_time/sleep-time-xtimer-backoff-{XTIMER_BACKOFF}.png")
-# plt.show()
+# plt.subplots_adjust(hspace=0.5)
+plt.savefig(f"sleep_accuracy/sleep-time-xtimer-usleep-set-backoff-{XTIMER_BACKOFF}.png")
+plt.show()
