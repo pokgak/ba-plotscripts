@@ -5,11 +5,11 @@ import json
 import matplotlib.pyplot as plt
 import numpy as np
 
-XTIMER_BACKOFF=40
+XTIMER_BACKOFF=30
 # file = "sleep_time/xunit_test3.xml"
 # file = "sleep_time/xunit_50repeat.xml"
 # file = f"sleep_time/xunit_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
-file = f"sleep_accuracy/xunit_xtimer_usleep_set_XTIMER_BACKOFF_{XTIMER_BACKOFF}.xml"
+file = f"sleep_accuracy/xunit_xtimer_usleep_set_XTIMER_BACKOFF_{XTIMER_BACKOFF}_now.xml"
 root = ET.parse(file).getroot()
 
 # # gpio overhead
@@ -53,5 +53,5 @@ plt.xticks(np.arange(0, 1001, 100))
 plt.title(f"Difference Sleep Time / Sleep Time XTIMER_BACKOFF={XTIMER_BACKOFF} [us]")
 
 # plt.subplots_adjust(hspace=0.5)
-plt.savefig(f"sleep_accuracy/sleep-time-xtimer-usleep-set-backoff-{XTIMER_BACKOFF}.png")
+plt.savefig(f"sleep_accuracy/sleep-time-xtimer-usleep-set-backoff-{XTIMER_BACKOFF}_copy.png")
 plt.show()
