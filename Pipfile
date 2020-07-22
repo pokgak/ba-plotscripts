@@ -10,6 +10,9 @@ black = "*"
 [packages]
 jupyterlab = "*"
 matplotlib = "*"
+plotly = "*"
+pandas = "*"
+chart-studio = "*"
 
 [requires]
 python_version = "3.8"
