@@ -28,16 +28,16 @@ for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jit
         elif "divisor" in name:
             divisor = int(d.get("value"))
 
-    newdf = {
-        "repeat_count": n,
-        "time": [i for i in range(1, len(traces[n]) + 1)],
-        "trace": traces[n],
-        "trace_milli": map(lambda x: x * 1000, traces[n]),
-        "background_timers": [str(len(intervals))] * len(traces[n]),
-    }
+        newdf = {
+            "repeat_count": n,
+            "time": [i for i in range(1, len(traces[n]) + 1)],
+            "trace": traces[n],
+            "trace_milli": map(lambda x: x * 1000, traces[n]),
+            "background_timers": [str(len(intervals))] * len(traces[n]),
+        }
 
-    if "Divisor" in parent.get("name"):
-        newdf["divisor"] = [divisor] * len(newdf["trace"])
+        if "Divisor" in parent.get("name"):
+            newdf["divisor"] = [divisor] * len(newdf["trace"])
 
     for n in traces.keys():
         jitter_repeat = jitter_repeat.append(pd.DataFrame.from_dict(newdf))
@@ -54,20 +54,55 @@ for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jit
 # go.FigureWidget(jitter_scatter)
 
 
-# %%
-# plot the jitter with different "busyness" (divisor)
+# %% Stats table for jitter divisor
 jitter_divisor = jitter_repeat.dropna()
 
-# jitter_table = go.FigureWidget(data=[go.Table(
-#     header=dict(values=['trace_milli', 'divisor']),
-#     cells=dict(values=[jitter_divisor.trace_milli, jitter_divisor.divisor])
-# )])
-# go.FigureWidget(jitter_table)
+jdg = jitter_divisor.groupby("divisor")
+jitter_table = go.FigureWidget(
+    data=[
+        go.Table(
+            header=dict(values=["divisor", "min", "max", "std"]),
+            cells=dict(
+                values=[
+                    list(jdg.indices.keys()),
+                    jdg.min()["trace_milli"],
+                    jdg.max()["trace_milli"],
+                    jdg.std()["trace_milli"],
+                ]
+            ),
+        )
+    ]
+)
+go.FigureWidget(jitter_table)
+
+# %% Stats Plot for jitter divisor
+jitter_divisor_stats = pd.DataFrame(
+    {
+        "divisor": list(jdg.indices.keys()),
+        "min": jdg.min()["trace_milli"],
+        "max": jdg.max()["trace_milli"],
+        "std": jdg.std()["trace_milli"],
+    }
+)
+go.FigureWidget(px.line(jitter_divisor_stats, x="divisor", y="std"))
+
+# %% Violin plot for jitter divisor
 
 jitter_divisor_fig = px.violin(
-    jitter_divisor, x="divisor", y="trace_milli", color="divisor"
+    jitter_divisor,
+    x="divisor",
+    y="trace_milli",
+    color="divisor",
+    title="Sleep Jitter with 50 BG Timers and variable interval divisor",
+    labels={
+        "trace_milli": "Sleep Duration (Milliseconds)",
+        "divisor": "Interval Divisor",
+    },
 )
 go.FigureWidget(jitter_divisor_fig)
+# jitter_divisor_fig.write_html("docs/sleep_jitter_divisor.html")
+
+
 # %% Plot Drift Simple Percentage Difference Measurements
 
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_gpio_overhead/xunit.xml"
