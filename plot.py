@@ -143,10 +143,11 @@ for k in dss.keys():
 df = df.groupby(["time", "repeat"]).sum()
 df["diff_dut_philip"] = df["dut"] - df["philip"]
 df["diff_percentage"] = df["diff_dut_philip"] / df["dut"] * 100
+df.reset_index(['time', 'repeat'], inplace=True)
 
 dss_fig = px.box(
     df,
-    x=df.index.get_level_values(0),
+    x='time',
     y="diff_percentage",
     # color='x',
     hover_data=["diff_dut_philip", "diff_percentage"],
