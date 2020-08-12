@@ -10,98 +10,53 @@ from ast import literal_eval
 
 
 # %%
-# file = f"data/sleep_jitter/xunit copy.xml"
-file = f"data/sleep_jitter/xunit divisor.xml"
+file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_gpio_overhead/xunit.xml"
+# file = f"data/sleep_jitter/xunit.xml"
 root = ET.parse(file).getroot()
 
-traces = {}
-jitter_repeat = pd.DataFrame()
+jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
 for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jitter']"):
-    parent = testcase
-    for d in testcase.findall(".//property"):
-        name = d.get("name").split("-")
-        if "intervals" in name:
-            intervals = literal_eval(d.get("value"))
-        elif "trace" in name:
-            repeat_count = int(name[-1])
-            traces[repeat_count] = literal_eval(d.get("value"))
-        elif "divisor" in name:
-            divisor = int(d.get("value"))
+    timer_count = len(literal_eval(testcase.find("properties/property[@name='intervals']").get('value')))
+    divisor = literal_eval(testcase.find("properties/property[@name='divisor']").get('value'))
+    traces = literal_eval(testcase.find("properties/property[@name='trace']").get('value'))
 
-        newdf = {
-            "repeat_count": n,
-            "time": [i for i in range(1, len(traces[n]) + 1)],
-            "trace": traces[n],
-            "trace_milli": map(lambda x: x * 1000, traces[n]),
-            "background_timers": [str(len(intervals))] * len(traces[n]),
-        }
+    jitter['sleep_duration'].extend(traces)
+    jitter['timer_count'].extend([str(timer_count)] * len(traces))
+    if 'Divisor' in testcase.get('name'):
+        jitter['divisor'].extend([divisor] * len(traces))
+    else:
+        # divisor None means = 1, not used when varying timer count
+        jitter['divisor'].extend([None] * len(traces))
 
-        if "Divisor" in parent.get("name"):
-            newdf["divisor"] = [divisor] * len(newdf["trace"])
+jitter = pd.DataFrame(jitter)
 
-    for n in traces.keys():
-        jitter_repeat = jitter_repeat.append(pd.DataFrame.from_dict(newdf))
-
-# plot
-# jitter_repeat_fig = px.violin(
-#     jitter_repeat, x="background_timers", y="trace_milli", color="background_timers"
+# jitter_fig = px.box(jitter[jitter['divisor'].isnull()],
+#     x="timer_count",
+#     y="sleep_duration",
+#     color="timer_count",
 # )
-# go.FigureWidget(jitter_repeat_fig)
 
-# jitter_scatter = px.scatter(
-#     jitter_repeat, y='time', x='trace_milli', color="background_timers", opacity=0.5, marginal_x='violin'
-# )
-# go.FigureWidget(jitter_scatter)
+# %%
 
+## jitter stats
 
-# %% Stats table for jitter divisor
-jitter_divisor = jitter_repeat.dropna()
-
-jdg = jitter_divisor.groupby("divisor")
-jitter_table = go.FigureWidget(
+jitter_divisor = jitter[jitter['divisor'].notnull()]
+jdg = jitter.groupby("divisor").describe()
+jitter_table = go.Figure(
     data=[
         go.Table(
-            header=dict(values=["divisor", "min", "max", "std"]),
+            header=dict(values=["divisor", "min", "mean", "max"]),
             cells=dict(
+                align="left",
                 values=[
-                    list(jdg.indices.keys()),
-                    jdg.min()["trace_milli"],
-                    jdg.max()["trace_milli"],
-                    jdg.std()["trace_milli"],
-                ]
+                    jdg.index, jdg['sleep_duration']['min'], jdg['sleep_duration']['mean'], jdg['sleep_duration']['max'],
+                ],
             ),
         )
     ]
 )
+
 go.FigureWidget(jitter_table)
-
-# %% Stats Plot for jitter divisor
-jitter_divisor_stats = pd.DataFrame(
-    {
-        "divisor": list(jdg.indices.keys()),
-        "min": jdg.min()["trace_milli"],
-        "max": jdg.max()["trace_milli"],
-        "std": jdg.std()["trace_milli"],
-    }
-)
-go.FigureWidget(px.line(jitter_divisor_stats, x="divisor", y="std"))
-
-# %% Violin plot for jitter divisor
-
-jitter_divisor_fig = px.violin(
-    jitter_divisor,
-    x="divisor",
-    y="trace_milli",
-    color="divisor",
-    title="Sleep Jitter with 50 BG Timers and variable interval divisor",
-    labels={
-        "trace_milli": "Sleep Duration (Milliseconds)",
-        "divisor": "Interval Divisor",
-    },
-)
-go.FigureWidget(jitter_divisor_fig)
-# jitter_divisor_fig.write_html("docs/sleep_jitter_divisor.html")
-
 
 # %% Plot Drift Simple Percentage Difference Measurements
 
@@ -199,6 +154,8 @@ dss_fig.write_html("docs/drift.html")
 go.FigureWidget(dss_fig)
 
 # %% Plot Line Chart for Drift Diff
+
+# TODO: combine with percentage using dropdowns
 
 # ignore
 # line chart not useful due to the scale
