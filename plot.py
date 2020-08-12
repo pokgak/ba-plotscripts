@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 from ast import literal_eval
 
 
-# %%
+# %%    Jitter - varied timer count
 file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_gpio_overhead/xunit.xml"
 # file = f"data/sleep_jitter/xunit.xml"
 root = ET.parse(file).getroot()
@@ -38,15 +38,14 @@ for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jit
 
 jitter = pd.DataFrame(jitter)
 
-# jitter_fig = px.box(jitter[jitter['divisor'].isnull()],
-#     x="timer_count",
-#     y="sleep_duration",
-#     color="timer_count",
-# )
+jitter_fig = px.strip(jitter[jitter['divisor'].isnull()],
+    x="timer_count",
+    y="sleep_duration",
+)
 
-# %%
+go.FigureWidget(jitter_fig)
 
-## jitter stats
+# %% Jitter - varied divisor
 
 jitter_divisor = jitter[jitter["divisor"].notnull()]
 jdg = jitter.groupby("divisor").describe()
