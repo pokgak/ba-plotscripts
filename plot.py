@@ -193,25 +193,3 @@ dss_fig.update_layout(
 
 dss_fig.write_html("docs/drift.html")
 go.FigureWidget(dss_fig)
-
-# %% Plot Line Chart for Drift Diff
-
-# TODO: combine with percentage using dropdowns
-
-# ignore
-# line chart not useful due to the scale
-dss_line_fig = px.line(
-    df,
-    x=df.index.get_level_values(0),
-    y=["dut", "philip"],
-    labels={
-        "diff_dut_philip": "Difference [s]",
-        "diff_percentage": "Percentage Actual/Given [%]",
-        "time": "Sleep Duration [s]",
-        "value": "Actual Sleep Duration [s]",
-        "x": "Sleep Duration [s]",
-    },
-)
-
-dss_line_fig.write_html("docs/drift_line.html")
-go.FigureWidget(dss_line_fig)
