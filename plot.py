@@ -129,7 +129,12 @@ df.reset_index(["time", "repeat"], inplace=True)
 
 percentage = go.Box(x=df["time"], y=df["diff_percentage"])
 absolute = go.Box(x=df["time"], y=df["diff_dut_philip"], visible=False)
-dss_fig = go.Figure([percentage, absolute])
+absolute_line = go.Scatter(
+    x=df["time"].unique(),
+    y=df.groupby("time").mean()["diff_dut_philip"].array,
+    visible=False,
+)
+dss_fig = go.Figure([percentage, absolute, absolute_line])
 
 # to add max line based on board info
 # dss_fig.update_layout(shapes=[
@@ -166,14 +171,14 @@ dss_fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        args=[{"visible": [True, False]}],
+                        args=[{"visible": [True, False, False]}],
                         label="Percentage",
-                        method="restyle",
+                        method="update",
                     ),
                     dict(
-                        args=[{"visible": [False, True]}],
+                        args=[{"visible": [False, True, True]}],
                         label="Absolute Difference",
-                        method="restyle",
+                        method="update",
                     ),
                 ]
             ),
