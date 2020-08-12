@@ -16,17 +16,25 @@ root = ET.parse(file).getroot()
 
 jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
 for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jitter']"):
-    timer_count = len(literal_eval(testcase.find("properties/property[@name='intervals']").get('value')))
-    divisor = literal_eval(testcase.find("properties/property[@name='divisor']").get('value'))
-    traces = literal_eval(testcase.find("properties/property[@name='trace']").get('value'))
+    timer_count = len(
+        literal_eval(
+            testcase.find("properties/property[@name='intervals']").get("value")
+        )
+    )
+    divisor = literal_eval(
+        testcase.find("properties/property[@name='divisor']").get("value")
+    )
+    traces = literal_eval(
+        testcase.find("properties/property[@name='trace']").get("value")
+    )
 
-    jitter['sleep_duration'].extend(traces)
-    jitter['timer_count'].extend([str(timer_count)] * len(traces))
-    if 'Divisor' in testcase.get('name'):
-        jitter['divisor'].extend([divisor] * len(traces))
+    jitter["sleep_duration"].extend(traces)
+    jitter["timer_count"].extend([str(timer_count)] * len(traces))
+    if "Divisor" in testcase.get("name"):
+        jitter["divisor"].extend([divisor] * len(traces))
     else:
         # divisor None means = 1, not used when varying timer count
-        jitter['divisor'].extend([None] * len(traces))
+        jitter["divisor"].extend([None] * len(traces))
 
 jitter = pd.DataFrame(jitter)
 
@@ -40,7 +48,7 @@ jitter = pd.DataFrame(jitter)
 
 ## jitter stats
 
-jitter_divisor = jitter[jitter['divisor'].notnull()]
+jitter_divisor = jitter[jitter["divisor"].notnull()]
 jdg = jitter.groupby("divisor").describe()
 jitter_table = go.Figure(
     data=[
@@ -49,7 +57,10 @@ jitter_table = go.Figure(
             cells=dict(
                 align="left",
                 values=[
-                    jdg.index, jdg['sleep_duration']['min'], jdg['sleep_duration']['mean'], jdg['sleep_duration']['max'],
+                    jdg.index,
+                    jdg["sleep_duration"]["min"],
+                    jdg["sleep_duration"]["mean"],
+                    jdg["sleep_duration"]["max"],
                 ],
             ),
         )
@@ -98,23 +109,27 @@ for k in dss.keys():
 df = df.groupby(["time", "repeat"]).sum()
 df["diff_dut_philip"] = df["dut"] - df["philip"]
 df["diff_percentage"] = df["diff_dut_philip"] / df["dut"] * 100
-df.reset_index(['time', 'repeat'], inplace=True)
+df.reset_index(["time", "repeat"], inplace=True)
 
-dss_fig = px.box(
-    df,
-    x='time',
-    y="diff_percentage",
-    # color='x',
-    hover_data=["diff_dut_philip", "diff_percentage"],
-    # points="all",
-    title=f"Drift Percentage for Sleep Duration {min(dss.keys())} - {max(dss.keys())} seconds",
-    labels={
-        "diff_dut_philip": "Difference [s]",
-        "diff_percentage": "Percentage Actual/Given [%]",
-        "time": "Sleep Duration [s]",
-        "x": "Sleep Duration [s]",
-    },
-)
+# dss_fig = px.box(
+#     df,
+#     x='time',
+#     y="diff_percentage",
+#     # color='x',
+#     hover_data=["diff_dut_philip", "diff_percentage"],
+#     # points="all",
+#     title=f"Drift Percentage for Sleep Duration {min(dss.keys())} - {max(dss.keys())} seconds",
+#     labels={
+#         "diff_dut_philip": "Difference [s]",
+#         "diff_percentage": "Percentage Actual/Given [%]",
+#         "time": "Sleep Duration [s]",
+#         "x": "Sleep Duration [s]",
+#     },
+# )
+
+percentage = go.Box(x=df["time"], y=df["diff_percentage"])
+absolute = go.Box(x=df["time"], y=df["diff_dut_philip"], visible=False)
+dss_fig = go.Figure([percentage, absolute])
 
 # to add max line based on board info
 # dss_fig.update_layout(shapes=[
@@ -129,20 +144,41 @@ dss_fig = px.box(
 dss_fig.update_layout(
     updatemenus=[
         dict(
-            buttons=list([
-                dict(
-                    args=["boxpoints", "outliers"],
-                    label="Outliers",
-                    method="restyle",
-                ),
-                dict(
-                    args=["boxpoints", "all"],
-                    label="All Points",
-                    method="restyle",
-                ),
-            ]),
+            buttons=list(
+                [
+                    dict(
+                        args=["boxpoints", "outliers"],
+                        label="Outliers",
+                        method="restyle",
+                    ),
+                    dict(
+                        args=["boxpoints", "all"], label="All Points", method="restyle",
+                    ),
+                ]
+            ),
             showactive=True,
             x=0,
+            xanchor="left",
+            y=1.15,
+            yanchor="top",
+        ),
+        dict(
+            buttons=list(
+                [
+                    dict(
+                        args=[{"visible": [True, False]}],
+                        label="Percentage",
+                        method="restyle",
+                    ),
+                    dict(
+                        args=[{"visible": [False, True]}],
+                        label="Absolute Difference",
+                        method="restyle",
+                    ),
+                ]
+            ),
+            showactive=True,
+            x=0.1,
             xanchor="left",
             y=1.15,
             yanchor="top",
@@ -159,13 +195,18 @@ go.FigureWidget(dss_fig)
 
 # ignore
 # line chart not useful due to the scale
-dss_line_fig = px.line(df, x=df.index.get_level_values(0), y=["dut", "philip"], labels={
+dss_line_fig = px.line(
+    df,
+    x=df.index.get_level_values(0),
+    y=["dut", "philip"],
+    labels={
         "diff_dut_philip": "Difference [s]",
         "diff_percentage": "Percentage Actual/Given [%]",
         "time": "Sleep Duration [s]",
         "value": "Actual Sleep Duration [s]",
         "x": "Sleep Duration [s]",
-    },)
+    },
+)
 
 dss_line_fig.write_html("docs/drift_line.html")
 go.FigureWidget(dss_line_fig)
