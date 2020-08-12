@@ -171,6 +171,30 @@ dss_fig = px.box(
 #     )
 # ])
 
+dss_fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=list([
+                dict(
+                    args=["boxpoints", "outliers"],
+                    label="Outliers",
+                    method="restyle",
+                ),
+                dict(
+                    args=["boxpoints", "all"],
+                    label="All Points",
+                    method="restyle",
+                ),
+            ]),
+            showactive=True,
+            x=0,
+            xanchor="left",
+            y=1.15,
+            yanchor="top",
+        ),
+    ]
+)
+
 dss_fig.write_html("docs/drift.html")
 go.FigureWidget(dss_fig)
 
