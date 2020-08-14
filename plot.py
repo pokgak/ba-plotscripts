@@ -10,12 +10,12 @@ from ast import literal_eval
 
 
 # %%    Jitter - varied timer count
-file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_gpio_overhead/xunit.xml"
+file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
 # file = f"data/sleep_jitter/xunit.xml"
 root = ET.parse(file).getroot()
 
 jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
-for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Sleep Jitter']"):
+for testcase in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep Jitter']"):
     timer_count = len(
         literal_eval(
             testcase.find("properties/property[@name='intervals']").get("value")
@@ -70,7 +70,7 @@ go.FigureWidget(jitter_table)
 
 # %% Plot Drift Simple Percentage Difference Measurements
 
-# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_gpio_overhead/xunit.xml"
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
 # file = "data/drift/1-15-30-seconds-10-repeats.xml"
 file = "data/drift/1-14-seconds-continuous-10-repeats.xml"
 root = ET.parse(file).getroot()
