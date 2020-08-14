@@ -23,7 +23,8 @@ for prop in root.findall(
     print(gpio_overhead.describe())
 
 # %% Accuracy
-file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+file = "/home/pokgak/git/ba-plotscripts/data/sleep_accuracy/duration-1-100-usec-backoff-30.xml"
 root = ET.parse(file).getroot()
 
 accuracy_rows = []
@@ -65,6 +66,12 @@ for typ, backoff in accuracy.groupby(["type", "backoff"]).groups.keys():
             name=f"{typ} / {backoff}",
         )
     )
+
+accuracy_fig.update_layout(dict(
+    title="Sleep Accuracy",
+    xaxis_title="Target Sleep Duration (s)",
+    yaxis_title="Difference Actual - Target Sleep Duration (s)",
+))
 
 go.FigureWidget(accuracy_fig)
 
