@@ -8,6 +8,20 @@ import plotly.express as px
 import plotly.graph_objects as go
 from ast import literal_eval
 
+# %% Parse GPIO Overhead
+file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# file = f"data/gpio_overhead/xunit.xml"
+root = ET.parse(file).getroot()
+
+for prop in root.findall(
+    "testcase[@classname='tests_timer_benchmarks.Gpio Overhead']//property"
+):
+    if prop.get("name") != "gpio-overhead":
+        raise RuntimeError("Other property than 'gpio-overhead' found")
+
+    gpio_overhead = pd.Series(literal_eval(prop.get("value")))
+    print(gpio_overhead.describe())
+
 
 # %%    Jitter - varied timer count
 file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
@@ -15,7 +29,9 @@ file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_bench
 root = ET.parse(file).getroot()
 
 jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
-for testcase in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep Jitter']"):
+for testcase in root.findall(
+    "testcase[@classname='tests_timer_benchmarks.Sleep Jitter']"
+):
     timer_count = len(
         literal_eval(
             testcase.find("properties/property[@name='intervals']").get("value")
@@ -38,9 +54,8 @@ for testcase in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep 
 
 jitter = pd.DataFrame(jitter)
 
-jitter_fig = px.strip(jitter[jitter['divisor'].isnull()],
-    x="timer_count",
-    y="sleep_duration",
+jitter_fig = px.strip(
+    jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration",
 )
 
 go.FigureWidget(jitter_fig)
