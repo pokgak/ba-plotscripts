@@ -22,6 +22,52 @@ for prop in root.findall(
     gpio_overhead = pd.Series(literal_eval(prop.get("value")))
     print(gpio_overhead.describe())
 
+# %% Accuracy
+file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+root = ET.parse(file).getroot()
+
+accuracy_rows = []
+backoff = literal_eval(
+    root.find(
+        "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
+    ).get("value")
+)
+for prop in root.findall(
+    "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"
+):
+    name = prop.get("name")
+    if "accuracy" in name:
+        function = name.split("-")[-2]
+        target = literal_eval(name.split("-")[-1]) / 1_000_000  # convert to sec
+        actuals = literal_eval(prop.get("value"))
+
+        for i, v in enumerate(actuals):
+            accuracy_rows.append(
+                {
+                    "target_duration": target,
+                    "actual_duration": v,
+                    "diff_actual_target": v - target,
+                    "repeat": i,
+                    "backoff": backoff,
+                    "type": function,
+                }
+            )
+
+accuracy = pd.DataFrame(accuracy_rows)
+
+accuracy_fig = go.Figure()
+for typ, backoff in accuracy.groupby(["type", "backoff"]).groups.keys():
+    df = accuracy.query(f"type == '{typ}' and backoff == {backoff}")
+    accuracy_fig.add_trace(
+        go.Scatter(
+            x=df["target_duration"],
+            y=df["diff_actual_target"],
+            name=f"{typ} / {backoff}",
+        )
+    )
+
+go.FigureWidget(accuracy_fig)
+
 
 # %%    Jitter - varied timer count
 file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
