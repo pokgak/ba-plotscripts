@@ -10,4 +10,4 @@ do
     links+="<li><a href=\"https://pokgak.github.io/ba-plotscripts/${plot}\">${plot}</a></li>\n"
 done
 
-sed -e "s|<li>REPLACE</li>|$links|p" index.template > index.html
+sed -e "s|<li>REPLACE</li>|$links|p" $GITHUB_WORKSPACE/index.template > $GITHUB_WORKSPACE/index.html

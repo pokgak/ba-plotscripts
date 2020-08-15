@@ -9,7 +9,7 @@ jobs:
     name: Compile latest index.html
     steps:
       - name: Run compile script
-        run: ./compile_index.sh
+        run: $GITHUB_WORKSPACE/compile_index.sh
 
       - name: Checkout 'pages' branch
         uses: actions/checkout@v2
