@@ -11,12 +11,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - name: Run compile script
-        run: |
-         ./compile_index.sh > index.html
+      - run: |
          git rebase master pages
-
+         ./compile_index.sh > index.html
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update index.html
