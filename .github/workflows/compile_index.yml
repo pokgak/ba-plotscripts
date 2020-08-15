@@ -7,7 +7,6 @@ jobs:
   compile_index_job:
     runs-on: ubuntu-latest
     name: Compile latest index.html
-    id: compile
     steps:
       - name: Run compile script
         run: ./compile_index.sh
