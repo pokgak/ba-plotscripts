@@ -12,16 +12,20 @@ jobs:
 
       - name: Run compile script
         run: |
-         ./compile_index.sh
+         ./compile_index.sh > index.html
          cat index.html
 
-      - name: Commit index.html to 'pages' branch
+      - name: Checkout 'pages' branch
         uses: actions/checkout@v2
         with:
           ref: pages
+
+      - name: Commit index.html to 'pages' branch
         run: |
+          cat index.html
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git add index.html
           git commit -m "Update index.html"
           git rebase master
           git push
