@@ -8,15 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Compile latest index.html
     steps:
-      - run: echo $GITHUB_WORKSPACE
-
-      - name: Run compile script
-        run: compile_index.sh
-
       - name: Checkout 'pages' branch
         uses: actions/checkout@v2
         with:
           ref: pages
+
+      - name: Run compile script
+        run: compile_index.sh
 
       - name: Commit index.html to 'pages' branch
         run: |
