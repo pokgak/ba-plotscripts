@@ -9,9 +9,9 @@ jobs:
     name: Compile latest index.html
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Run compile script
-        run: compile_index.sh
+        run: ./compile_index.sh
 
       - name: Checkout 'pages' branch
         uses: actions/checkout@v2
