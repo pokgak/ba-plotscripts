@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Compile latest index.html
     steps:
+      - run: echo $GITHUB_WORKSPACE
+      
       - name: Run compile script
         run: $GITHUB_WORKSPACE/compile_index.sh
 
