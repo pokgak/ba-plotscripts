@@ -67,11 +67,13 @@ for typ, backoff in accuracy.groupby(["type", "backoff"]).groups.keys():
         )
     )
 
-accuracy_fig.update_layout(dict(
-    title="Sleep Accuracy",
-    xaxis_title="Target Sleep Duration (s)",
-    yaxis_title="Difference Actual - Target Sleep Duration (s)",
-))
+accuracy_fig.update_layout(
+    dict(
+        title="Sleep Accuracy",
+        xaxis_title="Target Sleep Duration (s)",
+        yaxis_title="Difference Actual - Target Sleep Duration (s)",
+    )
+)
 
 go.FigureWidget(accuracy_fig)
 
@@ -203,6 +205,12 @@ absolute_line = go.Scatter(
 )
 dss_fig = go.Figure([percentage, absolute, absolute_line])
 
+dss_fig.update_layout(
+    title=f"Drift for Sleep Duration {df['time'].min()} - {df['time'].max()} seconds",
+    yaxis_title="Percentage Actual/Given Sleep Duration [%]",
+    xaxis_title="Sleep Duration [s]",
+)
+
 # to add max line based on board info
 # dss_fig.update_layout(shapes=[
 
@@ -229,9 +237,9 @@ dss_fig.update_layout(
                 ]
             ),
             showactive=True,
-            x=0,
+            x=0.9,
             xanchor="left",
-            y=1.15,
+            y=1.1,
             yanchor="top",
         ),
         dict(
@@ -243,16 +251,22 @@ dss_fig.update_layout(
                         method="update",
                     ),
                     dict(
-                        args=[{"visible": [False, True, True]}],
+                        args=[
+                            {
+                                "visible": [False, True, True],
+                                "showlegend": [False, False, False],
+                            },
+                            {"yaxis.title": "Absolute Difference [s]"},
+                        ],
                         label="Absolute Difference",
                         method="update",
                     ),
                 ]
             ),
             showactive=True,
-            x=0.1,
+            x=0.75,
             xanchor="left",
-            y=1.15,
+            y=1.1,
             yanchor="top",
         ),
     ]
