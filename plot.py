@@ -246,7 +246,12 @@ dss_fig.update_layout(
             buttons=list(
                 [
                     dict(
-                        args=[{"visible": [True, False, False]}],
+                        args=[
+                            {"visible": [True, False, False]},
+                            {
+                                "yaxis.title": "Percentage Actual/Given Sleep Duration [%]"
+                            },
+                        ],
                         label="Percentage",
                         method="update",
                     ),
