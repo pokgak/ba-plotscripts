@@ -348,48 +348,30 @@ bres = {
     "time": [],
 }
 
-values = literal_eval(
-    root.find(
-        './/testcase[@name="Measure Overhead Set First Timer"]//property[@name="overhead-set-first-timer"]'
-    ).get("value")
-)
-bres["time"].extend(values)
-bres["type"].extend(["set timer"] * len(values))
-
-values = literal_eval(
-    root.find(
-        './/testcase[@name="Measure Overhead Set Last Timer"]//property[@name="overhead-set-last-timer"]'
-    ).get("value")
-)
-bres["time"].extend(values)
-bres["type"].extend(["set last timer"] * len(values))
-
-values = literal_eval(
-    root.find(
-        './/testcase[@name="Measure Overhead Remove First Timer"]//property[@name="overhead-remove-first-timer"]'
-    ).get("value")
-)
-bres["time"].extend(values)
-bres["type"].extend(["remove first timer"] * len(values))
-
-values = literal_eval(
-    root.find(
-        './/testcase[@name="Measure Overhead Remove Last Timer"]//property[@name="overhead-remove-last-timer"]'
-    ).get("value")
-)
-bres["time"].extend(values)
-bres["type"].extend(["remove last timer"] * len(values))
+tests = ["set first timer", "set last timer", "remove first timer", "remove last timer"]
+for t in tests:
+    values = literal_eval(
+        root.find('.//property[@name="overhead-{}"]'.format(t.replace(" ", "-"))).get(
+            "value"
+        )
+    )
+    bres["time"].extend(values)
+    bres["type"].extend([t] * len(values))
 
 bres = pd.DataFrame(bres)
 
 ## plot
 
 bresgroup = bres.groupby("type")["time"].describe().reset_index()
-columns = ['type', 'mean', 'std', 'min', 'max']
+columns = ["type", "mean", "std", "min", "max"]
 
 bres_fig = go.Table(
     header=dict(values=columns),
-    cells=dict(values=[list(bresgroup[col]) for col in columns], align='center', format=[[None], [".3e"]]),
+    cells=dict(
+        values=[list(bresgroup[col]) for col in columns],
+        align="center",
+        format=[[None], [".3e"]],
+    ),
 )
 go.FigureWidget(bres_fig)
 
