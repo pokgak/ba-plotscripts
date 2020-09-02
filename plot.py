@@ -337,3 +337,59 @@ dextool_stat_fig = px.bar(
 
 dextool_stat_fig.write_html("docs/test_case_effectiveness.html")
 go.FigureWidget(dextool_stat_fig)
+
+# %% Timer Benchmarks
+
+file = "data/timer_benchmarks/xunit.xml"
+root = ET.parse(file).getroot()
+
+bres = {
+    "type": [],
+    "time": [],
+}
+
+values = literal_eval(
+    root.find(
+        './/testcase[@name="Measure Overhead Set First Timer"]//property[@name="overhead-set-first-timer"]'
+    ).get("value")
+)
+bres["time"].extend(values)
+bres["type"].extend(["set timer"] * len(values))
+
+values = literal_eval(
+    root.find(
+        './/testcase[@name="Measure Overhead Set Last Timer"]//property[@name="overhead-set-last-timer"]'
+    ).get("value")
+)
+bres["time"].extend(values)
+bres["type"].extend(["set last timer"] * len(values))
+
+values = literal_eval(
+    root.find(
+        './/testcase[@name="Measure Overhead Remove First Timer"]//property[@name="overhead-remove-first-timer"]'
+    ).get("value")
+)
+bres["time"].extend(values)
+bres["type"].extend(["remove first timer"] * len(values))
+
+values = literal_eval(
+    root.find(
+        './/testcase[@name="Measure Overhead Remove Last Timer"]//property[@name="overhead-remove-last-timer"]'
+    ).get("value")
+)
+bres["time"].extend(values)
+bres["type"].extend(["remove last timer"] * len(values))
+
+bres = pd.DataFrame(bres)
+
+## plot
+
+bresgroup = bres.groupby("type")["time"].describe().reset_index()
+columns = ['type', 'mean', 'std', 'min', 'max']
+
+bres_fig = go.Table(
+    header=dict(values=columns),
+    cells=dict(values=[list(bresgroup[col]) for col in columns], align='center', format=[[None], [".9f"]]),
+)
+go.FigureWidget(bres_fig)
+
