@@ -389,7 +389,7 @@ columns = ['type', 'mean', 'std', 'min', 'max']
 
 bres_fig = go.Table(
     header=dict(values=columns),
-    cells=dict(values=[list(bresgroup[col]) for col in columns], align='center', format=[[None], [".9f"]]),
+    cells=dict(values=[list(bresgroup[col]) for col in columns], align='center', format=[[None], [".3e"]]),
 )
 go.FigureWidget(bres_fig)
 
