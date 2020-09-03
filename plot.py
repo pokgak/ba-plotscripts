@@ -341,37 +341,39 @@ go.FigureWidget(dextool_stat_fig)
 # %% Timer Benchmarks
 
 file = "data/timer_benchmarks/xunit.xml"
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
 root = ET.parse(file).getroot()
 
 bres = {
-    "type": [],
+    "test": [],
     "time": [],
 }
 
-tests = ["set first timer", "set last timer", "remove first timer", "remove last timer"]
-for t in tests:
-    values = literal_eval(
-        root.find('.//property[@name="overhead-{}"]'.format(t.replace(" ", "-"))).get(
-            "value"
-        )
+tests = [
+    t
+    for t in root.findall(
+        './/testcase[@classname="tests_timer_benchmarks.Timer Overhead"]//property'
     )
+    if "overhead" in t.get("name")
+]
+for t in tests:
+    values = literal_eval(t.get("value"))
     bres["time"].extend(values)
-    bres["type"].extend([t] * len(values))
+    bres["test"].extend([" ".join(t.get("name").split("-")[1:])] * len(values))
 
 bres = pd.DataFrame(bres)
 
 ## plot
 
-bresgroup = bres.groupby("type")["time"].describe().reset_index()
-columns = ["type", "mean", "std", "min", "max"]
+bresgroup = bres.groupby("test")["time"].describe().reset_index()
+columns = ["test", "mean", "std", "min", "max"]
 
 bres_fig = go.Table(
     header=dict(values=columns),
     cells=dict(
-        values=[list(bresgroup[col]) for col in columns],
+        values=[bresgroup[col] for col in columns],
         align="center",
-        format=[[None], [".3e"]],
+        format=[[None], [".5s"]],
     ),
 )
 go.FigureWidget(bres_fig)
-
