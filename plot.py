@@ -155,25 +155,30 @@ for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Drift']")
 
         repeat_n = int(name[name.index("repeat") + 1])  # repeat count
         # values are recorded as string, convert to float
-        value = float(literal_eval(prop.get("value"))[-1])
+        value = literal_eval(prop.get("value"))
+        # make sure value not in array
+        if len(value) == 1:
+            value = value[0]
+
+        value_source = "dut" if "dut" in name else "philip"
 
         key = int(name[2]) / 1_000_000
-        if key not in dss:
-            dss[key] = []
 
-        dss[key].append(
-            {
+        # create a new row or update if already existed
+        try:
+            row = next(e for e in dss if e["time"] == key and e["repeat"] == repeat_n)
+            row.update(
+                {"time": key, "repeat": repeat_n, value_source: value,}
+            )
+        except StopIteration:
+            row = {
                 "time": key,
                 "repeat": repeat_n,
-                "dut" if "dut" in name else "philip": value,
+                value_source: value,
             }
-        )
+            dss.append(row)
 
-df = pd.DataFrame()
-for k in dss.keys():
-    for row in dss[k]:
-        df = df.append(row, ignore_index=True)
-
+df = pd.DataFrame(dss, dtype="float64")
 # combine dut, philip rows with same (time, repeat) to remove NaN values
 df = df.groupby(["time", "repeat"]).sum()
 df["diff_dut_philip"] = df["dut"] - df["philip"]
