@@ -282,66 +282,11 @@ dss_fig.update_layout(
     ]
 )
 
-dss_fig.write_html("docs/drift.html")
-go.FigureWidget(dss_fig)
+# dss_fig.write_html("docs/drift.html")
+# go.FigureWidget(dss_fig)
 
-# %% Get Dextool Test Case Stats from DB
+dss_fig.write_html("results/drift.html", full_html=False)
 
-import json
-import sqlite3
-
-conn = sqlite3.connect("/home/pokgak/git/RIOT-mutate/mutate/dextool_mutate.sqlite3")
-c = conn.cursor()
-
-
-def get_killing_tc_query(id):
-    return f"SELECT t1.name,t2.location FROM all_test_case t1, killed_test_case t2, mutation t3 WHERE t3.id = {id} AND t3.st_id = t2.st_id AND t2.tc_id = t1.id;"
-
-
-file = "data/dextool/report-1d1e9290.json"
-report = json.load(open(file))
-
-killed_muts = []
-for file in report["files"]:
-    for mut in file["mutations"]:
-        if mut["status"] == "killed":
-            killed_muts.append(mut["id"])
-
-# TODO: get test cases with zero kills
-kill_tc = []
-for mut in killed_muts:
-    killed_by = [
-        tc[0] for tc in c.execute(get_killing_tc_query(mut)).fetchall()
-    ]  # tc is tuple, remove unnecessary second item
-    kill_tc.append({"id": mut, "killed_by": killed_by})
-
-# %% Plot Dextool Test Case Stats
-
-dextool_stat = pd.DataFrame()
-for e in kill_tc:
-    tmp = pd.DataFrame(
-        {"id": e["id"] * len(e["killed_by"]), "killed_by": e["killed_by"]}
-    )
-    dextool_stat = dextool_stat.append(tmp, ignore_index=True)
-
-dextool_stat = (
-    dextool_stat.groupby("killed_by")
-    .count()
-    .reset_index()
-    .rename(columns={"id": "mut_count"})
-    .sort_values("mut_count")
-)
-
-dextool_stat_fig = px.bar(
-    dextool_stat,
-    x="killed_by",
-    y="mut_count",
-    title="Test Case Effectiveness",
-    labels={"killed_by": "Test Case Name", "mut_count": "No. of Mutants Killed"},
-)
-
-dextool_stat_fig.write_html("docs/test_case_effectiveness.html")
-go.FigureWidget(dextool_stat_fig)
 
 # %% Timer Benchmarks
 
