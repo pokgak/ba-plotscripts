@@ -8,10 +8,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 from ast import literal_eval
 
-# %% Parse GPIO Overhead
 file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-# file = f"data/gpio_overhead/xunit.xml"
 root = ET.parse(file).getroot()
+
+# %% Parse GPIO Overhead
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# file = f"data/gpio_overhead/xunit.xml"
+# root = ET.parse(file).getroot()
 
 for prop in root.findall(
     "testcase[@classname='tests_timer_benchmarks.Gpio Overhead']//property"
@@ -24,8 +27,8 @@ for prop in root.findall(
 
 # %% Accuracy
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-file = "/home/pokgak/git/ba-plotscripts/data/sleep_accuracy/duration-1-100-usec-backoff-30.xml"
-root = ET.parse(file).getroot()
+# file = "/home/pokgak/git/ba-plotscripts/data/sleep_accuracy/duration-1-100-usec-backoff-30.xml"
+# root = ET.parse(file).getroot()
 
 accuracy_rows = []
 backoff = literal_eval(
@@ -77,11 +80,13 @@ accuracy_fig.update_layout(
 
 go.FigureWidget(accuracy_fig)
 
+accuracy_fig.write_html("results/accuracy.html", full_html=False)
+
 
 # %%    Jitter - varied timer count
-file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
 # file = f"data/sleep_jitter/xunit.xml"
-root = ET.parse(file).getroot()
+# root = ET.parse(file).getroot()
 
 jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
 for testcase in root.findall(
@@ -113,7 +118,9 @@ jitter_fig = px.strip(
     jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration",
 )
 
-go.FigureWidget(jitter_fig)
+# go.FigureWidget(jitter_fig)
+
+jitter_fig.write_html("results/jitter.html", full_html=False)
 
 # %% Jitter - varied divisor
 
@@ -136,18 +143,17 @@ jitter_table = go.Figure(
     ]
 )
 
-go.FigureWidget(jitter_table)
+jitter_table.write_html("results/jitter_divisor.html", full_html=False)
 
 # %% Plot Drift Simple Percentage Difference Measurements
 
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
 # file = "data/drift/1-15-30-seconds-10-repeats.xml"
-file = "data/drift/1-14-seconds-continuous-10-repeats.xml"
-root = ET.parse(file).getroot()
+# file = "data/drift/1-14-seconds-continuous-10-repeats.xml"
+# root = ET.parse(file).getroot()
 
-drift_simple_single = dict()
-dss = drift_simple_single
-for testcase in root.findall("testcase[@classname='tests_gpio_overhead.Drift']"):
+dss = list()
+for testcase in root.findall("testcase[@classname='tests_timer_benchmarks.Drift']"):
 
     for prop in testcase.findall(".//property"):
         # name formatted as 'name'-'unit', we ditch the unit
@@ -290,9 +296,9 @@ dss_fig.write_html("results/drift.html", full_html=False)
 
 # %% Timer Benchmarks
 
-file = "data/timer_benchmarks/xunit.xml"
+# file = "data/timer_benchmarks/xunit.xml"
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-root = ET.parse(file).getroot()
+# root = ET.parse(file).getroot()
 
 bres = {
     "test": [],
@@ -318,12 +324,16 @@ bres = pd.DataFrame(bres)
 bresgroup = bres.groupby("test")["time"].describe().reset_index()
 columns = ["test", "mean", "std", "min", "max"]
 
-bres_fig = go.Table(
-    header=dict(values=columns),
-    cells=dict(
-        values=[bresgroup[col] for col in columns],
-        align="center",
-        format=[[None], [".5s"]],
-    ),
+bres_fig = go.Figure(
+    go.Table(
+        header=dict(values=columns),
+        cells=dict(
+            values=[bresgroup[col] for col in columns],
+            align="center",
+            format=[[None], [".5s"]],
+        ),
+    )
 )
-go.FigureWidget(bres_fig)
+# go.FigureWidget(bres_fig)
+
+bres_fig.write_html("results/overhead.html", full_html=False)
