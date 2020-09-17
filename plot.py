@@ -31,42 +31,49 @@ for prop in root.findall(
 # root = ET.parse(file).getroot()
 
 accuracy_rows = []
-backoff = literal_eval(
-    root.find(
-        "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
-    ).get("value")
-)
-for prop in root.findall(
-    "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"
-):
-    name = prop.get("name")
-    if "accuracy" in name:
-        function = name.split("-")[-2]
-        target = literal_eval(name.split("-")[-1]) / 1_000_000  # convert to sec
-        actuals = literal_eval(prop.get("value"))
+# backoff = literal_eval(
+#     root.find(
+#         "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
+#     ).get("value")
+# )
+for prop in root.findall("testcase[@name='Measure xtimer_usleep Accuracy']//property"):
+    name = prop.get("name").split("-")
+    function = "xtimer_usleep" if "xtimer_usleep" in name else "xtimer_set"
+    result_type = name[-1]
+    target = literal_eval(name[-2]) / 1000000
 
-        for i, v in enumerate(actuals):
+    actual = literal_eval(prop.get("value"))
+    if result_type == "dut":
+        # dut results are in microseconds, convert to seconds to uniform with philip results
+        actual = [v / 1000000 for v in actual]
+
+    for i, v in enumerate(actual):
             accuracy_rows.append(
                 {
+                "repeat": i,
                     "target_duration": target,
                     "actual_duration": v,
+                "function": function,
+                "result_type": result_type,
                     "diff_actual_target": v - target,
-                    "repeat": i,
-                    "backoff": backoff,
-                    "type": function,
                 }
             )
 
 accuracy = pd.DataFrame(accuracy_rows)
 
+# %%    Sleep Accuracy
+
 accuracy_fig = go.Figure()
-for typ, backoff in accuracy.groupby(["type", "backoff"]).groups.keys():
-    df = accuracy.query(f"type == '{typ}' and backoff == {backoff}")
+for function, result_type in accuracy.groupby(
+    ["function", "result_type"]
+).groups.keys():
+    if result_type == "dut":
+        continue
+
+    df = accuracy.query(f"function == '{function}' and result_type == 'philip'")
     accuracy_fig.add_trace(
         go.Scatter(
-            x=df["target_duration"],
-            y=df["diff_actual_target"],
-            name=f"{typ} / {backoff}",
+            x=df["target_duration"], y=df["diff_actual_target"], name=f"{function}",
         )
     )
 
@@ -78,6 +85,7 @@ accuracy_fig.update_layout(
     )
 )
 
+accuracy_fig.write_html("results/accuracy.html", full_html=False)
 go.FigureWidget(accuracy_fig)
 
 accuracy_fig.write_html("results/accuracy.html", full_html=False)
