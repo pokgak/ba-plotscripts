@@ -88,8 +88,38 @@ accuracy_fig.update_layout(
 accuracy_fig.write_html("results/accuracy.html", full_html=False)
 go.FigureWidget(accuracy_fig)
 
-accuracy_fig.write_html("results/accuracy.html", full_html=False)
+# %% Overhead xtimer_now()
 
+results = accuracy.groupby(["function", "target_duration", "result_type"])[
+    "actual_duration"
+].mean()
+
+results = results.reset_index()
+results = (
+    results.pivot(
+        index="target_duration", columns="result_type", values="actual_duration"
+    )
+    .reset_index()
+    .tail()
+)
+results["diff"] = results["dut"] - results["philip"]
+overhead_fig = go.Figure(
+    data=[
+        go.Table(
+            header=dict(values=results.columns),
+            cells=dict(
+                align="center",
+                format=[["s"], [".5s"]],
+                values=[results[col] for col in results.columns],
+            ),
+        )
+    ],
+)
+
+overhead_fig.update_layout(dict(title="Overhead of xtimer_now()",))
+
+overhead_fig.write_html("results/overhead_now.html", full_html=False)
+go.FigureWidget(overhead_fig)
 
 # %%    Jitter - varied timer count
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
