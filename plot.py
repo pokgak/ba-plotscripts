@@ -48,16 +48,16 @@ for prop in root.findall("testcase[@name='Measure xtimer_usleep Accuracy']//prop
         actual = [v / 1000000 for v in actual]
 
     for i, v in enumerate(actual):
-            accuracy_rows.append(
-                {
+        accuracy_rows.append(
+            {
                 "repeat": i,
-                    "target_duration": target,
-                    "actual_duration": v,
+                "target_duration": target,
+                "actual_duration": v,
                 "function": function,
                 "result_type": result_type,
-                    "diff_actual_target": v - target,
-                }
-            )
+                "diff_actual_target": v - target,
+            }
+        )
 
 accuracy = pd.DataFrame(accuracy_rows)
 
@@ -374,4 +374,4 @@ bres_fig = go.Figure(
 )
 # go.FigureWidget(bres_fig)
 
-bres_fig.write_html("results/overhead.html", full_html=False)
+bres_fig.write_html("results/overhead_set_remove.html", full_html=False)
