@@ -8,7 +8,12 @@ import plotly.express as px
 import plotly.graph_objects as go
 from ast import literal_eval
 
-file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# some configs
+output_html = False
+output_full_html = False
+
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+file = "/home/pokgak/git/ba-plotscripts/xtimer.xml"
 root = ET.parse(file).getroot()
 
 # %% Parse GPIO Overhead
@@ -36,7 +41,7 @@ accuracy_rows = []
 #         "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
 #     ).get("value")
 # )
-for prop in root.findall("testcase[@name='Measure xtimer_usleep Accuracy']//property"):
+for prop in root.findall("testcase[@name='Measure TIMER_SLEEP Accuracy']//property"):
     name = prop.get("name").split("-")
     function = "xtimer_usleep" if "xtimer_usleep" in name else "xtimer_set"
     result_type = name[-1]
@@ -85,7 +90,8 @@ accuracy_fig.update_layout(
     )
 )
 
-accuracy_fig.write_html("results/accuracy.html", full_html=False)
+if output_html:
+    accuracy_fig.write_html("results/accuracy.html", full_html=output_full_html)
 go.FigureWidget(accuracy_fig)
 
 # %% Overhead xtimer_now()
@@ -118,7 +124,8 @@ overhead_fig = go.Figure(
 
 overhead_fig.update_layout(dict(title="Overhead of xtimer_now()",))
 
-overhead_fig.write_html("results/overhead_now.html", full_html=False)
+if output_html:
+    overhead_fig.write_html("results/overhead_now.html", full_html=output_full_html)
 go.FigureWidget(overhead_fig)
 
 # %%    Jitter - varied timer count
@@ -156,9 +163,10 @@ jitter_fig = px.strip(
     jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration",
 )
 
-# go.FigureWidget(jitter_fig)
+if output_html:
+    jitter_fig.write_html("results/jitter.html", full_html=output_full_html)
+go.FigureWidget(jitter_fig)
 
-jitter_fig.write_html("results/jitter.html", full_html=False)
 
 # %% Jitter - varied divisor
 
@@ -167,13 +175,15 @@ jdg = jitter.groupby("divisor").describe()
 jitter_table = go.Figure(
     data=[
         go.Table(
-            header=dict(values=["divisor", "min", "mean", "max"]),
+            header=dict(values=["divisor", "mean", "std", "min", "max"]),
             cells=dict(
-                align="left",
+                align="center",
+                format=[[None], [".5s"]],
                 values=[
                     jdg.index,
-                    jdg["sleep_duration"]["min"],
                     jdg["sleep_duration"]["mean"],
+                    jdg["sleep_duration"]["std"],
+                    jdg["sleep_duration"]["min"],
                     jdg["sleep_duration"]["max"],
                 ],
             ),
@@ -181,7 +191,9 @@ jitter_table = go.Figure(
     ]
 )
 
-jitter_table.write_html("results/jitter_divisor.html", full_html=False)
+if output_html:
+    jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html)
+go.FigureWidget(jitter_table)
 
 # %% Plot Drift Simple Percentage Difference Measurements
 
@@ -326,10 +338,9 @@ dss_fig.update_layout(
     ]
 )
 
-# dss_fig.write_html("docs/drift.html")
-# go.FigureWidget(dss_fig)
-
-dss_fig.write_html("results/drift.html", full_html=False)
+if output_html:
+    dss_fig.write_html("results/drift.html", full_html=output_full_html)
+go.FigureWidget(dss_fig)
 
 
 # %% Timer Benchmarks
@@ -372,6 +383,7 @@ bres_fig = go.Figure(
         ),
     )
 )
-# go.FigureWidget(bres_fig)
 
-bres_fig.write_html("results/overhead_set_remove.html", full_html=False)
+if output_html:
+    bres_fig.write_html("results/overhead_set_remove.html", full_html=output_full_html)
+go.FigureWidget(bres_fig)
