@@ -72,7 +72,7 @@ for prop in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep Accu
 
 accuracy = pd.DataFrame(accuracy_rows)
 
-# %%    Sleep Accuracy
+## plot
 
 accuracy_fig = go.Figure()
 for function, result_type in accuracy.groupby(
@@ -97,42 +97,8 @@ accuracy_fig.update_layout(
 )
 
 if output_html:
-    accuracy_fig.write_html("results/accuracy.html", full_html=output_full_html)
+    accuracy_fig.write_html("results/accuracy.html", full_html=output_full_html, include_plotlyjs='cdn')
 go.FigureWidget(accuracy_fig)
-
-# %% Overhead xtimer_now()
-
-results = accuracy.groupby(["function", "target_duration", "result_type"])[
-    "actual_duration"
-].mean()
-
-results = results.reset_index()
-results = (
-    results.pivot(
-        index="target_duration", columns="result_type", values="actual_duration"
-    )
-    .reset_index()
-    .tail()
-)
-results["diff"] = results["dut"] - results["philip"]
-overhead_fig = go.Figure(
-    data=[
-        go.Table(
-            header=dict(values=results.columns),
-            cells=dict(
-                align="center",
-                format=[["s"], [".5s"]],
-                values=[results[col] for col in results.columns],
-            ),
-        )
-    ],
-)
-
-overhead_fig.update_layout(dict(title="Overhead of xtimer_now()",))
-
-if output_html:
-    overhead_fig.write_html("results/overhead_now.html", full_html=output_full_html)
-go.FigureWidget(overhead_fig)
 
 # %%    Jitter - varied timer count
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
