@@ -11,9 +11,12 @@ from ast import literal_eval
 # some configs
 output_html = False
 output_full_html = False
+output_png = False
+enable_dropdown = False
+use_fixed_range = False
 
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-file = "/home/pokgak/git/ba-plotscripts/xtimer.xml"
+# file = "/home/pokgak/git/ba-plotscripts/ztimer.xml"
 root = ET.parse(file).getroot()
 
 # %% Parse GPIO Overhead
@@ -41,11 +44,13 @@ accuracy_rows = []
 #         "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
 #     ).get("value")
 # )
-for prop in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"):
+for prop in root.findall(
+    "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"
+):
     name = prop.get("name").split("-")
     if "TIMER_SLEEP" in name:
         function = "TIMER_SLEEP"
-    elif"TIMER_SET" in name:
+    elif "TIMER_SET" in name:
         function = "TIMER_SET"
     else:
         raise NotImplemented
@@ -96,8 +101,15 @@ accuracy_fig.update_layout(
     )
 )
 
+if use_fixed_range:
+    accuracy_fig.update_yaxes(range=[0, 80e-6])
+
 if output_html:
-    accuracy_fig.write_html("results/accuracy.html", full_html=output_full_html, include_plotlyjs='cdn')
+    accuracy_fig.write_html(
+        "results/accuracy.html", full_html=output_full_html, include_plotlyjs="cdn"
+    )
+if output_png:
+    accuracy_fig.write_image("results/accuracy.png")
 go.FigureWidget(accuracy_fig)
 
 # %%    Jitter - varied timer count
@@ -135,37 +147,53 @@ jitter_fig = px.strip(
     jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration",
 )
 
+jitter_fig.update_layout(
+    title="Jitter of periodic 100ms sleep with increasing nr. of background timer",
+    yaxis_title="Actual Sleep Duration [s]",
+    xaxis_title="Nr. of background timers",
+)
+
+if use_fixed_range:
+    jitter_fig.update_yaxes(range=[0.099, 0.101])
+    pass
+
 if output_html:
-    jitter_fig.write_html("results/jitter.html", full_html=output_full_html, include_plotlyjs='cdn')
+    jitter_fig.write_html(
+        "results/jitter.html", full_html=output_full_html, include_plotlyjs="cdn"
+    )
+if output_png:
+    jitter_fig.write_image("results/jitter.png")
 go.FigureWidget(jitter_fig)
 
 
 # %% Jitter - varied divisor
 
-jitter_divisor = jitter[jitter["divisor"].notnull()]
-jdg = jitter.groupby("divisor").describe()
-jitter_table = go.Figure(
-    data=[
-        go.Table(
-            header=dict(values=["divisor", "mean", "std", "min", "max"]),
-            cells=dict(
-                align="center",
-                format=[[None], [".5s"]],
-                values=[
-                    jdg.index,
-                    jdg["sleep_duration"]["mean"],
-                    jdg["sleep_duration"]["std"],
-                    jdg["sleep_duration"]["min"],
-                    jdg["sleep_duration"]["max"],
-                ],
-            ),
-        )
-    ]
-)
+# jitter_divisor = jitter[jitter["divisor"].notnull()]
+# jdg = jitter.groupby("divisor").describe()
+# jitter_table = go.Figure(
+#     data=[
+#         go.Table(
+#             header=dict(values=["divisor", "mean", "std", "min", "max"]),
+#             cells=dict(
+#                 align="center",
+#                 format=[[None], [".5s"]],
+#                 values=[
+#                     jdg.index,
+#                     jdg["sleep_duration"]["mean"],
+#                     jdg["sleep_duration"]["std"],
+#                     jdg["sleep_duration"]["min"],
+#                     jdg["sleep_duration"]["max"],
+#                 ],
+#             ),
+#         )
+#     ]
+# )
 
-if output_html:
-    jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html, include_plotlyjs='cdn')
-go.FigureWidget(jitter_table)
+# if output_html:
+#     jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html, include_plotlyjs='cdn')
+# if output_png:
+#     jitter_table.write_image("results/jitter_divisor.png")
+# go.FigureWidget(jitter_table)
 
 # %% Plot Drift Simple Percentage Difference Measurements
 
@@ -254,64 +282,74 @@ dss_fig.update_layout(
 #     )
 # ])
 
-dss_fig.update_layout(
-    updatemenus=[
-        dict(
-            buttons=list(
-                [
-                    dict(
-                        args=["boxpoints", "outliers"],
-                        label="Outliers",
-                        method="restyle",
-                    ),
-                    dict(
-                        args=["boxpoints", "all"], label="All Points", method="restyle",
-                    ),
-                ]
+if enable_dropdown:
+    dss_fig.update_layout(
+        updatemenus=[
+            dict(
+                buttons=list(
+                    [
+                        dict(
+                            args=["boxpoints", "outliers"],
+                            label="Outliers",
+                            method="restyle",
+                        ),
+                        dict(
+                            args=["boxpoints", "all"],
+                            label="All Points",
+                            method="restyle",
+                        ),
+                    ]
+                ),
+                showactive=True,
+                x=0.9,
+                xanchor="left",
+                y=1.1,
+                yanchor="top",
             ),
-            showactive=True,
-            x=0.9,
-            xanchor="left",
-            y=1.1,
-            yanchor="top",
-        ),
-        dict(
-            buttons=list(
-                [
-                    dict(
-                        args=[
-                            {"visible": [True, False, False]},
-                            {
-                                "yaxis.title": "Percentage Actual/Given Sleep Duration [%]"
-                            },
-                        ],
-                        label="Percentage",
-                        method="update",
-                    ),
-                    dict(
-                        args=[
-                            {
-                                "visible": [False, True, True],
-                                "showlegend": [False, False, False],
-                            },
-                            {"yaxis.title": "Absolute Difference [s]"},
-                        ],
-                        label="Absolute Difference",
-                        method="update",
-                    ),
-                ]
+            dict(
+                buttons=list(
+                    [
+                        dict(
+                            args=[
+                                {"visible": [True, False, False]},
+                                {
+                                    "yaxis.title": "Percentage Actual/Given Sleep Duration [%]"
+                                },
+                            ],
+                            label="Percentage",
+                            method="update",
+                        ),
+                        dict(
+                            args=[
+                                {
+                                    "visible": [False, True, True],
+                                    "showlegend": [False, False, False],
+                                },
+                                {"yaxis.title": "Absolute Difference [s]"},
+                            ],
+                            label="Absolute Difference",
+                            method="update",
+                        ),
+                    ]
+                ),
+                showactive=True,
+                x=0.75,
+                xanchor="left",
+                y=1.1,
+                yanchor="top",
             ),
-            showactive=True,
-            x=0.75,
-            xanchor="left",
-            y=1.1,
-            yanchor="top",
-        ),
-    ]
-)
+        ]
+    )
+
+if use_fixed_range:
+    dss_fig.update_yaxes(range=[0.025, 0.07])
 
 if output_html:
-    dss_fig.write_html("results/drift.html", full_html=output_full_html, include_plotlyjs='cdn')
+    dss_fig.write_html(
+        "results/drift.html", full_html=output_full_html, include_plotlyjs="cdn"
+    )
+if output_png:
+    dss_fig.write_image("results/drift.png")
 go.FigureWidget(dss_fig)
 
 
@@ -356,6 +394,14 @@ bres_fig = go.Figure(
     )
 )
 
+bres_fig.update_layout(height=200, margin=dict(autoexpand=False, t=5, l=0, r=0, b=5,))
+
 if output_html:
-    bres_fig.write_html("results/overhead_set_remove.html", full_html=output_full_html, include_plotlyjs='cdn')
+    bres_fig.write_html(
+        "results/overhead_set_remove.html",
+        full_html=output_full_html,
+        include_plotlyjs="cdn",
+    )
+if output_png:
+    bres_fig.write_image("results/overhead.png", height=230)
 go.FigureWidget(bres_fig)
