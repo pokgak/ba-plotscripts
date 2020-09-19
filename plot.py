@@ -136,7 +136,7 @@ jitter_fig = px.strip(
 )
 
 if output_html:
-    jitter_fig.write_html("results/jitter.html", full_html=output_full_html)
+    jitter_fig.write_html("results/jitter.html", full_html=output_full_html, include_plotlyjs='cdn')
 go.FigureWidget(jitter_fig)
 
 
@@ -164,7 +164,7 @@ jitter_table = go.Figure(
 )
 
 if output_html:
-    jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html)
+    jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html, include_plotlyjs='cdn')
 go.FigureWidget(jitter_table)
 
 # %% Plot Drift Simple Percentage Difference Measurements
@@ -311,7 +311,7 @@ dss_fig.update_layout(
 )
 
 if output_html:
-    dss_fig.write_html("results/drift.html", full_html=output_full_html)
+    dss_fig.write_html("results/drift.html", full_html=output_full_html, include_plotlyjs='cdn')
 go.FigureWidget(dss_fig)
 
 
@@ -357,5 +357,5 @@ bres_fig = go.Figure(
 )
 
 if output_html:
-    bres_fig.write_html("results/overhead_set_remove.html", full_html=output_full_html)
+    bres_fig.write_html("results/overhead_set_remove.html", full_html=output_full_html, include_plotlyjs='cdn')
 go.FigureWidget(bres_fig)
