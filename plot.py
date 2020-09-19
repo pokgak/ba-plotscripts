@@ -9,14 +9,14 @@ import plotly.graph_objects as go
 from ast import literal_eval
 
 # some configs
-output_html = False
-output_full_html = False
+output_html = True
+output_full_html = True
 output_png = False
 enable_dropdown = False
 use_fixed_range = False
 
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-# file = "/home/pokgak/git/ba-plotscripts/ztimer.xml"
+file = "/home/pokgak/git/ba-plotscripts/docs/xtimer-ztimer-comparison/ztimer.xml"
 root = ET.parse(file).getroot()
 
 # %% Parse GPIO Overhead
@@ -106,10 +106,10 @@ if use_fixed_range:
 
 if output_html:
     accuracy_fig.write_html(
-        "results/accuracy.html", full_html=output_full_html, include_plotlyjs="cdn"
+        "docs/results/accuracy.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
-    accuracy_fig.write_image("results/accuracy.png")
+    accuracy_fig.write_image("docs/results/accuracy.png")
 go.FigureWidget(accuracy_fig)
 
 # %%    Jitter - varied timer count
@@ -159,10 +159,10 @@ if use_fixed_range:
 
 if output_html:
     jitter_fig.write_html(
-        "results/jitter.html", full_html=output_full_html, include_plotlyjs="cdn"
+        "docs/results/jitter.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
-    jitter_fig.write_image("results/jitter.png")
+    jitter_fig.write_image("docs/results/jitter.png")
 go.FigureWidget(jitter_fig)
 
 
@@ -190,9 +190,9 @@ go.FigureWidget(jitter_fig)
 # )
 
 # if output_html:
-#     jitter_table.write_html("results/jitter_divisor.html", full_html=output_full_html, include_plotlyjs='cdn')
+#     jitter_table.write_html("docs/results/jitter_divisor.html", full_html=output_full_html, include_plotlyjs='cdn')
 # if output_png:
-#     jitter_table.write_image("results/jitter_divisor.png")
+#     jitter_table.write_image("docs/results/jitter_divisor.png")
 # go.FigureWidget(jitter_table)
 
 # %% Plot Drift Simple Percentage Difference Measurements
@@ -346,10 +346,10 @@ if use_fixed_range:
 
 if output_html:
     dss_fig.write_html(
-        "results/drift.html", full_html=output_full_html, include_plotlyjs="cdn"
+        "docs/results/drift.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
-    dss_fig.write_image("results/drift.png")
+    dss_fig.write_image("docs/results/drift.png")
 go.FigureWidget(dss_fig)
 
 
@@ -394,14 +394,14 @@ bres_fig = go.Figure(
     )
 )
 
-bres_fig.update_layout(height=200, margin=dict(autoexpand=False, t=5, l=0, r=0, b=5,))
+bres_fig.update_layout(margin=dict(autoexpand=False, t=5, l=0, r=0, b=5,))
 
 if output_html:
     bres_fig.write_html(
-        "results/overhead_set_remove.html",
+        "docs/results/overhead.html",
         full_html=output_full_html,
         include_plotlyjs="cdn",
     )
 if output_png:
-    bres_fig.write_image("results/overhead.png", height=230)
+    bres_fig.write_image("docs/results/overhead.png", height=230)
 go.FigureWidget(bres_fig)
