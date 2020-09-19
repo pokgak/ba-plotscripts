@@ -41,9 +41,15 @@ accuracy_rows = []
 #         "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property[@name='xtimer-backoff']"
 #     ).get("value")
 # )
-for prop in root.findall("testcase[@name='Measure TIMER_SLEEP Accuracy']//property"):
+for prop in root.findall("testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"):
     name = prop.get("name").split("-")
-    function = "xtimer_usleep" if "xtimer_usleep" in name else "xtimer_set"
+    if "TIMER_SLEEP" in name:
+        function = "TIMER_SLEEP"
+    elif"TIMER_SET" in name:
+        function = "TIMER_SET"
+    else:
+        raise NotImplemented
+
     result_type = name[-1]
     target = literal_eval(name[-2]) / 1000000
 
