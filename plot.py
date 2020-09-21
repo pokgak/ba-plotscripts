@@ -7,14 +7,16 @@ import plotly.graph_objects as go
 from ast import literal_eval
 
 # some configs
-output_html = False
-output_full_html = True
+output_html = True
+output_full_html = False
 output_png = False
 enable_dropdown = False
-use_fixed_range = False
+use_fixed_range = True
 
-file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-# file = "/home/pokgak/git/ba-plotscripts/docs/xtimer-ztimer-comparison/ztimer.xml"
+data = "ztimer"
+
+# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+file = f"/home/pokgak/git/ba-plotscripts/docs/xtimer-ztimer-comparison/{data}.xml"
 root = ET.parse(file).getroot()
 
 # %% Accuracy
@@ -59,38 +61,45 @@ for prop in root.findall(
             }
         )
 
-accuracy = pd.DataFrame(accuracy_rows)
+accuracy = pd.DataFrame([row for row in accuracy_rows if row["result_type"] == "philip"])
 
 ## plot
 
-accuracy_fig = go.Figure()
-for function, result_type in accuracy.groupby(
-    ["function", "result_type"]
-).groups.keys():
-    if result_type == "dut":
-        continue
+accuracy = accuracy.groupby(["function", "target_duration"]).describe()["diff_actual_target"].reset_index()
+accuracy_fig = px.line(accuracy, x="target_duration", y="mean", color="function")
 
-    df = accuracy.query(f"function == '{function}' and result_type == 'philip'")
-    accuracy_fig.add_trace(
-        go.Scatter(
-            x=df["target_duration"], y=df["diff_actual_target"], name=f"{function}",
-        )
-    )
+# accuracy_fig = px.line(accuracy, x="target_duration", y="diff_actual_target", color="function")
+
+
+# accuracy_fig = go.Figure()
+# for function, result_type in accuracy.groupby(
+#     ["function", "result_type"]
+# ).groups.keys():
+#     if result_type == "dut":
+#         continue
+
+#     df = accuracy.query(f"function == '{function}' and result_type == 'philip'")
+#     accuracy_fig.add_trace(
+#         go.Scatter(
+#             x=df["target_duration"], y=df["diff_actual_target"], name=f"{function}",
+#         )
+#     )
 
 accuracy_fig.update_layout(
     dict(
         title="Sleep Accuracy",
         xaxis_title="Target Sleep Duration (s)",
         yaxis_title="Difference Actual - Target Sleep Duration (s)",
-    )
+    ),
+    legend_orientation="h",
 )
 
 if use_fixed_range:
-    accuracy_fig.update_yaxes(range=[0, 80e-6])
+    accuracy_fig.update_yaxes(range=[0, 90e-6])
 
 if output_html:
     accuracy_fig.write_html(
-        "docs/results/accuracy.html", full_html=output_full_html, include_plotlyjs="cdn"
+        f"docs/xtimer-ztimer-comparison/{data}/accuracy.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
     accuracy_fig.write_image("docs/results/accuracy.png")
@@ -127,23 +136,27 @@ for testcase in root.findall(
 
 jitter = pd.DataFrame(jitter)
 
-jitter_fig = px.strip(
-    jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration",
+jitter["sleep_duration_percentage"] = (jitter["sleep_duration"]  / 0.100) * 100
+
+#
+jitter_fig = px.violin(
+    jitter[jitter["divisor"].isnull()], x="timer_count", y="sleep_duration_percentage", color="timer_count", points="all"
 )
 
 jitter_fig.update_layout(
     title="Jitter of periodic 100ms sleep with increasing nr. of background timer",
-    yaxis_title="Actual Sleep Duration [s]",
+    yaxis_title="Actual Sleep Duration / 100ms [%]",
     xaxis_title="Nr. of background timers",
+    legend_orientation="h",
 )
 
 if use_fixed_range:
-    jitter_fig.update_yaxes(range=[0.099, 0.101])
+    jitter_fig.update_yaxes(range=[98.5, 101.5])
     pass
 
 if output_html:
     jitter_fig.write_html(
-        "docs/results/jitter.html", full_html=output_full_html, include_plotlyjs="cdn"
+        f"docs/xtimer-ztimer-comparison/{data}/jitter.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
     jitter_fig.write_image("docs/results/jitter.png")
@@ -254,6 +267,7 @@ dss_fig.update_layout(
     title=f"Drift for Sleep Duration {df['time'].min()} - {df['time'].max()} seconds",
     yaxis_title="Percentage Actual/Given Sleep Duration [%]",
     xaxis_title="Sleep Duration [s]",
+    legend_orientation="h",
 )
 
 # to add max line based on board info
@@ -330,7 +344,7 @@ if use_fixed_range:
 
 if output_html:
     dss_fig.write_html(
-        "docs/results/drift.html", full_html=output_full_html, include_plotlyjs="cdn"
+        f"docs/xtimer-ztimer-comparison/{data}/drift.html", full_html=output_full_html, include_plotlyjs="cdn"
     )
 if output_png:
     dss_fig.write_image("docs/results/drift.png")
@@ -381,11 +395,11 @@ bres_fig = go.Figure(
     )
 )
 
-bres_fig.update_layout(margin=dict(autoexpand=False, t=5, l=0, r=0, b=5,))
+bres_fig.update_layout(height=200, margin=dict(autoexpand=True, t=5, l=0, r=0, b=5,))
 
 if output_html:
     bres_fig.write_html(
-        "docs/results/overhead.html",
+        f"docs/xtimer-ztimer-comparison/{data}/overhead.html",
         full_html=output_full_html,
         include_plotlyjs="cdn",
     )
