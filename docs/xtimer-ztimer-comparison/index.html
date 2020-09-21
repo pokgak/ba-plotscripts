@@ -5,7 +5,7 @@
 <body>
     <div class="mx-auto flex">
         <div class="flex-col mx-5">
-            <h2>XTIMER</h2>
+            <h2 class="underline mb-5">XTIMER</h2>
             <img src="xtimer/overhead.png">
             <img src="xtimer/accuracy.png">
             <img src="xtimer/drift.png">
@@ -13,11 +13,36 @@
         </div>
         <!-- <div id="line" class="w-1"></div> -->
         <div class="flex-col mx-5">
-            <h2>ZTIMER</h2>
+            <h2 class="underline mb-5">ZTIMER</h2>
             <img src="ztimer/overhead.png">
             <img src="ztimer/accuracy.png">
             <img src="ztimer/drift.png">
             <img src="ztimer/jitter.png">
+        </div>
+
+        <div class="flex-col mx-5">
+            <h2 class="underline mb-5">Notes</h2>
+
+            <h3 class="my-3">Overhead</h3>
+            <ul class="text-sm list-disc">
+                <li>10us difference when setting a timer</li>
+                <li>xtimer overhead rose significantly (+38us, +44us) vs (+8us, +20us)</li>
+                <li>when removing a set timer, overall xtimer is faster</li>
+            </ul>
+
+            <h3 class="my-3">Accuracy</h3>
+            <ul class="text-sm list-disc">
+                <li>the "at least" sleep approach is more "true"</li>
+                <li>In general, ztimer has +10us overhead compared to xtimer</li>
+            </ul>
+
+            <h3 class="my-3">Drift</h3>
+            <p class="text-sm">nothing much to say</p>
+
+            <h3 class="my-3">Jitter</h3>
+            <ul class="text-sm list-disc">
+                <li>jitter is way less noticeable in ztimer</li>
+            </ul>
         </div>
     </div>
 </body>
