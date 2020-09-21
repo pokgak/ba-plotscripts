@@ -1,5 +1,3 @@
-# To add a new cell, type '# %%'
-# To add a new markdown cell, type '# %% [markdown]'
 # %%
 import xml.etree.ElementTree as ET
 import pandas as pd
@@ -9,29 +7,15 @@ import plotly.graph_objects as go
 from ast import literal_eval
 
 # some configs
-output_html = True
+output_html = False
 output_full_html = True
 output_png = False
 enable_dropdown = False
 use_fixed_range = False
 
-# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-file = "/home/pokgak/git/ba-plotscripts/docs/xtimer-ztimer-comparison/ztimer.xml"
+file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
+# file = "/home/pokgak/git/ba-plotscripts/docs/xtimer-ztimer-comparison/ztimer.xml"
 root = ET.parse(file).getroot()
-
-# %% Parse GPIO Overhead
-# file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
-# file = f"data/gpio_overhead/xunit.xml"
-# root = ET.parse(file).getroot()
-
-for prop in root.findall(
-    "testcase[@classname='tests_timer_benchmarks.Gpio Overhead']//property"
-):
-    if prop.get("name") != "gpio-overhead":
-        raise RuntimeError("Other property than 'gpio-overhead' found")
-
-    gpio_overhead = pd.Series(literal_eval(prop.get("value")))
-    print(gpio_overhead.describe())
 
 # %% Accuracy
 # file = "/home/pokgak/git/RobotFW-tests/build/robot/samr21-xpro/tests_timer_benchmarks/xunit.xml"
@@ -360,10 +344,12 @@ go.FigureWidget(dss_fig)
 # root = ET.parse(file).getroot()
 
 bres = {
+    "row": [],  # for the correct row order in the table
     "test": [],
     "time": [],
 }
 
+# rest
 tests = [
     t
     for t in root.findall(
@@ -374,15 +360,16 @@ tests = [
 for t in tests:
     values = literal_eval(t.get("value"))
     bres["time"].extend(values)
-    bres["test"].extend([" ".join(t.get("name").split("-")[1:])] * len(values))
+    name = t.get("name").split("-")
+    bres["row"].extend([name[1]] * len(values))
+    bres["test"].extend([" ".join(name[2:])] * len(values))
 
 bres = pd.DataFrame(bres)
 
 ## plot
 
-bresgroup = bres.groupby("test")["time"].describe().reset_index()
 columns = ["test", "mean", "std", "min", "max"]
-
+bresgroup = bres.groupby(["row", "test"])["time"].describe().reset_index()
 bres_fig = go.Figure(
     go.Table(
         header=dict(values=columns),
