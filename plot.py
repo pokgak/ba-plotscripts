@@ -75,6 +75,10 @@ class FigurePlotter:
                 yaxis_title="Difference Actual - Target Sleep Duration (s)",
             ),
             legend_orientation="h",
+            legend_yanchor="bottom",
+            legend_y=-0.25,
+            legend_xanchor="center",
+            legend_x=0.5,
         )
 
         fig.update_yaxes(range=[5e-6, 80e-6])
