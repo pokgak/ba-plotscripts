@@ -11,10 +11,11 @@ import plotly.graph_objects as go
 
 
 class FigurePlotter:
-    def __init__(self, input, outdir, ci_build):
-        self.root = ET.parse(input).getroot()
-        self.outdir = outdir
-        if ci_build:
+    def __init__(self, **kwargs):
+        self.root = ET.parse(kwargs["input"]).getroot()
+        self.outdir = kwargs["outdir"]
+        self.save_png = kwargs["save_png"]
+        if kwargs["for_ci"]:
             self.plotlyjs = False
             self.full_html = False
         else:
@@ -76,11 +77,18 @@ class FigurePlotter:
             legend_orientation="h",
         )
 
+        fig.update_yaxes(range=[5e-6, 80e-6])
+
         fig.write_html(
-            f"{self.outdir}/{filename}",
+            f"{self.outdir}/{filename}.html",
             full_html=self.full_html,
             include_plotlyjs=self.plotlyjs,
         )
+
+        if self.save_png:
+            fig.write_image(
+                f"{self.outdir}/{filename}.png",
+            )
 
     def plot_jitter(self, filename):
         jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
@@ -124,13 +132,24 @@ class FigurePlotter:
             yaxis_title="Actual Sleep Duration / 100ms [%]",
             xaxis_title="Nr. of background timers",
             legend_orientation="h",
+            legend_yanchor="bottom",
+            legend_y=-0.25,
+            legend_xanchor="center",
+            legend_x=0.5,
         )
 
+        fig.update_yaxes(range=[98.75, 101.25])
+
         fig.write_html(
-            f"{self.outdir}/{filename}",
+            f"{self.outdir}/{filename}.html",
             full_html=self.full_html,
             include_plotlyjs=self.plotlyjs,
         )
+
+        if self.save_png:
+            fig.write_image(
+                f"{self.outdir}/{filename}.png",
+            )
 
     def plot_drift_diff(self, filename):
         # absolute = go.Box(x=df["time"], y=df["diff_dut_philip"], visible=False)
@@ -196,6 +215,7 @@ class FigurePlotter:
             yaxis_title="Percentage Actual/Given Sleep Duration [%]",
             xaxis_title="Sleep Duration [s]",
             legend_orientation="h",
+            legend_y=1.0,
         )
 
         # to add max line based on board info
@@ -209,10 +229,15 @@ class FigurePlotter:
         # ])
 
         fig.write_html(
-            f"{self.outdir}/{filename}",
+            f"{self.outdir}/{filename}.html",
             full_html=self.full_html,
             include_plotlyjs=self.plotlyjs,
         )
+
+        if self.save_png:
+            fig.write_image(
+                f"{self.outdir}/{filename}.png",
+            )
 
     def plot_overhead(self, filename):
         bres = {"row": [], "test": [], "time": []}
@@ -251,17 +276,22 @@ class FigurePlotter:
             margin=dict(
                 autoexpand=True,
                 t=5,
-                l=0,
-                r=0,
+                l=5,
+                r=5,
                 b=5,
             ),
         )
 
         fig.write_html(
-            f"{self.outdir}/{filename}",
+            f"{self.outdir}/{filename}.html",
             full_html=self.full_html,
             include_plotlyjs=self.plotlyjs,
         )
+
+        if self.save_png:
+            fig.write_image(
+                f"{self.outdir}/{filename}.png",
+            )
 
 
 if __name__ == "__main__":
@@ -274,6 +304,9 @@ if __name__ == "__main__":
         "--outdir", help="output directory to write plots to", default="."
     )
     parser.add_argument(
+        "--save-png", help="save a PNG copy of the diagram", action="store_true"
+    )
+    parser.add_argument(
         "--for-ci",
         help="configure output for ci (this will exclude plotly.js from output files)",
         action="store_true",
@@ -284,9 +317,9 @@ if __name__ == "__main__":
     if not os.path.exists(args.outdir):
         os.makedirs(args.outdir)
 
-    plotter = FigurePlotter(args.input, args.outdir, args.for_ci)
-    plotter.plot_overhead("overhead.html")
-    plotter.plot_accuracy("accuracy.html")
-    plotter.plot_jitter("jitter.html")
-    plotter.plot_drift_percentage("drift_percentage.html")
-    # plotter.plot_drift_diff("drift_diff.html")
+    plotter = FigurePlotter(**vars(args))
+    plotter.plot_overhead("overhead")
+    plotter.plot_accuracy("accuracy")
+    plotter.plot_jitter("jitter")
+    plotter.plot_drift_percentage("drift_percentage")
+    # plotter.plot_drift_diff("drift_diff")
