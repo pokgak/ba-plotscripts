@@ -1,4 +1,5 @@
-# %%
+#!/usr/bin/env python3
+
 import os
 import argparse
 from ast import literal_eval
@@ -167,7 +168,11 @@ class FigurePlotter:
                         e for e in dss if e["time"] == key and e["repeat"] == repeat_n
                     )
                     row.update(
-                        {"time": key, "repeat": repeat_n, value_source: value,}
+                        {
+                            "time": key,
+                            "repeat": repeat_n,
+                            value_source: value,
+                        }
                     )
                 except StopIteration:
                     row = {
@@ -241,7 +246,16 @@ class FigurePlotter:
             )
         )
 
-        fig.update_layout(height=200, margin=dict(autoexpand=True, t=5, l=0, r=0, b=5,))
+        fig.update_layout(
+            height=200,
+            margin=dict(
+                autoexpand=True,
+                t=5,
+                l=0,
+                r=0,
+                b=5,
+            ),
+        )
 
         fig.write_html(
             f"{self.outdir}/{filename}",
