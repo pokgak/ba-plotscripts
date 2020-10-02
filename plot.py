@@ -2,6 +2,7 @@
 
 import os
 import argparse
+import warnings
 from ast import literal_eval
 
 import xml.etree.ElementTree as ET
@@ -22,11 +23,16 @@ class FigurePlotter:
             self.plotlyjs = "cdn"
             self.full_html = True
 
+        version = self.root.find(".//property[@name='timer-version']")
+        if version is None:
+            raise RuntimeError("timer version not found")
+        self.timer_version = version.get("value")
+
     def plot_accuracy(self, filename):
         # parse
         accuracy_rows = []
         for prop in self.root.findall(
-            "testcase[@classname='tests_timer_benchmarks.Sleep Accuracy']//property"
+            f"testcase[@classname='tests_{self.timer_version}_benchmarks.Sleep Accuracy']//property"
         ):
             name = prop.get("name").split("-")
             if "TIMER_SLEEP" in name:
@@ -56,17 +62,19 @@ class FigurePlotter:
                     }
                 )
 
-        accuracy = pd.DataFrame(
+        df = pd.DataFrame(
             [row for row in accuracy_rows if row["result_type"] == "philip"]
         )
+        if df.empty:
+            return
 
         # plot
-        accuracy = (
-            accuracy.groupby(["function", "target_duration"])
+        df = (
+            df.groupby(["function", "target_duration"])
             .describe()["diff_actual_target"]
             .reset_index()
         )
-        fig = px.line(accuracy, x="target_duration", y="mean", color="function")
+        fig = px.line(df, x="target_duration", y="mean", color="function")
 
         fig.update_layout(
             dict(
@@ -81,7 +89,7 @@ class FigurePlotter:
             legend_x=0.5,
         )
 
-        fig.update_yaxes(range=[5e-6, 80e-6])
+        fig.update_yaxes(range=[5e-6, 65e-6])
 
         fig.write_html(
             f"{self.outdir}/{filename}.html",
@@ -95,9 +103,9 @@ class FigurePlotter:
             )
 
     def plot_jitter(self, filename):
-        jitter = {"timer_count": [], "sleep_duration": [], "divisor": []}
+        df = {"timer_count": [], "sleep_duration": [], "divisor": []}
         for testcase in self.root.findall(
-            "testcase[@classname='tests_timer_benchmarks.Sleep Jitter']"
+            f"testcase[@classname='tests_{self.timer_version}_benchmarks.Sleep Jitter']"
         ):
             timer_count = len(
                 literal_eval(
@@ -111,20 +119,22 @@ class FigurePlotter:
                 testcase.find("properties/property[@name='trace']").get("value")
             )
 
-            jitter["sleep_duration"].extend(traces)
-            jitter["timer_count"].extend([str(timer_count)] * len(traces))
+            df["sleep_duration"].extend(traces)
+            df["timer_count"].extend([str(timer_count)] * len(traces))
             if "Divisor" in testcase.get("name"):
-                jitter["divisor"].extend([divisor] * len(traces))
+                df["divisor"].extend([divisor] * len(traces))
             else:
                 # divisor None means = 1, not used when varying timer count
-                jitter["divisor"].extend([None] * len(traces))
+                df["divisor"].extend([None] * len(traces))
 
-        jitter = pd.DataFrame(jitter)
+        df = pd.DataFrame(df)
+        if df.empty:
+            return
 
-        jitter["sleep_duration_percentage"] = (jitter["sleep_duration"] / 0.100) * 100
+        df["sleep_duration_percentage"] = (df["sleep_duration"] / 0.100) * 100
 
         fig = px.violin(
-            jitter[jitter["divisor"].isnull()],
+            df[df["divisor"].isnull()],
             x="timer_count",
             y="sleep_duration_percentage",
             color="timer_count",
@@ -155,19 +165,10 @@ class FigurePlotter:
                 f"{self.outdir}/{filename}.png",
             )
 
-    def plot_drift_diff(self, filename):
-        # absolute = go.Box(x=df["time"], y=df["diff_dut_philip"], visible=False)
-        # absolute_line = go.Scatter(
-        #     x=df["time"].unique(),
-        #     y=df.groupby("time").mean()["diff_dut_philip"].array,
-        #     visible=False,
-        # )
-        pass
-
-    def plot_drift_percentage(self, filename):
+    def get_drift_df(self):
         dss = list()
         for testcase in self.root.findall(
-            "testcase[@classname='tests_timer_benchmarks.Drift']"
+            f"testcase[@classname='tests_{self.timer_version}_benchmarks.Drift']"
         ):
 
             for prop in testcase.findall(".//property"):
@@ -191,11 +192,7 @@ class FigurePlotter:
                         e for e in dss if e["time"] == key and e["repeat"] == repeat_n
                     )
                     row.update(
-                        {
-                            "time": key,
-                            "repeat": repeat_n,
-                            value_source: value,
-                        }
+                        {"time": key, "repeat": repeat_n, value_source: value,}
                     )
                 except StopIteration:
                     row = {
@@ -211,15 +208,39 @@ class FigurePlotter:
         df["diff_dut_philip"] = df["dut"] - df["philip"]
         df["diff_percentage"] = df["diff_dut_philip"] / df["dut"] * 100
         df.reset_index(["time", "repeat"], inplace=True)
+        return df
 
-        fig = px.box(df, x="time", y="diff_percentage")
+    def plot_drift_diff(self, filename):
+        df = self.get_drift_df()
+        if df.empty:
+            return
+
+        fig = px.box(df, x="time", y="diff_dut_philip", color="time")
+        fig.add_trace(
+            go.Scatter(
+                x=df["time"].unique(),
+                y=df.groupby("time").mean()["diff_dut_philip"].array,
+            )
+        )
+
+        fig.write_html(
+            f"{self.outdir}/{filename}",
+            full_html=self.full_html,
+            include_plotlyjs=self.plotlyjs,
+        )
+
+    def plot_drift_percentage(self, filename):
+        df = self.get_drift_df()
+        if df.empty:
+            return
+
+        fig = px.box(df, x="time", y="diff_percentage", color="time")
 
         fig.update_layout(
             title=f"Drift for Sleep Duration {df['time'].min()} - {df['time'].max()} seconds",
             yaxis_title="Percentage Actual/Given Sleep Duration [%]",
             xaxis_title="Sleep Duration [s]",
             legend_orientation="h",
-            legend_y=1.0,
         )
 
         # to add max line based on board info
@@ -249,7 +270,7 @@ class FigurePlotter:
         tests = [
             t
             for t in self.root.findall(
-                './/testcase[@classname="tests_timer_benchmarks.Timer Overhead"]//property'
+                f"testcase[@classname='tests_{self.timer_version}_benchmarks.Timer Overhead']//property"
             )
             if "overhead" in t.get("name")
         ]
@@ -261,6 +282,8 @@ class FigurePlotter:
             bres["test"].extend([" ".join(name[2:])] * len(values))
 
         df = pd.DataFrame(bres)
+        if df.empty:
+            return
 
         columns = ["test", "mean", "std", "min", "max"]
         grouped = df.groupby(["row", "test"])["time"].describe().reset_index()
@@ -311,6 +334,18 @@ if __name__ == "__main__":
         "--save-png", help="save a PNG copy of the diagram", action="store_true"
     )
     parser.add_argument(
+        "--skip-overhead", help="skip timer overhead benchmark", action="store_true"
+    )
+    parser.add_argument(
+        "--skip-accuracy", help="skip sleep accuracy benchmark", action="store_true"
+    )
+    parser.add_argument(
+        "--skip-jitter", help="skip sleep jitter benchmark", action="store_true"
+    )
+    parser.add_argument(
+        "--skip-drift", help="skip sleep drift benchmark", action="store_true"
+    )
+    parser.add_argument(
         "--for-ci",
         help="configure output for ci (this will exclude plotly.js from output files)",
         action="store_true",
@@ -322,8 +357,12 @@ if __name__ == "__main__":
         os.makedirs(args.outdir)
 
     plotter = FigurePlotter(**vars(args))
-    plotter.plot_overhead("overhead")
-    plotter.plot_accuracy("accuracy")
-    plotter.plot_jitter("jitter")
-    plotter.plot_drift_percentage("drift_percentage")
-    # plotter.plot_drift_diff("drift_diff")
+    if not args.skip_overhead:
+        plotter.plot_overhead("overhead")
+    if not args.skip_accuracy:
+        plotter.plot_accuracy("accuracy")
+    if not args.skip_jitter:
+        plotter.plot_jitter("jitter")
+    if not args.skip_drift:
+        plotter.plot_drift_percentage("drift_percentage")
+        # plotter.plot_drift_diff("drift_diff")
