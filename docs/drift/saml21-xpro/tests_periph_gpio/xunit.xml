@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tests_periph_gpio" tests="15" errors="0" failures="15" skipped="0" time="39.816">
+<testcase classname="tests_periph_gpio.Periph Gpio Base" name="Verify GPIO_0" time="0.006">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Base" name="Verify GPIO_1" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Base" name="Verify GPIO_2" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify UART_CTS" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify UART_RTS" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify UART_RX" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify UART_TX" time="0.004">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify SPI_NSS" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify SPI_SCK" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify SPI_MISO" time="0.007">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify SPI_MOSI" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify I2C_SCL" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify I2C_SDA" time="0.004">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify DAC" time="0.006">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+<testcase classname="tests_periph_gpio.Periph Gpio Others" name="Verify ADC" time="0.005">
+<failure message="Parent suite setup failed:&#10;'Timeout' does not contain 'Success'" type="AssertionError"></failure>
+</testcase>
+</testsuite>

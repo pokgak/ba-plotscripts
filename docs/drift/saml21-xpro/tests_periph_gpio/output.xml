@@ -1,0 +1,2826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2 (Python 3.7.3 on linux)" generated="20200514 10:29:48.105" rpa="false">
+<suite id="s1" name="tests_periph_gpio">
+<suite id="s1-s1" name="Periph Gpio Base" source="/home/pi/.tmp/RobotFW-tests/tests/periph_gpio/tests/01__periph_gpio_base.robot">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PHILIP Reset</arg>
+<arg>RIOT Reset</arg>
+<arg>API Firmware Should Match</arg>
+</arguments>
+<kw name="PHILIP Reset" library="philip.keywords">
+<doc>Reset the PHiLIP MCU</doc>
+<kw name="Reset Mcu" library="PHILIP">
+<doc>Resets the device</doc>
+<status status="PASS" starttime="20200514 10:29:49.367" endtime="20200514 10:29:49.694"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:49.364" endtime="20200514 10:29:49.696"></status>
+</kw>
+<kw name="RIOT Reset" library="riot_base.keywords">
+<doc>Reset the test application</doc>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>make reset</arg>
+<arg>shell=True</arg>
+<arg>cwd=%{APPDIR}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:49.704" level="INFO">Starting process:
+make reset</msg>
+<msg timestamp="20200514 10:29:49.719" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20200514 10:29:51.567" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20200514 10:29:49.700" endtime="20200514 10:29:51.568"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>%{HIL_RESET_WAIT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:51.574" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20200514 10:29:51.570" endtime="20200514 10:29:51.574"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:49.698" endtime="20200514 10:29:51.576"></status>
+</kw>
+<kw name="API Firmware Should Match" library="api_shell.keywords">
+<doc>Verify that the DUT runs the required API test firmware</doc>
+<kw name="API Call Repeat on Timeout" library="api_shell.keywords">
+<doc>Repeats the given API ``call`` up to 5 times on timeout.</doc>
+<arguments>
+<arg>Get Metadata</arg>
+</arguments>
+<kw name="${i} IN RANGE [ 0 | 16 ]" type="for">
+<msg timestamp="20200514 10:29:51.586" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: For loop header ':FOR' is deprecated. Use 'FOR' instead.</msg>
+<msg timestamp="20200514 10:29:51.588" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: Marking for loop body with '\' is deprecated. Remove markers and use 'END' instead.</msg>
+<kw name="${i} = 0" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:51.611" endtime="20200514 10:29:52.620"></status>
+</kw>
+<msg timestamp="20200514 10:29:52.622" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:51.608" endtime="20200514 10:29:52.622"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:52.628" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:52.624" endtime="20200514 10:29:52.629"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:52.630" endtime="20200514 10:29:52.634"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:51.601" endtime="20200514 10:29:52.636"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:51.596" endtime="20200514 10:29:52.637"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:51.593" endtime="20200514 10:29:52.638"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:52.639" endtime="20200514 10:29:52.643"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:51.591" endtime="20200514 10:29:52.643"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:52.664" endtime="20200514 10:29:53.671"></status>
+</kw>
+<msg timestamp="20200514 10:29:53.672" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:52.660" endtime="20200514 10:29:53.672"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:53.678" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:53.674" endtime="20200514 10:29:53.679"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:53.680" endtime="20200514 10:29:53.685"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:52.654" endtime="20200514 10:29:53.686"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:52.649" endtime="20200514 10:29:53.688"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:52.646" endtime="20200514 10:29:53.689"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:53.691" endtime="20200514 10:29:53.694"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:52.644" endtime="20200514 10:29:53.695"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:53.715" endtime="20200514 10:29:54.722"></status>
+</kw>
+<msg timestamp="20200514 10:29:54.723" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:53.712" endtime="20200514 10:29:54.723"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:54.729" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:54.725" endtime="20200514 10:29:54.729"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:54.731" endtime="20200514 10:29:54.736"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:53.705" endtime="20200514 10:29:54.737"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:53.700" endtime="20200514 10:29:54.739"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:53.697" endtime="20200514 10:29:54.739"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:54.741" endtime="20200514 10:29:54.744"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:53.696" endtime="20200514 10:29:54.745"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:54.765" endtime="20200514 10:29:55.772"></status>
+</kw>
+<msg timestamp="20200514 10:29:55.773" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:54.762" endtime="20200514 10:29:55.774"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:55.779" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:55.776" endtime="20200514 10:29:55.780"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:55.782" endtime="20200514 10:29:55.785"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:54.756" endtime="20200514 10:29:55.787"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:54.750" endtime="20200514 10:29:55.788"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:54.747" endtime="20200514 10:29:55.789"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:55.791" endtime="20200514 10:29:55.794"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:54.746" endtime="20200514 10:29:55.795"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:55.815" endtime="20200514 10:29:56.822"></status>
+</kw>
+<msg timestamp="20200514 10:29:56.823" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:55.811" endtime="20200514 10:29:56.823"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:56.829" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:56.825" endtime="20200514 10:29:56.830"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:56.832" endtime="20200514 10:29:56.836"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:55.805" endtime="20200514 10:29:56.837"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:55.800" endtime="20200514 10:29:56.838"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:55.797" endtime="20200514 10:29:56.839"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:56.841" endtime="20200514 10:29:56.844"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:55.795" endtime="20200514 10:29:56.845"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:56.865" endtime="20200514 10:29:57.872"></status>
+</kw>
+<msg timestamp="20200514 10:29:57.873" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:56.861" endtime="20200514 10:29:57.873"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:57.879" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:57.875" endtime="20200514 10:29:57.880"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:57.881" endtime="20200514 10:29:57.886"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:56.855" endtime="20200514 10:29:57.888"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:56.850" endtime="20200514 10:29:57.889"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:56.847" endtime="20200514 10:29:57.890"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:57.892" endtime="20200514 10:29:57.895"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:56.845" endtime="20200514 10:29:57.895"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:57.916" endtime="20200514 10:29:58.922"></status>
+</kw>
+<msg timestamp="20200514 10:29:58.924" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:57.912" endtime="20200514 10:29:58.924"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:58.930" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:58.926" endtime="20200514 10:29:58.930"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:58.932" endtime="20200514 10:29:58.937"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:57.906" endtime="20200514 10:29:58.938"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:57.900" endtime="20200514 10:29:58.940"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:57.898" endtime="20200514 10:29:58.940"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:58.942" endtime="20200514 10:29:58.945"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:57.896" endtime="20200514 10:29:58.946"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:58.966" endtime="20200514 10:29:59.978"></status>
+</kw>
+<msg timestamp="20200514 10:29:59.979" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:58.962" endtime="20200514 10:29:59.979"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:29:59.985" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:29:59.981" endtime="20200514 10:29:59.986"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:59.988" endtime="20200514 10:29:59.991"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:58.956" endtime="20200514 10:29:59.993"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:58.951" endtime="20200514 10:29:59.994"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:58.948" endtime="20200514 10:29:59.995"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:29:59.997" endtime="20200514 10:30:00.000"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:58.947" endtime="20200514 10:30:00.000"></status>
+</kw>
+<kw name="${i} = 8" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:00.021" endtime="20200514 10:30:01.028"></status>
+</kw>
+<msg timestamp="20200514 10:30:01.029" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:00.017" endtime="20200514 10:30:01.029"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:01.035" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:01.031" endtime="20200514 10:30:01.036"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:01.037" endtime="20200514 10:30:01.041"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:00.011" endtime="20200514 10:30:01.042"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:00.006" endtime="20200514 10:30:01.044"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:00.003" endtime="20200514 10:30:01.044"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:01.046" endtime="20200514 10:30:01.049"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:00.001" endtime="20200514 10:30:01.050"></status>
+</kw>
+<kw name="${i} = 9" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:01.070" endtime="20200514 10:30:02.077"></status>
+</kw>
+<msg timestamp="20200514 10:30:02.078" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:01.066" endtime="20200514 10:30:02.078"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:02.084" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:02.080" endtime="20200514 10:30:02.085"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:02.086" endtime="20200514 10:30:02.090"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:01.060" endtime="20200514 10:30:02.092"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:01.055" endtime="20200514 10:30:02.093"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:01.052" endtime="20200514 10:30:02.094"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:02.095" endtime="20200514 10:30:02.099"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:01.050" endtime="20200514 10:30:02.099"></status>
+</kw>
+<kw name="${i} = 10" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:02.122" endtime="20200514 10:30:03.129"></status>
+</kw>
+<msg timestamp="20200514 10:30:03.130" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:02.118" endtime="20200514 10:30:03.130"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:03.137" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:03.132" endtime="20200514 10:30:03.138"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:03.139" endtime="20200514 10:30:03.143"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:02.112" endtime="20200514 10:30:03.144"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:02.104" endtime="20200514 10:30:03.146"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:02.102" endtime="20200514 10:30:03.146"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:03.148" endtime="20200514 10:30:03.152"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:02.100" endtime="20200514 10:30:03.152"></status>
+</kw>
+<kw name="${i} = 11" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:03.172" endtime="20200514 10:30:04.179"></status>
+</kw>
+<msg timestamp="20200514 10:30:04.180" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:03.168" endtime="20200514 10:30:04.180"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:04.186" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:04.182" endtime="20200514 10:30:04.187"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:04.189" endtime="20200514 10:30:04.192"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:03.162" endtime="20200514 10:30:04.194"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:03.157" endtime="20200514 10:30:04.195"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:03.155" endtime="20200514 10:30:04.196"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:04.198" endtime="20200514 10:30:04.201"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:03.153" endtime="20200514 10:30:04.201"></status>
+</kw>
+<kw name="${i} = 12" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:04.221" endtime="20200514 10:30:05.228"></status>
+</kw>
+<msg timestamp="20200514 10:30:05.229" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:04.218" endtime="20200514 10:30:05.229"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:05.235" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:05.231" endtime="20200514 10:30:05.236"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:05.237" endtime="20200514 10:30:05.241"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:04.212" endtime="20200514 10:30:05.243"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:04.206" endtime="20200514 10:30:05.244"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:04.204" endtime="20200514 10:30:05.245"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:05.246" endtime="20200514 10:30:05.250"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:04.202" endtime="20200514 10:30:05.251"></status>
+</kw>
+<kw name="${i} = 13" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:05.271" endtime="20200514 10:30:06.278"></status>
+</kw>
+<msg timestamp="20200514 10:30:06.279" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:05.268" endtime="20200514 10:30:06.280"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:06.286" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:06.282" endtime="20200514 10:30:06.286"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:06.288" endtime="20200514 10:30:06.291"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:05.262" endtime="20200514 10:30:06.293"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:05.256" endtime="20200514 10:30:06.294"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:05.254" endtime="20200514 10:30:06.295"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:06.297" endtime="20200514 10:30:06.300"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:05.252" endtime="20200514 10:30:06.300"></status>
+</kw>
+<kw name="${i} = 14" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:06.322" endtime="20200514 10:30:07.329"></status>
+</kw>
+<msg timestamp="20200514 10:30:07.330" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:06.317" endtime="20200514 10:30:07.331"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:07.337" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:07.334" endtime="20200514 10:30:07.338"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:07.340" endtime="20200514 10:30:07.343"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:06.311" endtime="20200514 10:30:07.345"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:06.306" endtime="20200514 10:30:07.346"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:06.303" endtime="20200514 10:30:07.347"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:07.349" endtime="20200514 10:30:07.352"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:06.301" endtime="20200514 10:30:07.352"></status>
+</kw>
+<kw name="${i} = 15" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:07.372" endtime="20200514 10:30:08.379"></status>
+</kw>
+<msg timestamp="20200514 10:30:08.380" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:07.369" endtime="20200514 10:30:08.381"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:08.387" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:08.383" endtime="20200514 10:30:08.387"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:08.389" endtime="20200514 10:30:08.393"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:07.363" endtime="20200514 10:30:08.395"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:07.358" endtime="20200514 10:30:08.396"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:07.355" endtime="20200514 10:30:08.397"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:08.399" endtime="20200514 10:30:08.402"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:07.353" endtime="20200514 10:30:08.402"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:29:51.586" endtime="20200514 10:30:08.403"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>Success</arg>
+</arguments>
+<msg timestamp="20200514 10:30:08.408" level="FAIL">'Timeout' does not contain 'Success'</msg>
+<status status="FAIL" starttime="20200514 10:30:08.404" endtime="20200514 10:30:08.409"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:29:51.582" endtime="20200514 10:30:08.411"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:29:51.577" endtime="20200514 10:30:08.413"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:29:49.360" endtime="20200514 10:30:08.413"></status>
+</kw>
+<test id="s1-s1-t1" name="Verify GPIO_0">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:08.414" endtime="20200514 10:30:08.420" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s1-t2" name="Verify GPIO_1">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:08.426" endtime="20200514 10:30:08.431" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s1-t3" name="Verify GPIO_2">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:08.437" endtime="20200514 10:30:08.442" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<doc>Verify if board to philip wiring is correct.</doc>
+<status status="FAIL" starttime="20200514 10:29:48.369" endtime="20200514 10:30:08.452">Suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</suite>
+<suite id="s1-s2" name="Periph Gpio Others" source="/home/pi/.tmp/RobotFW-tests/tests/periph_gpio/tests/02__periph_gpio_others.robot">
+<kw name="Run Keywords" library="BuiltIn" type="setup">
+<doc>Executes all the given keywords in a sequence.</doc>
+<arguments>
+<arg>PHILIP Reset</arg>
+<arg>RIOT Reset</arg>
+<arg>API Firmware Should Match</arg>
+</arguments>
+<kw name="PHILIP Reset" library="philip.keywords">
+<doc>Reset the PHiLIP MCU</doc>
+<kw name="Reset Mcu" library="PHILIP">
+<doc>Resets the device</doc>
+<status status="PASS" starttime="20200514 10:30:08.589" endtime="20200514 10:30:08.918"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:08.587" endtime="20200514 10:30:08.919"></status>
+</kw>
+<kw name="RIOT Reset" library="riot_base.keywords">
+<doc>Reset the test application</doc>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>make reset</arg>
+<arg>shell=True</arg>
+<arg>cwd=%{APPDIR}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:08.927" level="INFO">Starting process:
+make reset</msg>
+<msg timestamp="20200514 10:30:08.942" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20200514 10:30:10.811" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20200514 10:30:08.924" endtime="20200514 10:30:10.812"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>%{HIL_RESET_WAIT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:10.817" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20200514 10:30:10.814" endtime="20200514 10:30:10.818"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:08.921" endtime="20200514 10:30:10.820"></status>
+</kw>
+<kw name="API Firmware Should Match" library="api_shell.keywords">
+<doc>Verify that the DUT runs the required API test firmware</doc>
+<kw name="API Call Repeat on Timeout" library="api_shell.keywords">
+<doc>Repeats the given API ``call`` up to 5 times on timeout.</doc>
+<arguments>
+<arg>Get Metadata</arg>
+</arguments>
+<kw name="${i} IN RANGE [ 0 | 16 ]" type="for">
+<msg timestamp="20200514 10:30:10.828" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: For loop header ':FOR' is deprecated. Use 'FOR' instead.</msg>
+<msg timestamp="20200514 10:30:10.830" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: Marking for loop body with '\' is deprecated. Remove markers and use 'END' instead.</msg>
+<kw name="${i} = 0" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:10.853" endtime="20200514 10:30:11.923"></status>
+</kw>
+<msg timestamp="20200514 10:30:11.924" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:10.850" endtime="20200514 10:30:11.925"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:11.930" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:11.926" endtime="20200514 10:30:11.931"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:11.934" endtime="20200514 10:30:11.938"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:10.843" endtime="20200514 10:30:11.939"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:10.838" endtime="20200514 10:30:11.941"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:10.835" endtime="20200514 10:30:11.941"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:11.944" endtime="20200514 10:30:11.947"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:10.833" endtime="20200514 10:30:11.948"></status>
+</kw>
+<kw name="${i} = 1" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:11.968" endtime="20200514 10:30:12.975"></status>
+</kw>
+<msg timestamp="20200514 10:30:12.976" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:11.965" endtime="20200514 10:30:12.976"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:12.982" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:12.978" endtime="20200514 10:30:12.983"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:12.984" endtime="20200514 10:30:12.988"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:11.958" endtime="20200514 10:30:12.989"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:11.953" endtime="20200514 10:30:12.991"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:11.950" endtime="20200514 10:30:12.991"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:12.993" endtime="20200514 10:30:12.997"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:11.949" endtime="20200514 10:30:12.997"></status>
+</kw>
+<kw name="${i} = 2" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:13.017" endtime="20200514 10:30:14.024"></status>
+</kw>
+<msg timestamp="20200514 10:30:14.025" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:13.014" endtime="20200514 10:30:14.026"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:14.031" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:14.027" endtime="20200514 10:30:14.032"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:14.034" endtime="20200514 10:30:14.037"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:13.008" endtime="20200514 10:30:14.039"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:13.003" endtime="20200514 10:30:14.040"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:13.000" endtime="20200514 10:30:14.041"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:14.043" endtime="20200514 10:30:14.046"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:12.998" endtime="20200514 10:30:14.047"></status>
+</kw>
+<kw name="${i} = 3" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:14.067" endtime="20200514 10:30:15.074"></status>
+</kw>
+<msg timestamp="20200514 10:30:15.075" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:14.064" endtime="20200514 10:30:15.075"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:15.081" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:15.077" endtime="20200514 10:30:15.082"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:15.084" endtime="20200514 10:30:15.088"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:14.057" endtime="20200514 10:30:15.090"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:14.052" endtime="20200514 10:30:15.092"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:14.049" endtime="20200514 10:30:15.092"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:15.094" endtime="20200514 10:30:15.097"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:14.048" endtime="20200514 10:30:15.098"></status>
+</kw>
+<kw name="${i} = 4" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:15.119" endtime="20200514 10:30:16.126"></status>
+</kw>
+<msg timestamp="20200514 10:30:16.128" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:15.116" endtime="20200514 10:30:16.128"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:16.135" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:16.130" endtime="20200514 10:30:16.136"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:16.137" endtime="20200514 10:30:16.141"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:15.108" endtime="20200514 10:30:16.142"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:15.103" endtime="20200514 10:30:16.144"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:15.100" endtime="20200514 10:30:16.144"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:16.146" endtime="20200514 10:30:16.149"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:15.099" endtime="20200514 10:30:16.150"></status>
+</kw>
+<kw name="${i} = 5" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:16.170" endtime="20200514 10:30:17.177"></status>
+</kw>
+<msg timestamp="20200514 10:30:17.178" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:16.167" endtime="20200514 10:30:17.178"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:17.184" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:17.180" endtime="20200514 10:30:17.185"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:17.186" endtime="20200514 10:30:17.190"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:16.160" endtime="20200514 10:30:17.192"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:16.155" endtime="20200514 10:30:17.193"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:16.153" endtime="20200514 10:30:17.194"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:17.195" endtime="20200514 10:30:17.199"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:16.151" endtime="20200514 10:30:17.199"></status>
+</kw>
+<kw name="${i} = 6" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:17.219" endtime="20200514 10:30:18.227"></status>
+</kw>
+<msg timestamp="20200514 10:30:18.228" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:17.216" endtime="20200514 10:30:18.229"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:18.234" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:18.230" endtime="20200514 10:30:18.235"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:18.237" endtime="20200514 10:30:18.240"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:17.210" endtime="20200514 10:30:18.242"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:17.205" endtime="20200514 10:30:18.243"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:17.202" endtime="20200514 10:30:18.244"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:18.246" endtime="20200514 10:30:18.249"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:17.200" endtime="20200514 10:30:18.249"></status>
+</kw>
+<kw name="${i} = 7" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:18.270" endtime="20200514 10:30:19.277"></status>
+</kw>
+<msg timestamp="20200514 10:30:19.278" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:18.266" endtime="20200514 10:30:19.278"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:19.284" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:19.280" endtime="20200514 10:30:19.285"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:19.286" endtime="20200514 10:30:19.290"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:18.260" endtime="20200514 10:30:19.292"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:18.255" endtime="20200514 10:30:19.293"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:18.252" endtime="20200514 10:30:19.294"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:19.295" endtime="20200514 10:30:19.299"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:18.250" endtime="20200514 10:30:19.299"></status>
+</kw>
+<kw name="${i} = 8" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:19.319" endtime="20200514 10:30:20.328"></status>
+</kw>
+<msg timestamp="20200514 10:30:20.329" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:19.316" endtime="20200514 10:30:20.330"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:20.337" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:20.332" endtime="20200514 10:30:20.337"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:20.339" endtime="20200514 10:30:20.343"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:19.310" endtime="20200514 10:30:20.344"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:19.304" endtime="20200514 10:30:20.346"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:19.302" endtime="20200514 10:30:20.346"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:20.348" endtime="20200514 10:30:20.351"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:19.300" endtime="20200514 10:30:20.352"></status>
+</kw>
+<kw name="${i} = 9" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:20.373" endtime="20200514 10:30:21.380"></status>
+</kw>
+<msg timestamp="20200514 10:30:21.381" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:20.369" endtime="20200514 10:30:21.382"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:21.387" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:21.384" endtime="20200514 10:30:21.388"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:21.390" endtime="20200514 10:30:21.393"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:20.363" endtime="20200514 10:30:21.395"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:20.357" endtime="20200514 10:30:21.396"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:20.354" endtime="20200514 10:30:21.397"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:21.399" endtime="20200514 10:30:21.402"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:20.353" endtime="20200514 10:30:21.402"></status>
+</kw>
+<kw name="${i} = 10" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:21.424" endtime="20200514 10:30:22.431"></status>
+</kw>
+<msg timestamp="20200514 10:30:22.432" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:21.420" endtime="20200514 10:30:22.433"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:22.438" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:22.435" endtime="20200514 10:30:22.439"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:22.441" endtime="20200514 10:30:22.444"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:21.414" endtime="20200514 10:30:22.446"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:21.408" endtime="20200514 10:30:22.448"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:21.405" endtime="20200514 10:30:22.448"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:22.450" endtime="20200514 10:30:22.454"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:21.403" endtime="20200514 10:30:22.454"></status>
+</kw>
+<kw name="${i} = 11" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:22.475" endtime="20200514 10:30:23.482"></status>
+</kw>
+<msg timestamp="20200514 10:30:23.484" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:22.472" endtime="20200514 10:30:23.484"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:23.490" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:23.486" endtime="20200514 10:30:23.491"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:23.492" endtime="20200514 10:30:23.496"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:22.465" endtime="20200514 10:30:23.498"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:22.459" endtime="20200514 10:30:23.499"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:22.457" endtime="20200514 10:30:23.500"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:23.502" endtime="20200514 10:30:23.506"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:22.455" endtime="20200514 10:30:23.507"></status>
+</kw>
+<kw name="${i} = 12" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:23.528" endtime="20200514 10:30:24.536"></status>
+</kw>
+<msg timestamp="20200514 10:30:24.537" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:23.525" endtime="20200514 10:30:24.537"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:24.543" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:24.539" endtime="20200514 10:30:24.544"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:24.546" endtime="20200514 10:30:24.551"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:23.518" endtime="20200514 10:30:24.553"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:23.512" endtime="20200514 10:30:24.555"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:23.509" endtime="20200514 10:30:24.555"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:24.557" endtime="20200514 10:30:24.560"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:23.508" endtime="20200514 10:30:24.561"></status>
+</kw>
+<kw name="${i} = 13" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:24.581" endtime="20200514 10:30:25.588"></status>
+</kw>
+<msg timestamp="20200514 10:30:25.589" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:24.578" endtime="20200514 10:30:25.590"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:25.596" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:25.592" endtime="20200514 10:30:25.596"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:25.598" endtime="20200514 10:30:25.602"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:24.572" endtime="20200514 10:30:25.603"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:24.566" endtime="20200514 10:30:25.605"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:24.564" endtime="20200514 10:30:25.605"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:25.607" endtime="20200514 10:30:25.610"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:24.562" endtime="20200514 10:30:25.611"></status>
+</kw>
+<kw name="${i} = 14" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:25.631" endtime="20200514 10:30:26.638"></status>
+</kw>
+<msg timestamp="20200514 10:30:26.639" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:25.628" endtime="20200514 10:30:26.639"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:26.645" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:26.641" endtime="20200514 10:30:26.646"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:26.647" endtime="20200514 10:30:26.652"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:25.621" endtime="20200514 10:30:26.654"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:25.616" endtime="20200514 10:30:26.655"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:25.613" endtime="20200514 10:30:26.656"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:26.657" endtime="20200514 10:30:26.661"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:25.612" endtime="20200514 10:30:26.661"></status>
+</kw>
+<kw name="${i} = 15" type="foritem">
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>API Call Should Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Should Timeout" library="api_shell.keywords">
+<doc>Fails if the given API ``call`` does not timeout.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="API Call Expect" library="api_shell.keywords">
+<doc>Fails if the result of the given ``call`` does not
+match the expected outcome.</doc>
+<arguments>
+<arg>Timeout</arg>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>${call}</arg>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<assign>
+<var>${RESULT}</var>
+</assign>
+<kw name="Get Metadata" library="GPIOdevice">
+<doc>Get the metadata of the firmware.</doc>
+<arguments>
+<arg>@{args}</arg>
+<arg>&amp;{kwargs}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:26.681" endtime="20200514 10:30:27.688"></status>
+</kw>
+<msg timestamp="20200514 10:30:27.689" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:26.678" endtime="20200514 10:30:27.690"></status>
+</kw>
+<kw name="Set Suite Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<arguments>
+<arg>${RESULT}</arg>
+</arguments>
+<msg timestamp="20200514 10:30:27.695" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'data': None, 'result': 'Timeout'}</msg>
+<status status="PASS" starttime="20200514 10:30:27.692" endtime="20200514 10:30:27.696"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>${expect}</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:27.698" endtime="20200514 10:30:27.701"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:26.672" endtime="20200514 10:30:27.703"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:26.666" endtime="20200514 10:30:27.704"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:26.664" endtime="20200514 10:30:27.705"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${RESULT['result']}"!="Timeout"</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20200514 10:30:27.707" endtime="20200514 10:30:27.710"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:26.662" endtime="20200514 10:30:27.710"></status>
+</kw>
+<status status="PASS" starttime="20200514 10:30:10.828" endtime="20200514 10:30:27.711"></status>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<arguments>
+<arg>${RESULT['result']}</arg>
+<arg>Success</arg>
+</arguments>
+<msg timestamp="20200514 10:30:27.716" level="FAIL">'Timeout' does not contain 'Success'</msg>
+<status status="FAIL" starttime="20200514 10:30:27.712" endtime="20200514 10:30:27.717"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:30:10.825" endtime="20200514 10:30:27.719"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:30:10.821" endtime="20200514 10:30:27.720"></status>
+</kw>
+<status status="FAIL" starttime="20200514 10:30:08.584" endtime="20200514 10:30:27.721"></status>
+</kw>
+<test id="s1-s2-t1" name="Verify UART_CTS">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.722" endtime="20200514 10:30:27.727" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t2" name="Verify UART_RTS">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.734" endtime="20200514 10:30:27.739" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t3" name="Verify UART_RX">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.745" endtime="20200514 10:30:27.750" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t4" name="Verify UART_TX">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.756" endtime="20200514 10:30:27.760" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t5" name="Verify SPI_NSS">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.766" endtime="20200514 10:30:27.771" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t6" name="Verify SPI_SCK">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.777" endtime="20200514 10:30:27.782" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t7" name="Verify SPI_MISO">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.787" endtime="20200514 10:30:27.794" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t8" name="Verify SPI_MOSI">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.800" endtime="20200514 10:30:27.805" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t9" name="Verify I2C_SCL">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.810" endtime="20200514 10:30:27.815" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t10" name="Verify I2C_SDA">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.821" endtime="20200514 10:30:27.825" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t11" name="Verify DAC">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.831" endtime="20200514 10:30:27.837" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<test id="s1-s2-t12" name="Verify ADC">
+<tags>
+<tag>APP_tests_periph_gpio</tag>
+<tag>BOARD_saml21-xpro</tag>
+<tag>gpio</tag>
+<tag>periph</tag>
+</tags>
+<status status="FAIL" starttime="20200514 10:30:27.842" endtime="20200514 10:30:27.847" critical="yes">Parent suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</test>
+<doc>Verify if board to philip wiring is correct.</doc>
+<status status="FAIL" starttime="20200514 10:30:08.474" endtime="20200514 10:30:27.865">Suite setup failed:
+'Timeout' does not contain 'Success'</status>
+</suite>
+<metadata>
+<item name="RIOT-Application">tests_periph_gpio</item>
+<item name="RIOT-Board">saml21-xpro</item>
+<item name="RIOT-Version">2020.04-devel-1224-g4e5e4-test1</item>
+</metadata>
+<status status="FAIL" starttime="20200514 10:29:48.114" endtime="20200514 10:30:27.930"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="15">Critical Tests</stat>
+<stat pass="0" fail="15">All Tests</stat>
+</total>
+<tag>
+<stat pass="0" fail="0" info="non-critical">skip</stat>
+<stat pass="0" fail="0" info="non-critical">warn-if-failed</stat>
+<stat pass="0" fail="15">APP_tests_periph_gpio</stat>
+<stat pass="0" fail="15">BOARD_saml21-xpro</stat>
+<stat pass="0" fail="15">gpio</stat>
+<stat pass="0" fail="15">periph</stat>
+</tag>
+<suite>
+<stat pass="0" fail="15" id="s1" name="tests_periph_gpio">tests_periph_gpio</stat>
+<stat pass="0" fail="3" id="s1-s1" name="Periph Gpio Base">tests_periph_gpio.Periph Gpio Base</stat>
+<stat pass="0" fail="12" id="s1-s2" name="Periph Gpio Others">tests_periph_gpio.Periph Gpio Others</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20200514 10:29:51.586" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: For loop header ':FOR' is deprecated. Use 'FOR' instead.</msg>
+<msg timestamp="20200514 10:29:51.588" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: Marking for loop body with '\' is deprecated. Remove markers and use 'END' instead.</msg>
+<msg timestamp="20200514 10:30:10.828" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: For loop header ':FOR' is deprecated. Use 'FOR' instead.</msg>
+<msg timestamp="20200514 10:30:10.830" level="WARN">Error in file '/home/pi/.tmp/RobotFW-tests/dist/robotframework/res/api_shell.keywords.txt' in FOR loop starting on line 59: Marking for loop body with '\' is deprecated. Remove markers and use 'END' instead.</msg>
+</errors>
+</robot>
