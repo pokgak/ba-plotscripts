@@ -45,20 +45,10 @@ class FigurePlotter:
 
                 # create a new row or update if already existed
                 try:
-                    row = next(
-                        e for e in dss if e["time"] == key
-                    )
-                    row.update(
-                        {
-                            "time": key,
-                            value_source: value,
-                        }
-                    )
+                    row = next(e for e in dss if e["time"] == key)
+                    row.update({"time": key, value_source: value})
                 except StopIteration:
-                    row = {
-                        "time": key,
-                        value_source: value,
-                    }
+                    row = {"time": key, value_source: value}
                     dss.append(row)
 
         df = pd.DataFrame(dss, dtype="float64")
