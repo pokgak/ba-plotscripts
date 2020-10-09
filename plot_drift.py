@@ -113,6 +113,8 @@ def plot_drift_diff(plotter):
     fig.add_traces(traces)
     fig.update_layout(
         title="Drift Difference between Boards",
+        title_xanchor="center",
+        title_x=0.5,
         xaxis_title="Sleep Duration [s]",
         yaxis_title="Difference real - target duration [s]",
         legend_title_text="Board",
