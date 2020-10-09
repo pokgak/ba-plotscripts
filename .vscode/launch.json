@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "plot pr13103",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["--outdir", "${workspaceFolder}/docs/pr13103/pr_rebased", "--save-png", "${workspaceFolder}/docs/pr13103/pr_rebased.xml"],
+            "console": "integratedTerminal",
+        },
+        {
+            "name": "plot drifts",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": ["--outdir", "${workspaceFolder}/docs/drift/", "--datadir", "docs/drift/data", "--timer", "xtimer"],
+            "console": "integratedTerminal",
+        }
+    ]
+}
