@@ -33,7 +33,6 @@ class FigurePlotter:
                 # name formatted as 'name'-'unit', we ditch the unit
                 name = prop.get("name").split("-")
 
-                repeat_n = int(name[name.index("repeat") + 1])  # repeat count
                 # values are recorded as string, convert to float
                 value = literal_eval(prop.get("value"))
                 # make sure value not in array
@@ -42,26 +41,22 @@ class FigurePlotter:
 
                 value_source = "dut" if "dut" in name else "philip"
 
-                if name[2] == "60000000" or name[2] == "1000000":
-                    continue
                 key = int(name[2]) / 1_000_000
 
                 # create a new row or update if already existed
                 try:
                     row = next(
-                        e for e in dss if e["time"] == key and e["repeat"] == repeat_n
+                        e for e in dss if e["time"] == key
                     )
                     row.update(
                         {
                             "time": key,
-                            "repeat": repeat_n,
                             value_source: value,
                         }
                     )
                 except StopIteration:
                     row = {
                         "time": key,
-                        "repeat": repeat_n,
                         value_source: value,
                     }
                     dss.append(row)
@@ -120,8 +115,9 @@ def plot_drift_diff(plotter):
         legend_title_text="Board",
     )
 
-    fig.write_image(f"{args.outdir}/{args.timer}_drift.svg")
-    fig.write_html(f"{args.outdir}/{args.timer}_drift.html", include_plotlyjs="cdn")
+    fig.write_image(f"{args.outdir}/{args.timer}_drift.pdf")
+    # fig.write_html(f"{args.outdir}/{args.timer}_drift.html", include_plotlyjs="cdn")
+
 
 def plot_drift_percentage(plotter):
     traces = []
@@ -137,8 +133,8 @@ def plot_drift_percentage(plotter):
         legend_title_text="Board",
     )
 
-    fig.write_image(f"{args.outdir}/{args.timer}_percentage.svg")
-    fig.write_html(f"{args.outdir}/{args.timer}_percentage.html", include_plotlyjs="cdn")
+    fig.write_image(f"{args.outdir}/{args.timer}_percentage.pdf")
+    # fig.write_html(f"{args.outdir}/{args.timer}_percentage.html", include_plotlyjs="cdn")
 
 
 if __name__ == "__main__":
@@ -147,13 +143,21 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--datadir", help="directory where data is", default="docs/drift/data",
+        "--datadir",
+        help="directory where data is",
+        default="docs/drift/data",
     )
     parser.add_argument(
         "--outdir", help="output directory", default="docs/drift/result"
     )
     parser.add_argument("--timer", help="type of timer", choices=["xtimer", "ztimer"])
-    parser.add_argument("--exclude-board", nargs="+", help="list of boards to exclude from result, separated by space", default="")
+    parser.add_argument(
+        "--exclude-board",
+        metavar="BOARD",
+        nargs="+",
+        help="list of boards to exclude from result, separated by space",
+        default="",
+    )
 
     args = parser.parse_args()
 
