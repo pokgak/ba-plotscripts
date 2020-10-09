@@ -1,0 +1,14 @@
+# useful commands
+
+## plot xtimer drifts
+./plot_drift.py --outdir docs/drift --datadir docs/drift/data --timer xtimer
+
+## exclude boards from plot
+./plot_drift.py --outdir docs/drift --datadir docs/drift/data --timer xtimer --exclude-board samr21-xpro saml10-xpro
+
+## old
+
+# create drift plots from HIL results
+# refer https://www.howtogeek.com/435164/how-to-use-the-xargs-command-on-linux/
+ ls -1 docs/drift/data | xargs -I % ./plot_drift.py --outdir docs/drift/result --board % --timer xtimer --datadir docs/drift/data
+
