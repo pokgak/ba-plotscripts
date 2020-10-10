@@ -58,20 +58,20 @@ class FigurePlotter:
         df["philip_target_percentage"] = df["philip"] / df["time"] * 100
         return df
 
-    def get_diff_trace(self, board):
+    def get_skew_trace(self, board):
         df = self.get_drift_df(board)
         if df.empty:
             return
 
-        box = go.Box(
-            x=df["time"],
-            y=df["diff_philip_target"],
-            legendgroup=board,
-            showlegend=False,
-        )
+        # box = go.Box(
+        #     x=df["time"],
+        #     y=df["diff_philip_target"],
+        #     legendgroup=board,
+        #     showlegend=False,
+        # )
         line = go.Scatter(
             x=df["time"].unique(),
-            y=df.groupby("time").mean()["diff_philip_target"].array,
+            y=df.groupby("time")["diff_philip_target"].mean(),
             name=board,
             legendgroup=board,
         )
@@ -89,19 +89,19 @@ class FigurePlotter:
         return go.Box(x=df["time"], y=df["philip_target_percentage"], name=board)
 
 
-def plot_drift_diff(plotter):
+def plot_skew_diff(plotter):
     traces = []
     for b in plotter.boards:
-        traces.extend(plotter.get_diff_trace(b))
+        traces.extend(plotter.get_skew_trace(b))
 
     fig = go.Figure()
     fig.add_traces(traces)
     fig.update_layout(
-        title="Drift Difference between Boards",
+        title="Clock Skew on boards",
         title_xanchor="center",
         title_x=0.5,
         xaxis_title="Sleep Duration [s]",
-        yaxis_title="Difference real - target duration [s]",
+        # yaxis_title="Difference real - target duration [s]",
         legend_title_text="Board",
     )
 
@@ -157,5 +157,5 @@ if __name__ == "__main__":
     boards = [b for b in os.listdir(args.datadir) if b not in args.exclude_board]
 
     plotter = FigurePlotter(boards, **vars(args))
-    plot_drift_diff(plotter)
+    plot_skew_diff(plotter)
     # plot_drift_percentage(plotter)
