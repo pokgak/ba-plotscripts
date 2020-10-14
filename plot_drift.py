@@ -109,24 +109,6 @@ def plot_skew_diff(plotter):
     # fig.write_html(f"{args.outdir}/{args.timer}_drift.html", include_plotlyjs="cdn")
 
 
-def plot_drift_percentage(plotter):
-    traces = []
-    for b in plotter.boards:
-        traces.append(plotter.get_percentage_trace(b))
-
-    fig = go.Figure()
-    fig.add_traces(traces)
-    fig.update_layout(
-        title="Drift Percentage between Boards",
-        xaxis_title="Sleep Duration [s]",
-        yaxis_title="Percentage real/target [%]",
-        legend_title_text="Board",
-    )
-
-    fig.write_image(f"{args.outdir}/{args.timer}_percentage.pdf")
-    # fig.write_html(f"{args.outdir}/{args.timer}_percentage.html", include_plotlyjs="cdn")
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Produce timer benchmarks plots from xunit results"
