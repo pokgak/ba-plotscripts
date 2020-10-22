@@ -11,11 +11,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-OUTFILE = "pr13103_overhead.tex"
+OUTFILE = "xztimer_overhead.tex"
 
 data = {
-    "master": "docs/pr13103/master.xml",
-    "pr13103": "docs/pr13103/pr_rebased.xml"
+    "xtimer": "docs/timer_benchmarks/data/samr21-xpro/tests_xtimer_benchmarks/xunit.xml",
+    "ztimer": "docs/timer_benchmarks/data/samr21-xpro/tests_ztimer_benchmarks/xunit.xml"
 }
 
 bres = {"row": [], "test": [], "time": [], "version": []}
@@ -24,7 +24,7 @@ for timer, file in data.items():
     tests = [
         t
         for t in ET.parse(file).findall(
-            './/testcase[@classname="tests_xtimer_benchmarks.Timer Overhead"]//property'
+            f'.//testcase[@classname="tests_{timer}_benchmarks.Timer Overhead"]//property'
         )
         if "overhead" in t.get("name")
     ]

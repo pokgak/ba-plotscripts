@@ -97,15 +97,15 @@ def plot_skew_diff(plotter):
     fig = go.Figure()
     fig.add_traces(traces)
     fig.update_layout(
-        title="Clock Skew on boards",
+        # title="Clock Skew on boards",
         title_xanchor="center",
         title_x=0.5,
         xaxis_title="Sleep Duration [s]",
-        # yaxis_title="Difference real - target duration [s]",
+        yaxis_title="Difference real - target duration [s]",
         legend_title_text="Board",
     )
 
-    fig.write_image(f"{args.outdir}/{args.timer}_drift.pdf")
+    fig.write_image(f"{args.outdir}/{args.timer}/{args.outfile}")
     # fig.write_html(f"{args.outdir}/{args.timer}_drift.html", include_plotlyjs="cdn")
 
 
@@ -130,6 +130,7 @@ if __name__ == "__main__":
         help="list of boards to exclude from result, separated by space",
         default="",
     )
+    parser.add_argument("--outfile", help="output filename")
 
     args = parser.parse_args()
 

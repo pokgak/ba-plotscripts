@@ -58,9 +58,8 @@ def plot(df):
     fig.update_yaxes(matches=None, showticklabels=True, title="")
 
     fig.update_layout(
-        title="Jitter of periodic 100ms sleep with increasing nr. of background timer",
-        # yaxis_title="Actual Sleep Duration[s]",
-        # xaxis_title="Nr. of background timers",
+        # title="Jitter of periodic 100ms sleep with increasing nr. of background timer",
+        xaxis_title="Nr. of background timers",
         legend_orientation="h",
     )
 
