@@ -52,7 +52,7 @@ for version in ["xtimer", "ztimer"]:
     vtraces = [t[version] for t in traces]
     fig = go.Figure(vtraces)
     fig.update_layout(
-        title=f"List Operations Comparison with {version}",
+        # title=f"List Operations Comparison with {version}",
         yaxis_title="Duration [ms]",
         xaxis_title="Nr. of Timers",
         yaxis_range=[0, 4.1],
