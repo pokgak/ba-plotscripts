@@ -55,7 +55,7 @@ for version in ["xtimer", "ztimer"]:
         title=f"List Operations Comparison with {version}",
         yaxis_title="Duration [ms]",
         xaxis_title="Nr. of Timers",
-        # yaxis_range=[0, 5],
+        yaxis_range=[0, 4.1],
     )
     # fig.show()
     fig.write_image(f"{outdir}/{version}/list_operations_combined.pdf")
