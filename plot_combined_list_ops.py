@@ -30,7 +30,6 @@ def plot_list_ops(basedir, board):
         tmp = pd.DataFrame(data)
         tmp['timer_count'] = pd.to_numeric(tmp['timer_count'])
         tmp = tmp.groupby('timer_count').mean().reset_index()
-        print(tmp)
         df[version] = tmp
 
     return {
