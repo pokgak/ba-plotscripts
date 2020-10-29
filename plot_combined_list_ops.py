@@ -27,14 +27,18 @@ def plot_list_ops(basedir, board):
             data["timer_count"].extend([count] * len(trace))
             data["duration"].extend(trace)
 
-        df[version] = pd.DataFrame(data)
+        tmp = pd.DataFrame(data)
+        tmp['timer_count'] = pd.to_numeric(tmp['timer_count'])
+        tmp = tmp.groupby('timer_count').mean().reset_index()
+        print(tmp)
+        df[version] = tmp
 
     return {
-        "xtimer": go.Box(
-            x=df["xtimer"]["timer_count"], y=df["xtimer"]["duration"], name=board
+        "xtimer": go.Scatter(
+            x=df["xtimer"]["timer_count"], y=df["xtimer"]["duration"], name=board, mode="lines",
         ),
-        "ztimer": go.Box(
-            x=df["ztimer"]["timer_count"], y=df["ztimer"]["duration"], name=board
+        "ztimer": go.Scatter(
+            x=df["ztimer"]["timer_count"], y=df["ztimer"]["duration"], name=board, mode="lines",
         ),
     }
 
