@@ -9,47 +9,50 @@ import pandas as pd
 from ast import literal_eval
 
 
-def plot_list_ops(basedir, board, version):
-    inputfile = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
-    data = {"timer_count": [], "duration": []}
-    test = ET.parse(inputfile).find(f".//testcase[@name='Measure Add Timers']")
-    if test is None:
-        raise RuntimeError("test case not found")
+def plot_list_ops(basedir, board):
+    df = {}
+    for version in ["xtimer", "ztimer"]:
+        inputfile = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
+        data = {"timer_count": [], "duration": []}
+        test = ET.parse(inputfile).find(f".//testcase[@name='Measure Add Timers']")
+        if test is None:
+            raise RuntimeError("test case not found")
 
-    for prop in test.findall("./properties/property"):
-        name = prop.get("name").split("-")
-        count = name[0]
-        trace = literal_eval(prop.get("value"))
+        for prop in test.findall("./properties/property"):
+            name = prop.get("name").split("-")
+            count = name[0]
+            # convert to milliseconds
+            trace = [v * 1000 for v in literal_eval(prop.get("value"))]
 
-        data["timer_count"].extend([count] * len(trace))
-        data["duration"].extend(trace)
+            data["timer_count"].extend([count] * len(trace))
+            data["duration"].extend(trace)
 
-    df = pd.DataFrame(data)
+        df[version] = pd.DataFrame(data)
 
-    return go.Box(x=df["timer_count"], y=df["duration"], name=board)
+    return {
+        "xtimer": go.Box(
+            x=df["xtimer"]["timer_count"], y=df["xtimer"]["duration"], name=board
+        ),
+        "ztimer": go.Box(
+            x=df["ztimer"]["timer_count"], y=df["ztimer"]["duration"], name=board
+        ),
+    }
 
 
+outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
 boards = os.listdir(basedir)
-timer_versions = ["xtimer", "ztimer"]
 
-traces = [
-    plot_list_ops(basedir, board, version)
-    for version, board in itertools.product(timer_versions, boards)
-]
-fig = go.Figure(traces)
-fig.update_layout(
-    yaxis_title="Duration [s]",
-    xaxis_title="Nr. of Timers",
-)
-fig.show()
+traces = [plot_list_ops(basedir, board) for board in boards]
 
-
-# fig.update_layout(
-#     title="Setting N Timers: {:s} with {:s}".format(self.board, self.timer_version),
-#     yaxis_title="Duration [s]",
-#     xaxis_title="Nr. of Timers",
-# )
-# fig.write_image(
-#     "{}/{}_{}.pdf".format(self.outdir, self.board, filename),
-# )
+for version in ["xtimer", "ztimer"]:
+    vtraces = [t[version] for t in traces]
+    fig = go.Figure(vtraces)
+    fig.update_layout(
+        title=f"List Operations Comparison with {version}",
+        yaxis_title="Duration [ms]",
+        xaxis_title="Nr. of Timers",
+        # yaxis_range=[0, 5],
+    )
+    # fig.show()
+    fig.write_image(f"{outdir}/{version}/list_operations_combined.pdf")
