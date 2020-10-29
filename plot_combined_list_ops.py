@@ -45,19 +45,24 @@ fig = px.line(
     x="timer_count",
     y="duration",
     color="board",
-    facet_row="timer_version",
+    facet_col="timer_version",
     labels={"board": "Board"},
 )
 
 
 fig.update_layout(
-    # title=f"List Operations Comparison",
-    xaxis_title="Nr. of Timers",
-    # legend_orientation="h",
+    yaxis_title="Duration [ms]",
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99,
+    ),
 )
 fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-fig.update_yaxes(title_text="Duration [ms]", row=1, col=1)
-fig.update_yaxes(title_text="Duration [ms]", row=2, col=1)
+
+fig.update_xaxes(title_text="Nr. of Timers", row=1, col=1)
+fig.update_xaxes(title_text="Nr. of Timers", row=1, col=2)
 
 # fig.write_html("/tmp/list_operations_combined.html", include_plotlyjs="cdn")
 fig.write_image(f"{outdir}/list_operations_combined.pdf")
