@@ -4,16 +4,16 @@ import itertools
 
 import xml.etree.ElementTree as ET
 import plotly.graph_objects as go
+import plotly.express as px
 import pandas as pd
 
 from ast import literal_eval
 
 
 def plot_list_ops(basedir, board):
-    df = {}
-    for version in ["xtimer", "ztimer"]:
+    data = {"timer_count": [], "duration": [], "board": [], "timer_version": []}
+    for version, board in itertools.product(["xtimer", "ztimer"], boards):
         inputfile = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
-        data = {"timer_count": [], "duration": []}
         test = ET.parse(inputfile).find(f".//testcase[@name='Measure Add Timers']")
         if test is None:
             raise RuntimeError("test case not found")
@@ -24,38 +24,40 @@ def plot_list_ops(basedir, board):
             # convert to milliseconds
             trace = [v * 1000 for v in literal_eval(prop.get("value"))]
 
+            data["board"].extend([board] * len(trace))
+            data["timer_version"].extend([version] * len(trace))
             data["timer_count"].extend([count] * len(trace))
             data["duration"].extend(trace)
 
-        tmp = pd.DataFrame(data)
-        tmp['timer_count'] = pd.to_numeric(tmp['timer_count'])
-        tmp = tmp.groupby('timer_count').mean().reset_index()
-        df[version] = tmp
-
-    return {
-        "xtimer": go.Scatter(
-            x=df["xtimer"]["timer_count"], y=df["xtimer"]["duration"], name=board, mode="lines",
-        ),
-        "ztimer": go.Scatter(
-            x=df["ztimer"]["timer_count"], y=df["ztimer"]["duration"], name=board, mode="lines",
-        ),
-    }
+    df = pd.DataFrame(data)
+    df["timer_count"] = pd.to_numeric(df["timer_count"])
+    return df
 
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
 boards = os.listdir(basedir)
 
-traces = [plot_list_ops(basedir, board) for board in boards]
+df = plot_list_ops(basedir, boards)
 
-for version in ["xtimer", "ztimer"]:
-    vtraces = [t[version] for t in traces]
-    fig = go.Figure(vtraces)
-    fig.update_layout(
-        # title=f"List Operations Comparison with {version}",
-        yaxis_title="Duration [ms]",
-        xaxis_title="Nr. of Timers",
-        yaxis_range=[0, 4.1],
-    )
-    # fig.show()
-    fig.write_image(f"{outdir}/{version}/list_operations_combined.pdf")
+fig = px.line(
+    df,
+    x="timer_count",
+    y="duration",
+    color="board",
+    facet_row="timer_version",
+    labels={"board": "Board"},
+)
+
+
+fig.update_layout(
+    # title=f"List Operations Comparison",
+    xaxis_title="Nr. of Timers",
+    # legend_orientation="h",
+)
+fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+fig.update_yaxes(title_text="Duration [ms]", row=1, col=1)
+fig.update_yaxes(title_text="Duration [ms]", row=2, col=1)
+
+# fig.write_html("/tmp/list_operations_combined.html", include_plotlyjs="cdn")
+fig.write_image(f"{outdir}/list_operations_combined.pdf")
