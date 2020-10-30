@@ -9,9 +9,11 @@ import pandas as pd
 
 from ast import literal_eval
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
-boards = os.listdir(basedir)
+outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+
+exclude_boards = ["esp32-wroom-32", "saml10-xpro"]
+boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
 
 
 def plot_jitters(basedir, boards):
@@ -23,16 +25,15 @@ def plot_jitters(basedir, boards):
         "board": [],
     }
 
-    for version, board in itertools.product(["xtimer", "ztimer"], boards):
-        inputfile = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
+    for version, board in itertools.product(["master", "pr13103"], boards):
+        inputfile = f"{basedir}/{version}/{board}/tests_xtimer_benchmarks/xunit.xml"
         for testcase in ET.parse(inputfile).findall(
-            f"testcase[@classname='tests_{version}_benchmarks.Sleep Jitter']"
+            f"testcase[@classname='tests_xtimer_benchmarks.Sleep Jitter']"
         ):
-            bg_timer_count = int(
-                testcase.find("properties/property[@name='bg-timer-count']").get(
-                    "value"
-                )
-            )
+            tmp = testcase.find("properties/property[@name='bg-timer-count']")
+            if tmp is None:
+                continue
+            bg_timer_count = int(tmp.get("value"))
             main_timer_interval = int(
                 testcase.find("properties/property[@name='main-timer-interval']").get(
                     "value"

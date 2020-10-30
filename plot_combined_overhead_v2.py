@@ -9,19 +9,32 @@ import plotly.express as px
 
 from ast import literal_eval
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+# basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+
+outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+
+if not os.path.exists(outdir):
+        os.makedirs(outdir)
 
 
 def get_overhead_df(timer_version, board):
     bres = {"test": [], "time": [], "timer_version": [], "board": []}
 
-    filename = f"{basedir}/{board}/tests_{timer_version}_benchmarks/xunit.xml"
+    filename = f"{basedir}/{timer_version}/{board}/tests_xtimer_benchmarks/xunit.xml"
+    # check if file exists
+    try:
+        with open(filename) as f:
+            pass
+    except IOError:
+        print(f"\"{filename}\" does not exists")
+        return
 
     tests = [
         t
         for t in ET.parse(filename).findall(
-            f"testcase[@classname='tests_{timer_version}_benchmarks.Timer Overhead']//property"
+            f"testcase[@classname='tests_xtimer_benchmarks.Timer Overhead']//property"
         )
         if "overhead" in t.get("name")
     ]
@@ -36,12 +49,11 @@ def get_overhead_df(timer_version, board):
     return pd.DataFrame(bres)
 
 
-boards = os.listdir(basedir)
-
 df = pd.DataFrame(columns=["timer_version", "board", "test", "time"])
 
-for version, board in itertools.product(["xtimer", "ztimer"], boards):
-    df = df.append(get_overhead_df(version, board))
+for version in ["master", "pr13103"]:
+    for board in os.listdir(f"{basedir}/{version}"):
+        df = df.append(get_overhead_df(version, board))
 if df.empty:
     raise RuntimeError("Empty dataframe")
 

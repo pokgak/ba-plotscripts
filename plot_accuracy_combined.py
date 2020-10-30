@@ -9,10 +9,9 @@ import pandas as pd
 
 from ast import literal_eval
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
-boards = os.listdir(basedir)
-
+outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
+boards = os.listdir(f"{basedir}/master")
 
 def plot_accuracies(basedir, boards):
     data = {
@@ -23,10 +22,10 @@ def plot_accuracies(basedir, boards):
         "board": [],
     }
 
-    for version, board in itertools.product(["xtimer", "ztimer"], boards):
-        inputfile = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
+    for version, board in itertools.product(["master", "pr13103"], boards):
+        inputfile = f"{basedir}/{version}/{board}/tests_xtimer_benchmarks/xunit.xml"
         for prop in ET.parse(inputfile).findall(
-            f"testcase[@classname='tests_{version}_benchmarks.Sleep Accuracy']//property"
+            f"testcase[@classname='tests_xtimer_benchmarks.Sleep Accuracy']//property"
         ):
             name = prop.get("name").lower().split("-")
             if "timer_sleep" in name:
