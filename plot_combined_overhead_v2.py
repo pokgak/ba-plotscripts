@@ -27,7 +27,7 @@ def get_overhead_df(timer_version, board):
     ]
     for t in tests:
         name = t.get("name").split("-")
-        values = literal_eval(t.get("value"))
+        values = [v * 1000000 for v in literal_eval(t.get("value"))]
         bres["test"].extend([" ".join(name[2:])] * len(values))
         bres["time"].extend(values)
         bres["timer_version"].extend([timer_version] * len(values))
@@ -68,11 +68,11 @@ fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
 # update yaxis title
 fig.update_yaxes(showticklabels=True, matches=None, title="")
-fig.update_yaxes(title_text="Duration [s]", row=4, col=1)
+fig.update_yaxes(title_text="Duration [us]", row=4, col=1)
 # fig.update_yaxes(title_text="Duration [s]", row=2, col=1)
 # hide xaxis labels
 fig.update_xaxes(showticklabels=True, title="")
 # fig.show()
 # fig.write_image(f"{outdir}/{version}/overhead_combined.pdf")
-# fig.write_html(f"/tmp/overhead_combined.html", include_plotlyjs="cdn")
+fig.write_html(f"/tmp/overhead_combined.html", include_plotlyjs="cdn")
 fig.write_image(f"/{outdir}/overhead_combined.pdf", height=1240, width=1748)

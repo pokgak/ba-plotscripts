@@ -36,9 +36,10 @@ def plot_accuracies(basedir, boards):
             else:
                 raise LookupError
 
-            target = literal_eval(name[-2]) / 1000000
+            target = literal_eval(name[-2])
 
-            actual = literal_eval(prop.get("value"))
+            # convert to us
+            actual = [v * 1000000 for v in literal_eval(prop.get("value"))]
 
             data["actual_duration"].extend(actual)
             data["target_duration"].extend([target] * len(actual))
@@ -76,7 +77,7 @@ for func in ["set", "sleep"]:
     fig.update_xaxes(title_text="")
     # manually use annotations to set axis title
     fig.add_annotation(
-        text="Target Duration [s]",
+        text="Target Duration [us]",
         xref="paper",
         yref="paper",
         x=0.5,
@@ -84,7 +85,7 @@ for func in ["set", "sleep"]:
         showarrow=False,
     )
     fig.add_annotation(
-        text="Difference Actual-Target Duration [s]",
+        text="Difference Actual-Target Duration [us]",
         textangle=270,
         xref="paper",
         yref="paper",
