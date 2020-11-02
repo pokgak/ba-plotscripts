@@ -52,6 +52,7 @@ fig = px.line(
 
 fig.update_layout(
     yaxis_title="Duration [ms]",
+    font_size=24,
     legend=dict(
         yanchor="top",
         y=0.99,
@@ -64,5 +65,6 @@ fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 fig.update_xaxes(title_text="Nr. of Timers", row=1, col=1)
 fig.update_xaxes(title_text="Nr. of Timers", row=1, col=2)
 
-# fig.write_html("/tmp/list_operations_combined.html", include_plotlyjs="cdn")
+fig.write_html("/tmp/list_operations_combined.html", include_plotlyjs="cdn")
 fig.write_image(f"{outdir}/list_operations_combined.pdf")
+print(f"{outdir}/list_operations_combined.pdf")

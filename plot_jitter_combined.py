@@ -65,7 +65,7 @@ def plot_jitters(basedir, boards):
 df = plot_jitters(basedir, boards)
 
 # the earlier sample points might be too small to trigger
-df.drop(df[(df["i"] <= 10)].index, inplace=True)
+# df.drop(df[(df["i"] <= 10)].index, inplace=True)
 
 df["diff_actual_target_duration"] = df["sleep_duration"] - (df["main_timer_interval"])
 
@@ -91,6 +91,7 @@ fig.update_layout(legend=dict(
     orientation="h",
     x=0,
     y=1.1,
+    font_size=24,
 ))
 # hide original title
 fig.update_yaxes(title_text="")

@@ -67,8 +67,10 @@ for func in ["set", "sleep"]:
         facet_col="board",
         facet_col_spacing=0.05,
         facet_col_wrap=4,
+        font_size=24,
     )
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig.update_layout(font_size=24)
 
     fig.update_yaxes(matches=None, showticklabels=True)
 
@@ -100,4 +102,5 @@ for func in ["set", "sleep"]:
     #     fig.update_xaxes(title_text)
 
     fig.write_image(f"{outdir}/accuracy_{func}_combined.pdf")
-    # fig.write_html("/tmp/accuracy_{func}_combined.html")
+    print(f"{outdir}/accuracy_{func}_combined.pdf")
+    fig.write_html(f"/tmp/accuracy_{func}_combined.html")
