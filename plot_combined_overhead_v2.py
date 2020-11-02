@@ -46,6 +46,8 @@ for version, board in itertools.product(["xtimer", "ztimer"], boards):
 if df.empty:
     raise RuntimeError("Empty dataframe")
 
+df.drop(df[(df["i"] <= 5)].index, inplace=True)
+
 # separate figure to separate groups
 groups = [
     ["gpio", "timer now"],
@@ -70,9 +72,9 @@ for i, group in enumerate(groups):
         # points="all",
     )
 
-    fig.update_layout(showlegend=False, font_size=24)
+    fig.update_layout(showlegend=False, font_size=16)
     # simplify column title
-    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=20))
 
     # update yaxis title
     fig.update_yaxes(showticklabels=True, matches=None, title="")

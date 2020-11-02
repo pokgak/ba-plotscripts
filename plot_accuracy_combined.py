@@ -67,10 +67,9 @@ for func in ["set", "sleep"]:
         facet_col="board",
         facet_col_spacing=0.05,
         facet_col_wrap=4,
-        font_size=24,
     )
-    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-    fig.update_layout(font_size=24)
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=16))
+    # fig.update_layout(font_size=24)
 
     fig.update_yaxes(matches=None, showticklabels=True)
 
