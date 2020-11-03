@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.1.2 (Python 3.7.3 on linux)" generated="20201103 12:24:38.308" rpa="false">
+<robot generator="Robot 3.1.2 (Python 3.7.3 on linux)" generated="20201103 12:35:57.322" rpa="false">
 <suite id="s1" name="tests_xtimer_benchmarks" source="/opt/jenkins/workspace/RIOT-HIL_PR-90/tests/xtimer_benchmarks/tests">
 <suite id="s1-s1" name="Timer Version" source="/opt/jenkins/workspace/RIOT-HIL_PR-90/tests/xtimer_benchmarks/tests/00__timer_version.robot">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -18,29 +18,29 @@
 <arg>shell=True</arg>
 <arg>cwd=%{APPDIR}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:38.885" level="INFO">Starting process:
+<msg timestamp="20201103 12:35:57.906" level="INFO">Starting process:
 make reset</msg>
-<msg timestamp="20201103 12:24:38.893" level="INFO">Waiting for process to complete.</msg>
-<msg timestamp="20201103 12:24:40.142" level="INFO">Process completed.</msg>
-<status status="PASS" starttime="20201103 12:24:38.884" endtime="20201103 12:24:40.143"></status>
+<msg timestamp="20201103 12:35:57.916" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20201103 12:35:59.098" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20201103 12:35:57.905" endtime="20201103 12:35:59.099"></status>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <doc>Pauses the test executed for the given time.</doc>
 <arguments>
 <arg>%{HIL_RESET_WAIT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.146" level="INFO">Slept 0 seconds</msg>
-<status status="PASS" starttime="20201103 12:24:40.144" endtime="20201103 12:24:40.147"></status>
+<msg timestamp="20201103 12:35:59.102" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20201103 12:35:59.100" endtime="20201103 12:35:59.102"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:38.882" endtime="20201103 12:24:40.147"></status>
+<status status="PASS" starttime="20201103 12:35:57.904" endtime="20201103 12:35:59.103"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:40.150" endtime="20201103 12:24:40.332"></status>
+<status status="PASS" starttime="20201103 12:35:59.105" endtime="20201103 12:35:59.324"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.148" endtime="20201103 12:24:40.333"></status>
+<status status="PASS" starttime="20201103 12:35:59.103" endtime="20201103 12:35:59.324"></status>
 </kw>
 <kw name="API Firmware Data Should Match" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -91,18 +91,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.346" endtime="20201103 12:24:40.361"></status>
+<status status="PASS" starttime="20201103 12:35:59.338" endtime="20201103 12:35:59.352"></status>
 </kw>
-<msg timestamp="20201103 12:24:40.361" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.344" endtime="20201103 12:24:40.361"></status>
+<msg timestamp="20201103 12:35:59.352" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.336" endtime="20201103 12:35:59.353"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.364" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.362" endtime="20201103 12:24:40.364"></status>
+<msg timestamp="20201103 12:35:59.355" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.354" endtime="20201103 12:35:59.355"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -110,14 +110,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.367" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:40.365" endtime="20201103 12:24:40.367"></status>
+<msg timestamp="20201103 12:35:59.358" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:35:59.356" endtime="20201103 12:35:59.359"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:40.342" endtime="20201103 12:24:40.368"></status>
+<status status="FAIL" starttime="20201103 12:35:59.333" endtime="20201103 12:35:59.360"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:40.339" endtime="20201103 12:24:40.368"></status>
+<status status="FAIL" starttime="20201103 12:35:59.331" endtime="20201103 12:35:59.360"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.338" endtime="20201103 12:24:40.369"></status>
+<status status="PASS" starttime="20201103 12:35:59.330" endtime="20201103 12:35:59.360"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -127,14 +127,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:40.373" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:40.372" endtime="20201103 12:24:40.373"></status>
+<msg timestamp="20201103 12:35:59.364" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:35:59.364" endtime="20201103 12:35:59.365"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.370" endtime="20201103 12:24:40.373"></status>
+<status status="PASS" starttime="20201103 12:35:59.361" endtime="20201103 12:35:59.365"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.337" endtime="20201103 12:24:40.373"></status>
+<status status="PASS" starttime="20201103 12:35:59.329" endtime="20201103 12:35:59.365"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.337" endtime="20201103 12:24:40.374"></status>
+<status status="PASS" starttime="20201103 12:35:59.328" endtime="20201103 12:35:59.365"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -142,9 +142,9 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.374" endtime="20201103 12:24:40.376"></status>
+<status status="PASS" starttime="20201103 12:35:59.366" endtime="20201103 12:35:59.368"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.335" endtime="20201103 12:24:40.376"></status>
+<status status="PASS" starttime="20201103 12:35:59.327" endtime="20201103 12:35:59.368"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -152,11 +152,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['data']}</arg>
 <arg>${firmware}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.377" endtime="20201103 12:24:40.378"></status>
+<status status="PASS" starttime="20201103 12:35:59.369" endtime="20201103 12:35:59.371"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.334" endtime="20201103 12:24:40.379"></status>
+<status status="PASS" starttime="20201103 12:35:59.325" endtime="20201103 12:35:59.371"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:38.881" endtime="20201103 12:24:40.379"></status>
+<status status="PASS" starttime="20201103 12:35:57.902" endtime="20201103 12:35:59.372"></status>
 </kw>
 <test id="s1-s1-t1" name="Save Timer Version">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -169,9 +169,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:40.385" endtime="20201103 12:24:40.406"></status>
+<status status="PASS" starttime="20201103 12:35:59.378" endtime="20201103 12:35:59.397"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.384" endtime="20201103 12:24:40.407"></status>
+<status status="PASS" starttime="20201103 12:35:59.376" endtime="20201103 12:35:59.398"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -222,18 +222,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.436" endtime="20201103 12:24:40.454"></status>
+<status status="PASS" starttime="20201103 12:35:59.414" endtime="20201103 12:35:59.428"></status>
 </kw>
-<msg timestamp="20201103 12:24:40.455" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.433" endtime="20201103 12:24:40.455"></status>
+<msg timestamp="20201103 12:35:59.428" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.412" endtime="20201103 12:35:59.429"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.460" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.457" endtime="20201103 12:24:40.460"></status>
+<msg timestamp="20201103 12:35:59.431" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.429" endtime="20201103 12:35:59.431"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -241,14 +241,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.466" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:40.462" endtime="20201103 12:24:40.466"></status>
+<msg timestamp="20201103 12:35:59.434" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:35:59.432" endtime="20201103 12:35:59.435"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:40.426" endtime="20201103 12:24:40.468"></status>
+<status status="FAIL" starttime="20201103 12:35:59.408" endtime="20201103 12:35:59.435"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:40.421" endtime="20201103 12:24:40.469"></status>
+<status status="FAIL" starttime="20201103 12:35:59.406" endtime="20201103 12:35:59.436"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.418" endtime="20201103 12:24:40.470"></status>
+<status status="PASS" starttime="20201103 12:35:59.404" endtime="20201103 12:35:59.436"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -258,14 +258,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:40.477" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:40.475" endtime="20201103 12:24:40.478"></status>
+<msg timestamp="20201103 12:35:59.440" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:35:59.439" endtime="20201103 12:35:59.440"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.471" endtime="20201103 12:24:40.478"></status>
+<status status="PASS" starttime="20201103 12:35:59.437" endtime="20201103 12:35:59.441"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.416" endtime="20201103 12:24:40.478"></status>
+<status status="PASS" starttime="20201103 12:35:59.403" endtime="20201103 12:35:59.441"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.415" endtime="20201103 12:24:40.479"></status>
+<status status="PASS" starttime="20201103 12:35:59.402" endtime="20201103 12:35:59.441"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -273,13 +273,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.480" endtime="20201103 12:24:40.483"></status>
+<status status="PASS" starttime="20201103 12:35:59.442" endtime="20201103 12:35:59.443"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.412" endtime="20201103 12:24:40.484"></status>
+<status status="PASS" starttime="20201103 12:35:59.401" endtime="20201103 12:35:59.444"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.409" endtime="20201103 12:24:40.485"></status>
+<status status="PASS" starttime="20201103 12:35:59.399" endtime="20201103 12:35:59.444"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.383" endtime="20201103 12:24:40.486"></status>
+<status status="PASS" starttime="20201103 12:35:59.375" endtime="20201103 12:35:59.444"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -311,18 +311,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.495" endtime="20201103 12:24:40.506"></status>
+<status status="PASS" starttime="20201103 12:35:59.451" endtime="20201103 12:35:59.462"></status>
 </kw>
-<msg timestamp="20201103 12:24:40.507" level="INFO">${RESULT} = {'cmd': 'get_timer_version', 'msg': ['get_timer_version\r\n'], 'data': ['xtimer'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.494" endtime="20201103 12:24:40.507"></status>
+<msg timestamp="20201103 12:35:59.462" level="INFO">${RESULT} = {'cmd': 'get_timer_version', 'msg': ['get_timer_version\r\n'], 'data': ['xtimer'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.450" endtime="20201103 12:35:59.463"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.509" level="INFO">${RESULT} = {'cmd': 'get_timer_version', 'msg': ['get_timer_version\r\n'], 'data': ['xtimer'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:40.508" endtime="20201103 12:24:40.509"></status>
+<msg timestamp="20201103 12:35:59.465" level="INFO">${RESULT} = {'cmd': 'get_timer_version', 'msg': ['get_timer_version\r\n'], 'data': ['xtimer'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:35:59.463" endtime="20201103 12:35:59.465"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -330,11 +330,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:40.510" endtime="20201103 12:24:40.512"></status>
+<status status="PASS" starttime="20201103 12:35:59.466" endtime="20201103 12:35:59.468"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.491" endtime="20201103 12:24:40.512"></status>
+<status status="PASS" starttime="20201103 12:35:59.447" endtime="20201103 12:35:59.468"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.488" endtime="20201103 12:24:40.513"></status>
+<status status="PASS" starttime="20201103 12:35:59.445" endtime="20201103 12:35:59.469"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -347,18 +347,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.517" level="INFO">NAME: timer-version</msg>
-<status status="PASS" starttime="20201103 12:24:40.515" endtime="20201103 12:24:40.517"></status>
+<msg timestamp="20201103 12:35:59.473" level="INFO">NAME: timer-version</msg>
+<status status="PASS" starttime="20201103 12:35:59.472" endtime="20201103 12:35:59.473"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.518" level="INFO">VALUE: xtimer</msg>
-<status status="PASS" starttime="20201103 12:24:40.518" endtime="20201103 12:24:40.519"></status>
+<msg timestamp="20201103 12:35:59.475" level="INFO">VALUE: xtimer</msg>
+<status status="PASS" starttime="20201103 12:35:59.474" endtime="20201103 12:35:59.475"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.513" endtime="20201103 12:24:40.519"></status>
+<status status="PASS" starttime="20201103 12:35:59.469" endtime="20201103 12:35:59.476"></status>
 </kw>
 <doc>Record the timer version</doc>
 <tags>
@@ -366,9 +366,9 @@ match the expected outcome.</doc>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:24:40.380" endtime="20201103 12:24:40.520" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:35:59.372" endtime="20201103 12:35:59.476" critical="yes"></status>
 </test>
-<status status="PASS" starttime="20201103 12:24:38.430" endtime="20201103 12:24:40.533"></status>
+<status status="PASS" starttime="20201103 12:35:57.446" endtime="20201103 12:35:59.479"></status>
 </suite>
 <suite id="s1-s2" name="Sleep Jitter" source="/opt/jenkins/workspace/RIOT-HIL_PR-90/tests/xtimer_benchmarks/tests/03__sleep_jitter.robot">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -387,29 +387,29 @@ match the expected outcome.</doc>
 <arg>shell=True</arg>
 <arg>cwd=%{APPDIR}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:40.583" level="INFO">Starting process:
+<msg timestamp="20201103 12:35:59.529" level="INFO">Starting process:
 make reset</msg>
-<msg timestamp="20201103 12:24:40.593" level="INFO">Waiting for process to complete.</msg>
-<msg timestamp="20201103 12:24:41.726" level="INFO">Process completed.</msg>
-<status status="PASS" starttime="20201103 12:24:40.582" endtime="20201103 12:24:41.727"></status>
+<msg timestamp="20201103 12:35:59.537" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20201103 12:36:00.735" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20201103 12:35:59.528" endtime="20201103 12:36:00.735"></status>
 </kw>
 <kw name="Sleep" library="BuiltIn">
 <doc>Pauses the test executed for the given time.</doc>
 <arguments>
 <arg>%{HIL_RESET_WAIT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:41.729" level="INFO">Slept 0 seconds</msg>
-<status status="PASS" starttime="20201103 12:24:41.728" endtime="20201103 12:24:41.729"></status>
+<msg timestamp="20201103 12:36:00.738" level="INFO">Slept 0 seconds</msg>
+<status status="PASS" starttime="20201103 12:36:00.736" endtime="20201103 12:36:00.738"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.580" endtime="20201103 12:24:41.730"></status>
+<status status="PASS" starttime="20201103 12:35:59.526" endtime="20201103 12:36:00.739"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:41.732" endtime="20201103 12:24:41.990"></status>
+<status status="PASS" starttime="20201103 12:36:00.742" endtime="20201103 12:36:01.041"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:41.731" endtime="20201103 12:24:41.991"></status>
+<status status="PASS" starttime="20201103 12:36:00.740" endtime="20201103 12:36:01.041"></status>
 </kw>
 <kw name="API Firmware Data Should Match" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -460,18 +460,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.014" endtime="20201103 12:24:42.028"></status>
+<status status="PASS" starttime="20201103 12:36:01.054" endtime="20201103 12:36:01.070"></status>
 </kw>
-<msg timestamp="20201103 12:24:42.028" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:42.012" endtime="20201103 12:24:42.028"></status>
+<msg timestamp="20201103 12:36:01.071" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:01.052" endtime="20201103 12:36:01.071"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:42.031" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:42.029" endtime="20201103 12:24:42.031"></status>
+<msg timestamp="20201103 12:36:01.074" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:01.072" endtime="20201103 12:36:01.075"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -479,14 +479,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:42.034" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:42.032" endtime="20201103 12:24:42.034"></status>
+<msg timestamp="20201103 12:36:01.078" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:01.076" endtime="20201103 12:36:01.079"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:42.008" endtime="20201103 12:24:42.035"></status>
+<status status="FAIL" starttime="20201103 12:36:01.050" endtime="20201103 12:36:01.080"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:42.004" endtime="20201103 12:24:42.035"></status>
+<status status="FAIL" starttime="20201103 12:36:01.047" endtime="20201103 12:36:01.081"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.001" endtime="20201103 12:24:42.035"></status>
+<status status="PASS" starttime="20201103 12:36:01.046" endtime="20201103 12:36:01.081"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -496,14 +496,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:42.039" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:42.038" endtime="20201103 12:24:42.040"></status>
+<msg timestamp="20201103 12:36:01.087" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:01.086" endtime="20201103 12:36:01.088"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.036" endtime="20201103 12:24:42.041"></status>
+<status status="PASS" starttime="20201103 12:36:01.082" endtime="20201103 12:36:01.088"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:41.999" endtime="20201103 12:24:42.041"></status>
+<status status="PASS" starttime="20201103 12:36:01.045" endtime="20201103 12:36:01.089"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:41.998" endtime="20201103 12:24:42.041"></status>
+<status status="PASS" starttime="20201103 12:36:01.045" endtime="20201103 12:36:01.089"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -511,9 +511,9 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.042" endtime="20201103 12:24:42.043"></status>
+<status status="PASS" starttime="20201103 12:36:01.090" endtime="20201103 12:36:01.092"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:41.995" endtime="20201103 12:24:42.044"></status>
+<status status="PASS" starttime="20201103 12:36:01.044" endtime="20201103 12:36:01.093"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -521,11 +521,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['data']}</arg>
 <arg>${firmware}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.044" endtime="20201103 12:24:42.046"></status>
+<status status="PASS" starttime="20201103 12:36:01.094" endtime="20201103 12:36:01.099"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:41.993" endtime="20201103 12:24:42.046"></status>
+<status status="PASS" starttime="20201103 12:36:01.042" endtime="20201103 12:36:01.100"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:40.579" endtime="20201103 12:24:42.047"></status>
+<status status="PASS" starttime="20201103 12:35:59.525" endtime="20201103 12:36:01.101"></status>
 </kw>
 <test id="s1-s2-t1" name="0 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -538,9 +538,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:42.052" endtime="20201103 12:24:42.072"></status>
+<status status="PASS" starttime="20201103 12:36:01.111" endtime="20201103 12:36:01.130"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.051" endtime="20201103 12:24:42.072"></status>
+<status status="PASS" starttime="20201103 12:36:01.108" endtime="20201103 12:36:01.131"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -591,18 +591,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.085" endtime="20201103 12:24:42.099"></status>
+<status status="PASS" starttime="20201103 12:36:01.148" endtime="20201103 12:36:01.162"></status>
 </kw>
-<msg timestamp="20201103 12:24:42.099" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:42.083" endtime="20201103 12:24:42.100"></status>
+<msg timestamp="20201103 12:36:01.163" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:01.146" endtime="20201103 12:36:01.163"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:42.103" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:42.101" endtime="20201103 12:24:42.104"></status>
+<msg timestamp="20201103 12:36:01.166" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:01.164" endtime="20201103 12:36:01.166"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -610,14 +610,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:42.107" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:42.105" endtime="20201103 12:24:42.107"></status>
+<msg timestamp="20201103 12:36:01.169" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:01.167" endtime="20201103 12:36:01.169"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:42.081" endtime="20201103 12:24:42.108"></status>
+<status status="FAIL" starttime="20201103 12:36:01.143" endtime="20201103 12:36:01.170"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:42.078" endtime="20201103 12:24:42.109"></status>
+<status status="FAIL" starttime="20201103 12:36:01.140" endtime="20201103 12:36:01.170"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.077" endtime="20201103 12:24:42.109"></status>
+<status status="PASS" starttime="20201103 12:36:01.138" endtime="20201103 12:36:01.171"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -627,14 +627,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:42.114" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:42.113" endtime="20201103 12:24:42.115"></status>
+<msg timestamp="20201103 12:36:01.174" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:01.174" endtime="20201103 12:36:01.175"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.110" endtime="20201103 12:24:42.115"></status>
+<status status="PASS" starttime="20201103 12:36:01.171" endtime="20201103 12:36:01.175"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.076" endtime="20201103 12:24:42.115"></status>
+<status status="PASS" starttime="20201103 12:36:01.137" endtime="20201103 12:36:01.175"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.076" endtime="20201103 12:24:42.116"></status>
+<status status="PASS" starttime="20201103 12:36:01.136" endtime="20201103 12:36:01.175"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -642,13 +642,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.117" endtime="20201103 12:24:42.119"></status>
+<status status="PASS" starttime="20201103 12:36:01.176" endtime="20201103 12:36:01.177"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.074" endtime="20201103 12:24:42.119"></status>
+<status status="PASS" starttime="20201103 12:36:01.134" endtime="20201103 12:36:01.178"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.073" endtime="20201103 12:24:42.120"></status>
+<status status="PASS" starttime="20201103 12:36:01.132" endtime="20201103 12:36:01.178"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.050" endtime="20201103 12:24:42.120"></status>
+<status status="PASS" starttime="20201103 12:36:01.106" endtime="20201103 12:36:01.178"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -686,18 +686,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:42.131" endtime="20201103 12:24:49.153"></status>
+<status status="PASS" starttime="20201103 12:36:01.188" endtime="20201103 12:36:08.210"></status>
 </kw>
-<msg timestamp="20201103 12:24:49.154" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 0\r\n'], 'data': [{'bg-timer-count': '0'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:42.129" endtime="20201103 12:24:49.155"></status>
+<msg timestamp="20201103 12:36:08.211" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 0\r\n'], 'data': [{'bg-timer-count': '0'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:01.186" endtime="20201103 12:36:08.211"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.160" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 0\r\n'], 'data': [{'bg-timer-count': '0'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:49.156" endtime="20201103 12:24:49.160"></status>
+<msg timestamp="20201103 12:36:08.216" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 0\r\n'], 'data': [{'bg-timer-count': '0'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:08.213" endtime="20201103 12:36:08.216"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -705,11 +705,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.162" endtime="20201103 12:24:49.165"></status>
+<status status="PASS" starttime="20201103 12:36:08.218" endtime="20201103 12:36:08.221"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.125" endtime="20201103 12:24:49.166"></status>
+<status status="PASS" starttime="20201103 12:36:01.183" endtime="20201103 12:36:08.222"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.122" endtime="20201103 12:24:49.167"></status>
+<status status="PASS" starttime="20201103 12:36:01.181" endtime="20201103 12:36:08.223"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -719,8 +719,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:24:49.172" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 0}</msg>
-<status status="PASS" starttime="20201103 12:24:49.169" endtime="20201103 12:24:49.173"></status>
+<msg timestamp="20201103 12:36:08.228" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 0}</msg>
+<status status="PASS" starttime="20201103 12:36:08.225" endtime="20201103 12:36:08.228"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -733,18 +733,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.182" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:24:49.178" endtime="20201103 12:24:49.183"></status>
+<msg timestamp="20201103 12:36:08.236" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:08.234" endtime="20201103 12:36:08.237"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.188" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:24:49.185" endtime="20201103 12:24:49.189"></status>
+<msg timestamp="20201103 12:36:08.241" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:08.239" endtime="20201103 12:36:08.241"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.174" endtime="20201103 12:24:49.191"></status>
+<status status="PASS" starttime="20201103 12:36:08.230" endtime="20201103 12:36:08.242"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -757,18 +757,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.199" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:24:49.197" endtime="20201103 12:24:49.199"></status>
+<msg timestamp="20201103 12:36:08.250" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:08.248" endtime="20201103 12:36:08.251"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.203" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:24:49.201" endtime="20201103 12:24:49.204"></status>
+<msg timestamp="20201103 12:36:08.255" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:08.253" endtime="20201103 12:36:08.255"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.192" endtime="20201103 12:24:49.205"></status>
+<status status="PASS" starttime="20201103 12:36:08.244" endtime="20201103 12:36:08.256"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -781,18 +781,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.213" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:24:49.211" endtime="20201103 12:24:49.213"></status>
+<msg timestamp="20201103 12:36:08.264" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:08.262" endtime="20201103 12:36:08.265"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.218" level="INFO">VALUE: 0</msg>
-<status status="PASS" starttime="20201103 12:24:49.215" endtime="20201103 12:24:49.218"></status>
+<msg timestamp="20201103 12:36:08.269" level="INFO">VALUE: 0</msg>
+<status status="PASS" starttime="20201103 12:36:08.267" endtime="20201103 12:36:08.270"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.206" endtime="20201103 12:24:49.219"></status>
+<status status="PASS" starttime="20201103 12:36:08.258" endtime="20201103 12:36:08.271"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -824,18 +824,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.231" endtime="20201103 12:24:49.531"></status>
+<status status="PASS" starttime="20201103 12:36:08.284" endtime="20201103 12:36:08.589"></status>
 </kw>
-<msg timestamp="20201103 12:24:49.534" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.06930275, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.169310972, 'source': 'DUT_IC', 'event': 'FALL...</msg>
-<status status="PASS" starttime="20201103 12:24:49.229" endtime="20201103 12:24:49.534"></status>
+<msg timestamp="20201103 12:36:08.592" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.066917764, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.166924917, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:08.281" endtime="20201103 12:36:08.592"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.542" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.06930275, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.169310972, 'source': 'DUT_IC', 'event': 'FALL...</msg>
-<status status="PASS" starttime="20201103 12:24:49.535" endtime="20201103 12:24:49.542"></status>
+<msg timestamp="20201103 12:36:08.600" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.066917764, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.166924917, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:08.593" endtime="20201103 12:36:08.600"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -843,11 +843,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.543" endtime="20201103 12:24:49.544"></status>
+<status status="PASS" starttime="20201103 12:36:08.601" endtime="20201103 12:36:08.602"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.224" endtime="20201103 12:24:49.545"></status>
+<status status="PASS" starttime="20201103 12:36:08.276" endtime="20201103 12:36:08.603"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.221" endtime="20201103 12:24:49.545"></status>
+<status status="PASS" starttime="20201103 12:36:08.272" endtime="20201103 12:36:08.603"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -858,8 +858,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:24:49.549" level="INFO">${FILTERED} = [{'time': 1.169310972, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000822199999981, 'source_diff': 0.10000822199999981}, {'time': 1.269318292, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
-<status status="PASS" starttime="20201103 12:24:49.546" endtime="20201103 12:24:49.550"></status>
+<msg timestamp="20201103 12:36:08.607" level="INFO">${FILTERED} = [{'time': 1.166924917, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000715299999996, 'source_diff': 0.10000715299999996}, {'time': 1.266933222, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:08.604" endtime="20201103 12:36:08.607"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -869,8 +869,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:24:49.563" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:24:49.550" endtime="20201103 12:24:49.563"></status>
+<msg timestamp="20201103 12:36:08.621" level="INFO">${RESULT} = {'diff': [0.10000715299999996, 0.10000776400000011, 0.1000068329999999, 0.10000684700000018, 0.10000679199999984, 0.1000067910000002, 0.10000680599999989, 0.10000676400000019, 0.1000068329999999, 0.10...</msg>
+<status status="PASS" starttime="20201103 12:36:08.608" endtime="20201103 12:36:08.621"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -883,18 +883,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.567" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:24:49.566" endtime="20201103 12:24:49.567"></status>
+<msg timestamp="20201103 12:36:08.625" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:08.624" endtime="20201103 12:36:08.625"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.569" level="INFO">VALUE: [0.10000822199999981, 0.10000684799999982, 0.10000688899999988, 0.100006861, 0.1000068890000001, 0.100006861, 0.10000690199999984, 0.1000068329999999, 0.10000690300000015, 0.10000686099999978, 0.10000687500000005, 0.10000686099999978, 0.10000688899999988, 0.10000686100000022, 0.10000688899999988, 0.10000686099999978, 0.10000688899999988, 0.1000068470000004, 0.1000069309999998, 0.1000069029999997, 0.10000683300000013, 0.10000686199999986, 0.10000687500000005, 0.10000686099999978, 0.10000688900000032, 0.10000687500000005, 0.10000688800000024, 0.10000686099999978, 0.10000697200000008, 0.10000679199999984, 0.10000691699999997, 0.10000688900000032, 0.10000686099999978, 0.10000688900000032, 0.10000686099999978, 0.10000687500000005, 0.10000687500000005, 0.10000687500000005, 0.10000687500000005, 0.1000068470000004, 0.10000688900000032, 0.10000684699999951, 0.10000688900000032, 0.10000687500000005, 0.10000690200000051, 0.10000687500000005, 0.10000688899999943, 0.10000687500000005, 0.10000688900000032, 0.10000686099999978]</msg>
-<status status="PASS" starttime="20201103 12:24:49.568" endtime="20201103 12:24:49.570"></status>
+<msg timestamp="20201103 12:36:08.627" level="INFO">VALUE: [0.10000715299999996, 0.10000776400000011, 0.1000068329999999, 0.10000684700000018, 0.10000679199999984, 0.1000067910000002, 0.10000680599999989, 0.10000676400000019, 0.1000068329999999, 0.10000681899999986, 0.10000682000000038, 0.10000677699999994, 0.10000683299999968, 0.10000676400000019, 0.10000680500000003, 0.10000674999999992, 0.10000681999999994, 0.10000677800000002, 0.10000680500000003, 0.10000679200000029, 0.10000680600000011, 0.10000679099999976, 0.10000680500000003, 0.10000680600000011, 0.10000680600000011, 0.10000676300000011, 0.10000683299999968, 0.10000676400000019, 0.10000681899999986, 0.10000683300000057, 0.10000681999999994, 0.10000679200000029, 0.10000681900000075, 0.10000677800000002, 0.10000681999999994, 0.10000677800000002, 0.10000683300000013, 0.10000677800000002, 0.10000686099999978, 0.10000679099999932, 0.10000680499999959, 0.10000680599999967, 0.10000683400000021, 0.10000675000000037, 0.10000683300000013, 0.10000677800000002, 0.10000683400000021, 0.10000676399999975, 0.10000683300000013, 0.1000067919999994]</msg>
+<status status="PASS" starttime="20201103 12:36:08.626" endtime="20201103 12:36:08.627"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.564" endtime="20201103 12:24:49.570"></status>
+<status status="PASS" starttime="20201103 12:36:08.621" endtime="20201103 12:36:08.628"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -903,26 +903,26 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.572" endtime="20201103 12:24:49.573"></status>
+<status status="PASS" starttime="20201103 12:36:08.630" endtime="20201103 12:36:08.631"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:49.575" endtime="20201103 12:24:49.595"></status>
+<status status="PASS" starttime="20201103 12:36:08.633" endtime="20201103 12:36:08.653"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.574" endtime="20201103 12:24:49.595"></status>
+<status status="PASS" starttime="20201103 12:36:08.632" endtime="20201103 12:36:08.653"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.571" endtime="20201103 12:24:49.596"></status>
+<status status="PASS" starttime="20201103 12:36:08.628" endtime="20201103 12:36:08.654"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:42.121" endtime="20201103 12:24:49.596"></status>
+<status status="PASS" starttime="20201103 12:36:01.179" endtime="20201103 12:36:08.654"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:24:42.047" endtime="20201103 12:24:49.597" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:01.102" endtime="20201103 12:36:08.655" critical="yes"></status>
 </test>
 <test id="s1-s2-t2" name="5 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -935,9 +935,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:49.603" endtime="20201103 12:24:49.622"></status>
+<status status="PASS" starttime="20201103 12:36:08.661" endtime="20201103 12:36:08.681"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.602" endtime="20201103 12:24:49.623"></status>
+<status status="PASS" starttime="20201103 12:36:08.660" endtime="20201103 12:36:08.681"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -988,18 +988,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.636" endtime="20201103 12:24:49.650"></status>
+<status status="PASS" starttime="20201103 12:36:08.694" endtime="20201103 12:36:08.708"></status>
 </kw>
-<msg timestamp="20201103 12:24:49.651" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:49.635" endtime="20201103 12:24:49.651"></status>
+<msg timestamp="20201103 12:36:08.708" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:08.693" endtime="20201103 12:36:08.708"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.653" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:49.652" endtime="20201103 12:24:49.654"></status>
+<msg timestamp="20201103 12:36:08.711" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:08.709" endtime="20201103 12:36:08.711"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1007,14 +1007,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:49.656" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:49.654" endtime="20201103 12:24:49.656"></status>
+<msg timestamp="20201103 12:36:08.714" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:08.712" endtime="20201103 12:36:08.714"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:49.632" endtime="20201103 12:24:49.657"></status>
+<status status="FAIL" starttime="20201103 12:36:08.690" endtime="20201103 12:36:08.715"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:49.629" endtime="20201103 12:24:49.658"></status>
+<status status="FAIL" starttime="20201103 12:36:08.687" endtime="20201103 12:36:08.715"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.628" endtime="20201103 12:24:49.658"></status>
+<status status="PASS" starttime="20201103 12:36:08.686" endtime="20201103 12:36:08.715"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -1024,14 +1024,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:49.662" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:49.661" endtime="20201103 12:24:49.662"></status>
+<msg timestamp="20201103 12:36:08.719" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:08.718" endtime="20201103 12:36:08.719"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.659" endtime="20201103 12:24:49.662"></status>
+<status status="PASS" starttime="20201103 12:36:08.716" endtime="20201103 12:36:08.720"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.627" endtime="20201103 12:24:49.663"></status>
+<status status="PASS" starttime="20201103 12:36:08.685" endtime="20201103 12:36:08.721"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.627" endtime="20201103 12:24:49.664"></status>
+<status status="PASS" starttime="20201103 12:36:08.685" endtime="20201103 12:36:08.721"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1039,13 +1039,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.664" endtime="20201103 12:24:49.666"></status>
+<status status="PASS" starttime="20201103 12:36:08.722" endtime="20201103 12:36:08.723"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.625" endtime="20201103 12:24:49.666"></status>
+<status status="PASS" starttime="20201103 12:36:08.683" endtime="20201103 12:36:08.724"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.624" endtime="20201103 12:24:49.667"></status>
+<status status="PASS" starttime="20201103 12:36:08.682" endtime="20201103 12:36:08.724"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.600" endtime="20201103 12:24:49.667"></status>
+<status status="PASS" starttime="20201103 12:36:08.658" endtime="20201103 12:36:08.724"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -1083,18 +1083,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:49.675" endtime="20201103 12:24:56.696"></status>
+<status status="PASS" starttime="20201103 12:36:08.732" endtime="20201103 12:36:15.754"></status>
 </kw>
-<msg timestamp="20201103 12:24:56.697" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 5\r\n'], 'data': [{'bg-timer-count': '5'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:49.674" endtime="20201103 12:24:56.698"></status>
+<msg timestamp="20201103 12:36:15.755" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 5\r\n'], 'data': [{'bg-timer-count': '5'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:08.731" endtime="20201103 12:36:15.755"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.702" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 5\r\n'], 'data': [{'bg-timer-count': '5'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:56.699" endtime="20201103 12:24:56.703"></status>
+<msg timestamp="20201103 12:36:15.760" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 5\r\n'], 'data': [{'bg-timer-count': '5'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:15.757" endtime="20201103 12:36:15.761"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1102,11 +1102,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:56.705" endtime="20201103 12:24:56.708"></status>
+<status status="PASS" starttime="20201103 12:36:15.762" endtime="20201103 12:36:15.765"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.671" endtime="20201103 12:24:56.709"></status>
+<status status="PASS" starttime="20201103 12:36:08.728" endtime="20201103 12:36:15.766"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.669" endtime="20201103 12:24:56.710"></status>
+<status status="PASS" starttime="20201103 12:36:08.726" endtime="20201103 12:36:15.767"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -1116,8 +1116,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:24:56.715" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 5}</msg>
-<status status="PASS" starttime="20201103 12:24:56.711" endtime="20201103 12:24:56.715"></status>
+<msg timestamp="20201103 12:36:15.772" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 5}</msg>
+<status status="PASS" starttime="20201103 12:36:15.769" endtime="20201103 12:36:15.773"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1130,18 +1130,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.723" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:24:56.721" endtime="20201103 12:24:56.724"></status>
+<msg timestamp="20201103 12:36:15.781" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:15.778" endtime="20201103 12:36:15.781"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.727" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:24:56.725" endtime="20201103 12:24:56.728"></status>
+<msg timestamp="20201103 12:36:15.785" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:15.783" endtime="20201103 12:36:15.785"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:56.716" endtime="20201103 12:24:56.729"></status>
+<status status="PASS" starttime="20201103 12:36:15.774" endtime="20201103 12:36:15.786"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1154,18 +1154,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.737" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:24:56.735" endtime="20201103 12:24:56.738"></status>
+<msg timestamp="20201103 12:36:15.794" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:15.792" endtime="20201103 12:36:15.795"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.742" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:24:56.740" endtime="20201103 12:24:56.743"></status>
+<msg timestamp="20201103 12:36:15.799" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:15.797" endtime="20201103 12:36:15.800"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:56.730" endtime="20201103 12:24:56.744"></status>
+<status status="PASS" starttime="20201103 12:36:15.788" endtime="20201103 12:36:15.801"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1178,18 +1178,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.752" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:24:56.750" endtime="20201103 12:24:56.752"></status>
+<msg timestamp="20201103 12:36:15.809" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:15.807" endtime="20201103 12:36:15.810"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:56.756" level="INFO">VALUE: 5</msg>
-<status status="PASS" starttime="20201103 12:24:56.754" endtime="20201103 12:24:56.757"></status>
+<msg timestamp="20201103 12:36:15.813" level="INFO">VALUE: 5</msg>
+<status status="PASS" starttime="20201103 12:36:15.811" endtime="20201103 12:36:15.814"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:56.745" endtime="20201103 12:24:56.758"></status>
+<status status="PASS" starttime="20201103 12:36:15.802" endtime="20201103 12:36:15.815"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -1221,18 +1221,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:56.771" endtime="20201103 12:24:57.073"></status>
+<status status="PASS" starttime="20201103 12:36:15.825" endtime="20201103 12:36:16.123"></status>
 </kw>
-<msg timestamp="20201103 12:24:57.076" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062125681, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162131931, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:24:56.768" endtime="20201103 12:24:57.077"></status>
+<msg timestamp="20201103 12:36:16.126" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061372361, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161379528, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:15.824" endtime="20201103 12:36:16.126"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:57.084" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062125681, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162131931, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:24:57.077" endtime="20201103 12:24:57.085"></status>
+<msg timestamp="20201103 12:36:16.134" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061372361, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161379528, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:16.127" endtime="20201103 12:36:16.134"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1240,11 +1240,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:57.085" endtime="20201103 12:24:57.087"></status>
+<status status="PASS" starttime="20201103 12:36:16.135" endtime="20201103 12:36:16.137"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:56.763" endtime="20201103 12:24:57.087"></status>
+<status status="PASS" starttime="20201103 12:36:15.820" endtime="20201103 12:36:16.137"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:56.759" endtime="20201103 12:24:57.088"></status>
+<status status="PASS" starttime="20201103 12:36:15.816" endtime="20201103 12:36:16.137"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -1255,8 +1255,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:24:57.092" level="INFO">${FILTERED} = [{'time': 1.162131931, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000625000000007, 'source_diff': 0.10000625000000007}, {'time': 1.262140153, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
-<status status="PASS" starttime="20201103 12:24:57.089" endtime="20201103 12:24:57.092"></status>
+<msg timestamp="20201103 12:36:16.141" level="INFO">${FILTERED} = [{'time': 1.161379528, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000716700000001, 'source_diff': 0.10000716700000001}, {'time': 1.261386903, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:16.138" endtime="20201103 12:36:16.142"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -1266,8 +1266,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:24:57.105" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:24:57.093" endtime="20201103 12:24:57.105"></status>
+<msg timestamp="20201103 12:36:16.155" level="INFO">${RESULT} = {'diff': [0.10000716700000001, 0.10000683399999999, 0.10000681900000008, 0.10000677800000002, 0.10000681899999986, 0.10000679099999998, 0.10000679199999984, 0.10000680599999989, 0.10000680500000003, 0...</msg>
+<status status="PASS" starttime="20201103 12:36:16.142" endtime="20201103 12:36:16.155"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1280,18 +1280,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:57.109" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:24:57.108" endtime="20201103 12:24:57.110"></status>
+<msg timestamp="20201103 12:36:16.159" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:16.158" endtime="20201103 12:36:16.159"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:57.112" level="INFO">VALUE: [0.10000625000000007, 0.10000775000000006, 0.10000681900000008, 0.10000687500000005, 0.10000687500000005, 0.10000681900000008, 0.10000681900000008, 0.10000694500000007, 0.10000676399999997, 0.10000694500000007, 0.10000676400000019, 0.10000692999999972, 0.10000677699999994, 0.10000688899999988, 0.10000680500000003, 0.10000688899999988, 0.10000680599999967, 0.10000697200000008, 0.10000674999999992, 0.10000695800000026, 0.10000673699999973, 0.10000690200000006, 0.10000683299999968, 0.10000686100000022, 0.10000681899999986, 0.10000688900000032, 0.10000683399999977, 0.10000688900000032, 0.10000681899999986, 0.10000687500000005, 0.10000687500000005, 0.10000683299999924, 0.10000683400000021, 0.10000687500000005, 0.10000681999999994, 0.10000688900000032, 0.10000681899999986, 0.10000690199999962, 0.10000681899999986, 0.10000693100000024, 0.10000677800000002, 0.10000688899999943, 0.10000687500000005, 0.1000068470000004, 0.10000683300000013, 0.1000069029999997, 0.10000680600000056, 0.10000688900000032, 0.10000681899999986, 0.10000693000000016]</msg>
-<status status="PASS" starttime="20201103 12:24:57.111" endtime="20201103 12:24:57.112"></status>
+<msg timestamp="20201103 12:36:16.161" level="INFO">VALUE: [0.10000716700000001, 0.10000683399999999, 0.10000681900000008, 0.10000677800000002, 0.10000681899999986, 0.10000679099999998, 0.10000679199999984, 0.10000680599999989, 0.10000680500000003, 0.10000679099999998, 0.10000680600000011, 0.10000681999999994, 0.10000679200000029, 0.10000681899999986, 0.10000677800000002, 0.10000679200000029, 0.10000680500000003, 0.10000679199999984, 0.10000679199999984, 0.10000677700000038, 0.10000680599999967, 0.10000679199999984, 0.10000681899999986, 0.10000677699999994, 0.10000686100000022, 0.10000679200000029, 0.10000680500000003, 0.10000679199999984, 0.10000683400000021, 0.10000677800000002, 0.1000067910000002, 0.1000067919999994, 0.10000680599999967, 0.10000680499999959, 0.10000680499999959, 0.10000679200000029, 0.10000679200000029, 0.10000680500000048, 0.10000686100000067, 0.10000680599999967, 0.10000681999999994, 0.1000067910000002, 0.10000679200000029, 0.10000680599999967, 0.1000067919999994, 0.10000680499999959, 0.10000680599999967, 0.10000680599999967, 0.10000680599999967, 0.10000681899999986]</msg>
+<status status="PASS" starttime="20201103 12:36:16.160" endtime="20201103 12:36:16.162"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.106" endtime="20201103 12:24:57.113"></status>
+<status status="PASS" starttime="20201103 12:36:16.156" endtime="20201103 12:36:16.162"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -1300,26 +1300,26 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:57.115" endtime="20201103 12:24:57.116"></status>
+<status status="PASS" starttime="20201103 12:36:16.164" endtime="20201103 12:36:16.166"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:57.118" endtime="20201103 12:24:57.137"></status>
+<status status="PASS" starttime="20201103 12:36:16.168" endtime="20201103 12:36:16.187"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.117" endtime="20201103 12:24:57.138"></status>
+<status status="PASS" starttime="20201103 12:36:16.166" endtime="20201103 12:36:16.188"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.113" endtime="20201103 12:24:57.138"></status>
+<status status="PASS" starttime="20201103 12:36:16.163" endtime="20201103 12:36:16.188"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:49.668" endtime="20201103 12:24:57.139"></status>
+<status status="PASS" starttime="20201103 12:36:08.725" endtime="20201103 12:36:16.188"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:24:49.598" endtime="20201103 12:24:57.139" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:08.656" endtime="20201103 12:36:16.189" critical="yes"></status>
 </test>
 <test id="s1-s2-t3" name="10 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -1332,9 +1332,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:24:57.146" endtime="20201103 12:24:57.166"></status>
+<status status="PASS" starttime="20201103 12:36:16.196" endtime="20201103 12:36:16.215"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.145" endtime="20201103 12:24:57.166"></status>
+<status status="PASS" starttime="20201103 12:36:16.194" endtime="20201103 12:36:16.216"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -1385,18 +1385,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:57.179" endtime="20201103 12:24:57.193"></status>
+<status status="PASS" starttime="20201103 12:36:16.228" endtime="20201103 12:36:16.243"></status>
 </kw>
-<msg timestamp="20201103 12:24:57.194" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:57.177" endtime="20201103 12:24:57.194"></status>
+<msg timestamp="20201103 12:36:16.244" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:16.227" endtime="20201103 12:36:16.244"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:57.196" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:57.195" endtime="20201103 12:24:57.197"></status>
+<msg timestamp="20201103 12:36:16.246" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:16.245" endtime="20201103 12:36:16.247"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1404,14 +1404,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:24:57.199" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:24:57.198" endtime="20201103 12:24:57.200"></status>
+<msg timestamp="20201103 12:36:16.249" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:16.247" endtime="20201103 12:36:16.250"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:57.175" endtime="20201103 12:24:57.200"></status>
+<status status="FAIL" starttime="20201103 12:36:16.224" endtime="20201103 12:36:16.250"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:24:57.173" endtime="20201103 12:24:57.201"></status>
+<status status="FAIL" starttime="20201103 12:36:16.222" endtime="20201103 12:36:16.251"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.171" endtime="20201103 12:24:57.201"></status>
+<status status="PASS" starttime="20201103 12:36:16.221" endtime="20201103 12:36:16.251"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -1421,14 +1421,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:24:57.205" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:24:57.204" endtime="20201103 12:24:57.205"></status>
+<msg timestamp="20201103 12:36:16.255" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:16.254" endtime="20201103 12:36:16.255"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.202" endtime="20201103 12:24:57.206"></status>
+<status status="PASS" starttime="20201103 12:36:16.252" endtime="20201103 12:36:16.255"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.171" endtime="20201103 12:24:57.206"></status>
+<status status="PASS" starttime="20201103 12:36:16.220" endtime="20201103 12:36:16.255"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.170" endtime="20201103 12:24:57.206"></status>
+<status status="PASS" starttime="20201103 12:36:16.219" endtime="20201103 12:36:16.256"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1436,13 +1436,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:57.207" endtime="20201103 12:24:57.208"></status>
+<status status="PASS" starttime="20201103 12:36:16.256" endtime="20201103 12:36:16.258"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.168" endtime="20201103 12:24:57.209"></status>
+<status status="PASS" starttime="20201103 12:36:16.218" endtime="20201103 12:36:16.258"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.167" endtime="20201103 12:24:57.209"></status>
+<status status="PASS" starttime="20201103 12:36:16.216" endtime="20201103 12:36:16.259"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.143" endtime="20201103 12:24:57.209"></status>
+<status status="PASS" starttime="20201103 12:36:16.193" endtime="20201103 12:36:16.259"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -1480,18 +1480,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:24:57.217" endtime="20201103 12:25:04.239"></status>
+<status status="PASS" starttime="20201103 12:36:16.267" endtime="20201103 12:36:23.289"></status>
 </kw>
-<msg timestamp="20201103 12:25:04.241" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 10\r\n'], 'data': [{'bg-timer-count': '10'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:24:57.216" endtime="20201103 12:25:04.242"></status>
+<msg timestamp="20201103 12:36:23.290" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 10\r\n'], 'data': [{'bg-timer-count': '10'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:16.265" endtime="20201103 12:36:23.290"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.249" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 10\r\n'], 'data': [{'bg-timer-count': '10'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:04.244" endtime="20201103 12:25:04.250"></status>
+<msg timestamp="20201103 12:36:23.295" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 10\r\n'], 'data': [{'bg-timer-count': '10'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:23.292" endtime="20201103 12:36:23.296"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1499,11 +1499,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.252" endtime="20201103 12:25:04.255"></status>
+<status status="PASS" starttime="20201103 12:36:23.297" endtime="20201103 12:36:23.301"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.213" endtime="20201103 12:25:04.256"></status>
+<status status="PASS" starttime="20201103 12:36:16.263" endtime="20201103 12:36:23.302"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.211" endtime="20201103 12:25:04.257"></status>
+<status status="PASS" starttime="20201103 12:36:16.261" endtime="20201103 12:36:23.303"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -1513,8 +1513,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:04.263" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 10}</msg>
-<status status="PASS" starttime="20201103 12:25:04.259" endtime="20201103 12:25:04.263"></status>
+<msg timestamp="20201103 12:36:23.307" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 10}</msg>
+<status status="PASS" starttime="20201103 12:36:23.304" endtime="20201103 12:36:23.308"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1527,18 +1527,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.272" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:04.269" endtime="20201103 12:25:04.273"></status>
+<msg timestamp="20201103 12:36:23.317" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:23.314" endtime="20201103 12:36:23.317"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.277" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:25:04.275" endtime="20201103 12:25:04.278"></status>
+<msg timestamp="20201103 12:36:23.321" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:23.319" endtime="20201103 12:36:23.322"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.264" endtime="20201103 12:25:04.279"></status>
+<status status="PASS" starttime="20201103 12:36:23.309" endtime="20201103 12:36:23.323"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1551,18 +1551,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.287" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:04.285" endtime="20201103 12:25:04.287"></status>
+<msg timestamp="20201103 12:36:23.331" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:23.329" endtime="20201103 12:36:23.331"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.291" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:25:04.289" endtime="20201103 12:25:04.292"></status>
+<msg timestamp="20201103 12:36:23.335" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:23.333" endtime="20201103 12:36:23.336"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.280" endtime="20201103 12:25:04.293"></status>
+<status status="PASS" starttime="20201103 12:36:23.324" endtime="20201103 12:36:23.337"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1575,18 +1575,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.300" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:25:04.298" endtime="20201103 12:25:04.301"></status>
+<msg timestamp="20201103 12:36:23.341" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:23.340" endtime="20201103 12:36:23.341"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.305" level="INFO">VALUE: 10</msg>
-<status status="PASS" starttime="20201103 12:25:04.303" endtime="20201103 12:25:04.305"></status>
+<msg timestamp="20201103 12:36:23.343" level="INFO">VALUE: 10</msg>
+<status status="PASS" starttime="20201103 12:36:23.342" endtime="20201103 12:36:23.343"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.294" endtime="20201103 12:25:04.306"></status>
+<status status="PASS" starttime="20201103 12:36:23.337" endtime="20201103 12:36:23.344"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -1618,18 +1618,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.320" endtime="20201103 12:25:04.626"></status>
+<status status="PASS" starttime="20201103 12:36:23.350" endtime="20201103 12:36:23.649"></status>
 </kw>
-<msg timestamp="20201103 12:25:04.628" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061494056, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161502333, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:04.317" endtime="20201103 12:25:04.629"></status>
+<msg timestamp="20201103 12:36:23.652" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061435653, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161442792, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:23.348" endtime="20201103 12:36:23.652"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.636" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061494056, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161502333, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:04.630" endtime="20201103 12:25:04.637"></status>
+<msg timestamp="20201103 12:36:23.660" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061435653, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161442792, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:23.653" endtime="20201103 12:36:23.660"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1637,11 +1637,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.637" endtime="20201103 12:25:04.639"></status>
+<status status="PASS" starttime="20201103 12:36:23.661" endtime="20201103 12:36:23.662"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.311" endtime="20201103 12:25:04.640"></status>
+<status status="PASS" starttime="20201103 12:36:23.346" endtime="20201103 12:36:23.663"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.308" endtime="20201103 12:25:04.640"></status>
+<status status="PASS" starttime="20201103 12:36:23.344" endtime="20201103 12:36:23.663"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -1652,8 +1652,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:25:04.644" level="INFO">${FILTERED} = [{'time': 1.161502333, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000827700000015, 'source_diff': 0.10000827700000015}, {'time': 1.261509569, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
-<status status="PASS" starttime="20201103 12:25:04.641" endtime="20201103 12:25:04.644"></status>
+<msg timestamp="20201103 12:36:23.667" level="INFO">${FILTERED} = [{'time': 1.161442792, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000713899999991, 'source_diff': 0.10000713899999991}, {'time': 1.261451139, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:23.664" endtime="20201103 12:36:23.667"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -1663,8 +1663,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:04.657" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:25:04.645" endtime="20201103 12:25:04.657"></status>
+<msg timestamp="20201103 12:36:23.680" level="INFO">${RESULT} = {'diff': [0.10000713899999991, 0.10000780600000003, 0.10000677699999994, 0.10000680600000011, 0.10000677800000002, 0.10000679099999998, 0.10000679200000007, 0.10000683399999999, 0.10000674999999992, 0...</msg>
+<status status="PASS" starttime="20201103 12:36:23.668" endtime="20201103 12:36:23.680"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1677,18 +1677,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.661" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:25:04.660" endtime="20201103 12:25:04.661"></status>
+<msg timestamp="20201103 12:36:23.684" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:23.683" endtime="20201103 12:36:23.684"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.663" level="INFO">VALUE: [0.10000827700000015, 0.10000676299999989, 0.1000068329999999, 0.10000690299999992, 0.10000687499999983, 0.10000687500000005, 0.1000068329999999, 0.10000691699999997, 0.1000068329999999, 0.10000690300000015, 0.10000684800000004, 0.10000690300000015, 0.10000683300000013, 0.10000698599999991, 0.10000677699999994, 0.10000690200000006, 0.10000683300000013, 0.10000691699999997, 0.10000683299999968, 0.10000693000000016, 0.10000681999999994, 0.1000069029999997, 0.10000684699999995, 0.10000691700000042, 0.10000683399999977, 0.10000690199999962, 0.10000683299999968, 0.10000691700000042, 0.10000686099999978, 0.10000690300000015, 0.10000683400000021, 0.10000691600000078, 0.10000683300000013, 0.10000694500000051, 0.10000683300000013, 0.10000691699999997, 0.10000684799999959, 0.10000690300000059, 0.10000684699999951, 0.10000691699999997, 0.10000683300000013, 0.10000690199999962, 0.10000683400000021, 0.10000691699999997, 0.10000683300000013, 0.10000691699999997, 0.10000683300000013, 0.10000691599999989, 0.10000684699999951, 0.10000691699999997]</msg>
-<status status="PASS" starttime="20201103 12:25:04.662" endtime="20201103 12:25:04.664"></status>
+<msg timestamp="20201103 12:36:23.687" level="INFO">VALUE: [0.10000713899999991, 0.10000780600000003, 0.10000677699999994, 0.10000680600000011, 0.10000677800000002, 0.10000679099999998, 0.10000679200000007, 0.10000683399999999, 0.10000674999999992, 0.10000683300000013, 0.10000674999999992, 0.10000683300000013, 0.10000676399999975, 0.10000679200000029, 0.10000679099999976, 0.10000680500000003, 0.10000679200000029, 0.10000681999999994, 0.10000676300000011, 0.10000680600000011, 0.10000679199999984, 0.1000067910000002, 0.10000680599999967, 0.10000679199999984, 0.10000679099999976, 0.10000680499999959, 0.10000682000000038, 0.10000679199999984, 0.10000677699999994, 0.10000679199999984, 0.10000686099999978, 0.10000681899999986, 0.10000677700000082, 0.10000686099999978, 0.10000686199999986, 0.1000067910000002, 0.10000681900000075, 0.10000677800000002, 0.10000680499999959, 0.10000679099999932, 0.10000680599999967, 0.10000683400000021, 0.10000676400000064, 0.10000680499999959, 0.10000679200000029, 0.10000679200000029, 0.10000680500000048, 0.1000068470000004, 0.10000680599999967, 0.10000684699999951]</msg>
+<status status="PASS" starttime="20201103 12:36:23.685" endtime="20201103 12:36:23.687"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.657" endtime="20201103 12:25:04.664"></status>
+<status status="PASS" starttime="20201103 12:36:23.681" endtime="20201103 12:36:23.688"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -1697,26 +1697,26 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.666" endtime="20201103 12:25:04.668"></status>
+<status status="PASS" starttime="20201103 12:36:23.690" endtime="20201103 12:36:23.692"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:04.670" endtime="20201103 12:25:04.690"></status>
+<status status="PASS" starttime="20201103 12:36:23.694" endtime="20201103 12:36:23.713"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.668" endtime="20201103 12:25:04.690"></status>
+<status status="PASS" starttime="20201103 12:36:23.692" endtime="20201103 12:36:23.714"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.665" endtime="20201103 12:25:04.691"></status>
+<status status="PASS" starttime="20201103 12:36:23.688" endtime="20201103 12:36:23.714"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:24:57.210" endtime="20201103 12:25:04.691"></status>
+<status status="PASS" starttime="20201103 12:36:16.259" endtime="20201103 12:36:23.714"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:24:57.141" endtime="20201103 12:25:04.691" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:16.190" endtime="20201103 12:36:23.715" critical="yes"></status>
 </test>
 <test id="s1-s2-t4" name="15 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -1729,9 +1729,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:04.699" endtime="20201103 12:25:04.719"></status>
+<status status="PASS" starttime="20201103 12:36:23.721" endtime="20201103 12:36:23.741"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.697" endtime="20201103 12:25:04.720"></status>
+<status status="PASS" starttime="20201103 12:36:23.720" endtime="20201103 12:36:23.741"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -1782,18 +1782,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.733" endtime="20201103 12:25:04.748"></status>
+<status status="PASS" starttime="20201103 12:36:23.755" endtime="20201103 12:36:23.769"></status>
 </kw>
-<msg timestamp="20201103 12:25:04.748" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:04.732" endtime="20201103 12:25:04.748"></status>
+<msg timestamp="20201103 12:36:23.770" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:23.753" endtime="20201103 12:36:23.770"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.751" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:04.749" endtime="20201103 12:25:04.751"></status>
+<msg timestamp="20201103 12:36:23.772" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:23.771" endtime="20201103 12:36:23.773"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1801,14 +1801,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:04.754" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:25:04.752" endtime="20201103 12:25:04.754"></status>
+<msg timestamp="20201103 12:36:23.775" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:23.773" endtime="20201103 12:36:23.776"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:04.728" endtime="20201103 12:25:04.755"></status>
+<status status="FAIL" starttime="20201103 12:36:23.750" endtime="20201103 12:36:23.776"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:04.726" endtime="20201103 12:25:04.755"></status>
+<status status="FAIL" starttime="20201103 12:36:23.748" endtime="20201103 12:36:23.777"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.725" endtime="20201103 12:25:04.756"></status>
+<status status="PASS" starttime="20201103 12:36:23.746" endtime="20201103 12:36:23.777"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -1818,14 +1818,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:25:04.759" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:25:04.759" endtime="20201103 12:25:04.760"></status>
+<msg timestamp="20201103 12:36:23.781" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:23.780" endtime="20201103 12:36:23.781"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.757" endtime="20201103 12:25:04.760"></status>
+<status status="PASS" starttime="20201103 12:36:23.778" endtime="20201103 12:36:23.781"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.724" endtime="20201103 12:25:04.760"></status>
+<status status="PASS" starttime="20201103 12:36:23.746" endtime="20201103 12:36:23.782"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.724" endtime="20201103 12:25:04.760"></status>
+<status status="PASS" starttime="20201103 12:36:23.745" endtime="20201103 12:36:23.782"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1833,13 +1833,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.761" endtime="20201103 12:25:04.763"></status>
+<status status="PASS" starttime="20201103 12:36:23.783" endtime="20201103 12:36:23.784"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.722" endtime="20201103 12:25:04.763"></status>
+<status status="PASS" starttime="20201103 12:36:23.744" endtime="20201103 12:36:23.785"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.721" endtime="20201103 12:25:04.764"></status>
+<status status="PASS" starttime="20201103 12:36:23.742" endtime="20201103 12:36:23.785"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.695" endtime="20201103 12:25:04.764"></status>
+<status status="PASS" starttime="20201103 12:36:23.719" endtime="20201103 12:36:23.785"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -1877,18 +1877,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:04.772" endtime="20201103 12:25:11.794"></status>
+<status status="PASS" starttime="20201103 12:36:23.794" endtime="20201103 12:36:30.816"></status>
 </kw>
-<msg timestamp="20201103 12:25:11.795" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 15\r\n'], 'data': [{'bg-timer-count': '15'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:04.770" endtime="20201103 12:25:11.795"></status>
+<msg timestamp="20201103 12:36:30.817" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 15\r\n'], 'data': [{'bg-timer-count': '15'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:23.792" endtime="20201103 12:36:30.817"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.800" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 15\r\n'], 'data': [{'bg-timer-count': '15'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:11.797" endtime="20201103 12:25:11.801"></status>
+<msg timestamp="20201103 12:36:30.822" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 15\r\n'], 'data': [{'bg-timer-count': '15'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:30.819" endtime="20201103 12:36:30.823"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -1896,11 +1896,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:11.802" endtime="20201103 12:25:11.806"></status>
+<status status="PASS" starttime="20201103 12:36:30.824" endtime="20201103 12:36:30.828"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.768" endtime="20201103 12:25:11.807"></status>
+<status status="PASS" starttime="20201103 12:36:23.789" endtime="20201103 12:36:30.830"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.766" endtime="20201103 12:25:11.808"></status>
+<status status="PASS" starttime="20201103 12:36:23.787" endtime="20201103 12:36:30.831"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -1910,8 +1910,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:11.813" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 15}</msg>
-<status status="PASS" starttime="20201103 12:25:11.810" endtime="20201103 12:25:11.814"></status>
+<msg timestamp="20201103 12:36:30.835" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 15}</msg>
+<status status="PASS" starttime="20201103 12:36:30.832" endtime="20201103 12:36:30.836"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1924,18 +1924,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.822" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:11.820" endtime="20201103 12:25:11.822"></status>
+<msg timestamp="20201103 12:36:30.844" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:30.842" endtime="20201103 12:36:30.845"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.826" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:25:11.824" endtime="20201103 12:25:11.826"></status>
+<msg timestamp="20201103 12:36:30.848" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:30.846" endtime="20201103 12:36:30.849"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:11.815" endtime="20201103 12:25:11.828"></status>
+<status status="PASS" starttime="20201103 12:36:30.837" endtime="20201103 12:36:30.850"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1948,18 +1948,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.835" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:11.833" endtime="20201103 12:25:11.836"></status>
+<msg timestamp="20201103 12:36:30.858" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:30.856" endtime="20201103 12:36:30.859"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.840" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:25:11.838" endtime="20201103 12:25:11.840"></status>
+<msg timestamp="20201103 12:36:30.862" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:30.861" endtime="20201103 12:36:30.863"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:11.829" endtime="20201103 12:25:11.841"></status>
+<status status="PASS" starttime="20201103 12:36:30.852" endtime="20201103 12:36:30.864"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -1972,18 +1972,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.849" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:25:11.847" endtime="20201103 12:25:11.850"></status>
+<msg timestamp="20201103 12:36:30.868" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:30.867" endtime="20201103 12:36:30.868"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:11.853" level="INFO">VALUE: 15</msg>
-<status status="PASS" starttime="20201103 12:25:11.851" endtime="20201103 12:25:11.854"></status>
+<msg timestamp="20201103 12:36:30.870" level="INFO">VALUE: 15</msg>
+<status status="PASS" starttime="20201103 12:36:30.869" endtime="20201103 12:36:30.871"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:11.843" endtime="20201103 12:25:11.855"></status>
+<status status="PASS" starttime="20201103 12:36:30.864" endtime="20201103 12:36:30.874"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -2015,18 +2015,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:11.870" endtime="20201103 12:25:12.173"></status>
+<status status="PASS" starttime="20201103 12:36:30.885" endtime="20201103 12:36:31.183"></status>
 </kw>
-<msg timestamp="20201103 12:25:12.175" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062531236, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162539514, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:11.867" endtime="20201103 12:25:12.176"></status>
+<msg timestamp="20201103 12:36:31.186" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062619417, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162627528, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:30.884" endtime="20201103 12:36:31.186"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:12.183" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062531236, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162539514, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:12.177" endtime="20201103 12:25:12.184"></status>
+<msg timestamp="20201103 12:36:31.194" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062619417, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162627528, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:31.187" endtime="20201103 12:36:31.194"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2034,11 +2034,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:12.184" endtime="20201103 12:25:12.186"></status>
+<status status="PASS" starttime="20201103 12:36:31.195" endtime="20201103 12:36:31.197"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:11.860" endtime="20201103 12:25:12.187"></status>
+<status status="PASS" starttime="20201103 12:36:30.877" endtime="20201103 12:36:31.197"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:11.856" endtime="20201103 12:25:12.187"></status>
+<status status="PASS" starttime="20201103 12:36:30.874" endtime="20201103 12:36:31.198"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -2049,8 +2049,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:25:12.191" level="INFO">${FILTERED} = [{'time': 1.162539514, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.100008278, 'source_diff': 0.100008278}, {'time': 1.26254575, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.1000057639999998...</msg>
-<status status="PASS" starttime="20201103 12:25:12.188" endtime="20201103 12:25:12.191"></status>
+<msg timestamp="20201103 12:36:31.202" level="INFO">${FILTERED} = [{'time': 1.162627528, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000811099999996, 'source_diff': 0.10000811099999996}, {'time': 1.262633847, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:31.198" endtime="20201103 12:36:31.202"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -2060,8 +2060,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:12.203" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:25:12.192" endtime="20201103 12:25:12.204"></status>
+<msg timestamp="20201103 12:36:31.215" level="INFO">${RESULT} = {'diff': [0.10000811099999996, 0.1000057780000001, 0.10000679200000007, 0.10000674999999992, 0.10000680500000003, 0.10000675000000014, 0.10000677800000002, 0.10000676399999997, 0.10000677800000002, 0....</msg>
+<status status="PASS" starttime="20201103 12:36:31.203" endtime="20201103 12:36:31.215"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2074,18 +2074,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:12.208" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:25:12.207" endtime="20201103 12:25:12.208"></status>
+<msg timestamp="20201103 12:36:31.219" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:31.218" endtime="20201103 12:36:31.219"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:12.210" level="INFO">VALUE: [0.100008278, 0.10000576399999983, 0.10000683399999999, 0.10000690299999992, 0.10000684699999995, 0.10000690300000015, 0.10000681999999994, 0.10000690200000006, 0.100006861, 0.10000688900000032, 0.10000683299999968, 0.10000691599999989, 0.10000683300000013, 0.10000691699999997, 0.10000683300000013, 0.10000690200000006, 0.10000683400000021, 0.10000691699999997, 0.10000683299999968, 0.1000069029999997, 0.10000686099999978, 0.10000687500000005, 0.10000683300000013, 0.10000691699999997, 0.10000688900000032, 0.10000686099999978, 0.10000683300000013, 0.10000690300000015, 0.10000683300000013, 0.10000691600000033, 0.10000683399999932, 0.1000069580000007, 0.10000680500000048, 0.10000694499999963, 0.10000680600000056, 0.10000691599999989, 0.10000690199999962, 0.1000068470000004, 0.10000686099999978, 0.10000697300000017, 0.10000677800000002, 0.10000692999999927, 0.10000681900000075, 0.10000690300000059, 0.10000687500000005, 0.10000687500000005, 0.10000688900000032, 0.10000687500000005, 0.10000683299999924, 0.10000693100000024]</msg>
-<status status="PASS" starttime="20201103 12:25:12.209" endtime="20201103 12:25:12.211"></status>
+<msg timestamp="20201103 12:36:31.222" level="INFO">VALUE: [0.10000811099999996, 0.1000057780000001, 0.10000679200000007, 0.10000674999999992, 0.10000680500000003, 0.10000675000000014, 0.10000677800000002, 0.10000676399999997, 0.10000677800000002, 0.10000679200000007, 0.10000676300000011, 0.10000681999999994, 0.10000677700000038, 0.10000677800000002, 0.10000677699999994, 0.10000677800000002, 0.10000677800000002, 0.10000677800000002, 0.10000677800000002, 0.1000067910000002, 0.10000677800000002, 0.10000676299999967, 0.10000677800000002, 0.1000067910000002, 0.10000677800000002, 0.10000676400000019, 0.10000679199999984, 0.10000679200000029, 0.10000674999999992, 0.10000677800000002, 0.1000067910000002, 0.1000067919999994, 0.10000677800000002, 0.10000676400000064, 0.10000680600000056, 0.10000675000000037, 0.10000679200000029, 0.10000677699999994, 0.10000677800000002, 0.10000677800000002, 0.10000677800000002, 0.10000679200000029, 0.10000677699999994, 0.1000067919999994, 0.10000679200000029, 0.10000676399999975, 0.10000677800000002, 0.1000067910000002, 0.10000677800000002, 0.10000677699999994]</msg>
+<status status="PASS" starttime="20201103 12:36:31.220" endtime="20201103 12:36:31.222"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.204" endtime="20201103 12:25:12.211"></status>
+<status status="PASS" starttime="20201103 12:36:31.216" endtime="20201103 12:36:31.223"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -2094,26 +2094,26 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:12.214" endtime="20201103 12:25:12.215"></status>
+<status status="PASS" starttime="20201103 12:36:31.225" endtime="20201103 12:36:31.227"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:12.217" endtime="20201103 12:25:12.236"></status>
+<status status="PASS" starttime="20201103 12:36:31.229" endtime="20201103 12:36:31.248"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.215" endtime="20201103 12:25:12.237"></status>
+<status status="PASS" starttime="20201103 12:36:31.227" endtime="20201103 12:36:31.249"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.212" endtime="20201103 12:25:12.237"></status>
+<status status="PASS" starttime="20201103 12:36:31.224" endtime="20201103 12:36:31.249"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:04.764" endtime="20201103 12:25:12.237"></status>
+<status status="PASS" starttime="20201103 12:36:23.786" endtime="20201103 12:36:31.250"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:25:04.693" endtime="20201103 12:25:12.238" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:23.716" endtime="20201103 12:36:31.250" critical="yes"></status>
 </test>
 <test id="s1-s2-t5" name="20 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -2126,9 +2126,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:12.244" endtime="20201103 12:25:12.264"></status>
+<status status="PASS" starttime="20201103 12:36:31.257" endtime="20201103 12:36:31.276"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.243" endtime="20201103 12:25:12.264"></status>
+<status status="PASS" starttime="20201103 12:36:31.255" endtime="20201103 12:36:31.277"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -2179,18 +2179,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:12.278" endtime="20201103 12:25:12.292"></status>
+<status status="PASS" starttime="20201103 12:36:31.291" endtime="20201103 12:36:31.305"></status>
 </kw>
-<msg timestamp="20201103 12:25:12.292" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:12.277" endtime="20201103 12:25:12.292"></status>
+<msg timestamp="20201103 12:36:31.306" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:31.290" endtime="20201103 12:36:31.306"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:12.295" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:12.293" endtime="20201103 12:25:12.295"></status>
+<msg timestamp="20201103 12:36:31.309" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:31.307" endtime="20201103 12:36:31.309"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2198,14 +2198,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:12.298" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:25:12.296" endtime="20201103 12:25:12.298"></status>
+<msg timestamp="20201103 12:36:31.312" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:31.310" endtime="20201103 12:36:31.312"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:12.274" endtime="20201103 12:25:12.299"></status>
+<status status="FAIL" starttime="20201103 12:36:31.287" endtime="20201103 12:36:31.313"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:12.271" endtime="20201103 12:25:12.299"></status>
+<status status="FAIL" starttime="20201103 12:36:31.284" endtime="20201103 12:36:31.313"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.270" endtime="20201103 12:25:12.300"></status>
+<status status="PASS" starttime="20201103 12:36:31.282" endtime="20201103 12:36:31.314"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -2215,14 +2215,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:25:12.303" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:25:12.302" endtime="20201103 12:25:12.304"></status>
+<msg timestamp="20201103 12:36:31.317" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:31.317" endtime="20201103 12:36:31.318"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.300" endtime="20201103 12:25:12.304"></status>
+<status status="PASS" starttime="20201103 12:36:31.314" endtime="20201103 12:36:31.318"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.269" endtime="20201103 12:25:12.304"></status>
+<status status="PASS" starttime="20201103 12:36:31.282" endtime="20201103 12:36:31.318"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.268" endtime="20201103 12:25:12.304"></status>
+<status status="PASS" starttime="20201103 12:36:31.281" endtime="20201103 12:36:31.318"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2230,13 +2230,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:12.305" endtime="20201103 12:25:12.306"></status>
+<status status="PASS" starttime="20201103 12:36:31.319" endtime="20201103 12:36:31.321"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.267" endtime="20201103 12:25:12.307"></status>
+<status status="PASS" starttime="20201103 12:36:31.279" endtime="20201103 12:36:31.321"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.265" endtime="20201103 12:25:12.307"></status>
+<status status="PASS" starttime="20201103 12:36:31.278" endtime="20201103 12:36:31.322"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.242" endtime="20201103 12:25:12.308"></status>
+<status status="PASS" starttime="20201103 12:36:31.254" endtime="20201103 12:36:31.322"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -2274,18 +2274,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:12.316" endtime="20201103 12:25:19.337"></status>
+<status status="PASS" starttime="20201103 12:36:31.330" endtime="20201103 12:36:38.352"></status>
 </kw>
-<msg timestamp="20201103 12:25:19.338" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 20\r\n'], 'data': [{'bg-timer-count': '20'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:12.314" endtime="20201103 12:25:19.338"></status>
+<msg timestamp="20201103 12:36:38.353" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 20\r\n'], 'data': [{'bg-timer-count': '20'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:31.329" endtime="20201103 12:36:38.353"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.343" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 20\r\n'], 'data': [{'bg-timer-count': '20'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:19.340" endtime="20201103 12:25:19.345"></status>
+<msg timestamp="20201103 12:36:38.358" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 20\r\n'], 'data': [{'bg-timer-count': '20'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:38.355" endtime="20201103 12:36:38.359"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2293,11 +2293,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.346" endtime="20201103 12:25:19.350"></status>
+<status status="PASS" starttime="20201103 12:36:38.361" endtime="20201103 12:36:38.364"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.312" endtime="20201103 12:25:19.351"></status>
+<status status="PASS" starttime="20201103 12:36:31.326" endtime="20201103 12:36:38.365"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.310" endtime="20201103 12:25:19.352"></status>
+<status status="PASS" starttime="20201103 12:36:31.324" endtime="20201103 12:36:38.366"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -2307,8 +2307,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:19.357" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 20}</msg>
-<status status="PASS" starttime="20201103 12:25:19.353" endtime="20201103 12:25:19.357"></status>
+<msg timestamp="20201103 12:36:38.371" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 20}</msg>
+<status status="PASS" starttime="20201103 12:36:38.368" endtime="20201103 12:36:38.372"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2321,18 +2321,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.365" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:19.363" endtime="20201103 12:25:19.366"></status>
+<msg timestamp="20201103 12:36:38.380" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:38.378" endtime="20201103 12:36:38.381"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.370" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:25:19.368" endtime="20201103 12:25:19.371"></status>
+<msg timestamp="20201103 12:36:38.385" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:38.383" endtime="20201103 12:36:38.385"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.358" endtime="20201103 12:25:19.372"></status>
+<status status="PASS" starttime="20201103 12:36:38.373" endtime="20201103 12:36:38.386"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2345,18 +2345,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.380" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:19.378" endtime="20201103 12:25:19.380"></status>
+<msg timestamp="20201103 12:36:38.390" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:38.389" endtime="20201103 12:36:38.390"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.384" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:25:19.382" endtime="20201103 12:25:19.385"></status>
+<msg timestamp="20201103 12:36:38.392" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:38.391" endtime="20201103 12:36:38.392"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.373" endtime="20201103 12:25:19.386"></status>
+<status status="PASS" starttime="20201103 12:36:38.386" endtime="20201103 12:36:38.393"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2369,18 +2369,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.396" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:25:19.394" endtime="20201103 12:25:19.397"></status>
+<msg timestamp="20201103 12:36:38.398" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:38.396" endtime="20201103 12:36:38.398"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.400" level="INFO">VALUE: 20</msg>
-<status status="PASS" starttime="20201103 12:25:19.398" endtime="20201103 12:25:19.401"></status>
+<msg timestamp="20201103 12:36:38.400" level="INFO">VALUE: 20</msg>
+<status status="PASS" starttime="20201103 12:36:38.399" endtime="20201103 12:36:38.400"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.387" endtime="20201103 12:25:19.402"></status>
+<status status="PASS" starttime="20201103 12:36:38.393" endtime="20201103 12:36:38.401"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -2412,18 +2412,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.415" endtime="20201103 12:25:19.716"></status>
+<status status="PASS" starttime="20201103 12:36:38.407" endtime="20201103 12:36:38.703"></status>
 </kw>
-<msg timestamp="20201103 12:25:19.719" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061447083, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161454319, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:19.412" endtime="20201103 12:25:19.719"></status>
+<msg timestamp="20201103 12:36:38.706" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.064206556, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.164212653, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:38.406" endtime="20201103 12:36:38.706"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.727" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061447083, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161454319, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:19.720" endtime="20201103 12:25:19.727"></status>
+<msg timestamp="20201103 12:36:38.713" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.064206556, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.164212653, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:38.707" endtime="20201103 12:36:38.714"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2431,11 +2431,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.728" endtime="20201103 12:25:19.730"></status>
+<status status="PASS" starttime="20201103 12:36:38.715" endtime="20201103 12:36:38.716"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.406" endtime="20201103 12:25:19.730"></status>
+<status status="PASS" starttime="20201103 12:36:38.403" endtime="20201103 12:36:38.717"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.403" endtime="20201103 12:25:19.730"></status>
+<status status="PASS" starttime="20201103 12:36:38.402" endtime="20201103 12:36:38.717"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -2446,8 +2446,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:25:19.734" level="INFO">${FILTERED} = [{'time': 1.161454319, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000723599999994, 'source_diff': 0.10000723599999994}, {'time': 1.261461542, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
-<status status="PASS" starttime="20201103 12:25:19.731" endtime="20201103 12:25:19.734"></status>
+<msg timestamp="20201103 12:36:38.721" level="INFO">${FILTERED} = [{'time': 1.164212653, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000609700000007, 'source_diff': 0.10000609700000007}, {'time': 1.264219958, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:38.718" endtime="20201103 12:36:38.721"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -2457,8 +2457,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:19.749" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:25:19.735" endtime="20201103 12:25:19.749"></status>
+<msg timestamp="20201103 12:36:38.736" level="INFO">${RESULT} = {'diff': [0.10000609700000007, 0.10000676399999997, 0.10000679200000007, 0.10000675000000014, 0.10000677800000002, 0.10000674999999992, 0.10000677800000002, 0.10000676300000011, 0.10000676399999997, 0...</msg>
+<status status="PASS" starttime="20201103 12:36:38.722" endtime="20201103 12:36:38.736"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2471,18 +2471,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.753" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:25:19.752" endtime="20201103 12:25:19.753"></status>
+<msg timestamp="20201103 12:36:38.740" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:38.739" endtime="20201103 12:36:38.740"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.756" level="INFO">VALUE: [0.10000723599999994, 0.10000673599999987, 0.10000684700000018, 0.100006861, 0.10000680500000003, 0.10000687500000005, 0.10000681999999994, 0.1000068890000001, 0.10000681999999994, 0.10000687500000027, 0.10000680600000011, 0.10000687500000005, 0.10000680499999959, 0.10000688899999988, 0.10000681899999986, 0.10000688900000032, 0.10000681999999994, 0.10000694399999999, 0.10000676399999975, 0.10000688899999988, 0.1000068190000003, 0.1000069029999997, 0.10000680600000011, 0.10000694500000007, 0.10000677800000002, 0.10000690300000015, 0.10000687500000005, 0.10000681999999994, 0.10000681899999986, 0.10000690300000015, 0.10000680599999967, 0.10000688900000032, 0.10000683400000021, 0.10000687500000005, 0.10000683299999924, 0.10000687500000005, 0.10000681899999986, 0.1000069029999997, 0.10000680599999967, 0.1000069029999997, 0.10000680600000056, 0.10000688899999943, 0.10000680500000048, 0.10000690200000051, 0.10000681899999986, 0.1000069029999997, 0.10000687500000005, 0.10000683300000013, 0.10000681999999994, 0.10000690300000059]</msg>
-<status status="PASS" starttime="20201103 12:25:19.754" endtime="20201103 12:25:19.756"></status>
+<msg timestamp="20201103 12:36:38.743" level="INFO">VALUE: [0.10000609700000007, 0.10000676399999997, 0.10000679200000007, 0.10000675000000014, 0.10000677800000002, 0.10000674999999992, 0.10000677800000002, 0.10000676300000011, 0.10000676399999997, 0.10000677700000016, 0.10000676399999975, 0.10000677699999994, 0.10000680600000011, 0.1000067360000001, 0.10000676400000019, 0.10000676399999975, 0.10000677799999957, 0.10000676400000019, 0.10000677800000002, 0.10000676400000019, 0.10000677800000002, 0.10000684699999995, 0.10000676400000019, 0.10000677699999994, 0.10000676399999975, 0.10000677700000038, 0.10000676399999975, 0.10000676400000019, 0.10000677800000002, 0.10000676400000019, 0.10000677800000002, 0.10000676399999975, 0.1000067919999994, 0.1000067910000002, 0.10000680500000048, 0.10000677800000002, 0.10000679099999932, 0.10000679200000029, 0.10000677800000002, 0.10000677699999994, 0.10000681999999994, 0.10000676399999975, 0.1000067910000002, 0.10000677800000002, 0.10000684699999951, 0.1000067919999994, 0.10000676400000064, 0.10000677699999994, 0.10000679200000029, 0.10000679200000029]</msg>
+<status status="PASS" starttime="20201103 12:36:38.741" endtime="20201103 12:36:38.743"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.750" endtime="20201103 12:25:19.757"></status>
+<status status="PASS" starttime="20201103 12:36:38.737" endtime="20201103 12:36:38.744"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -2491,26 +2491,26 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.759" endtime="20201103 12:25:19.760"></status>
+<status status="PASS" starttime="20201103 12:36:38.746" endtime="20201103 12:36:38.747"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:19.762" endtime="20201103 12:25:19.782"></status>
+<status status="PASS" starttime="20201103 12:36:38.749" endtime="20201103 12:36:38.769"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.761" endtime="20201103 12:25:19.782"></status>
+<status status="PASS" starttime="20201103 12:36:38.748" endtime="20201103 12:36:38.769"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.757" endtime="20201103 12:25:19.783"></status>
+<status status="PASS" starttime="20201103 12:36:38.744" endtime="20201103 12:36:38.770"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:12.308" endtime="20201103 12:25:19.783"></status>
+<status status="PASS" starttime="20201103 12:36:31.323" endtime="20201103 12:36:38.770"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:25:12.240" endtime="20201103 12:25:19.784" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:31.252" endtime="20201103 12:36:38.771" critical="yes"></status>
 </test>
 <test id="s1-s2-t6" name="25 BG Timers">
 <kw name="Run Keywords" library="BuiltIn" type="setup">
@@ -2523,9 +2523,9 @@ match the expected outcome.</doc>
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:19.790" endtime="20201103 12:25:19.809"></status>
+<status status="PASS" starttime="20201103 12:36:38.777" endtime="20201103 12:36:38.796"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.789" endtime="20201103 12:25:19.810"></status>
+<status status="PASS" starttime="20201103 12:36:38.775" endtime="20201103 12:36:38.797"></status>
 </kw>
 <kw name="API Sync Shell" library="api_shell.keywords">
 <doc>Verify that the DUT runs the required API test firmware</doc>
@@ -2576,18 +2576,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.824" endtime="20201103 12:25:19.837"></status>
+<status status="PASS" starttime="20201103 12:36:38.810" endtime="20201103 12:36:38.824"></status>
 </kw>
-<msg timestamp="20201103 12:25:19.838" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:19.822" endtime="20201103 12:25:19.838"></status>
+<msg timestamp="20201103 12:36:38.825" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:38.809" endtime="20201103 12:36:38.825"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.840" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:19.839" endtime="20201103 12:25:19.841"></status>
+<msg timestamp="20201103 12:36:38.827" level="INFO">${RESULT} = {'cmd': 'get_metadata', 'msg': ['get_metadata\r\n'], 'data': ['nucleo-f767zi', '2020.10', 'tests_xtimer_benchmarks'], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:38.826" endtime="20201103 12:36:38.828"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2595,14 +2595,14 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:19.843" level="FAIL">'Success' does not contain 'Timeout'</msg>
-<status status="FAIL" starttime="20201103 12:25:19.841" endtime="20201103 12:25:19.844"></status>
+<msg timestamp="20201103 12:36:38.830" level="FAIL">'Success' does not contain 'Timeout'</msg>
+<status status="FAIL" starttime="20201103 12:36:38.828" endtime="20201103 12:36:38.831"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:19.820" endtime="20201103 12:25:19.844"></status>
+<status status="FAIL" starttime="20201103 12:36:38.806" endtime="20201103 12:36:38.831"></status>
 </kw>
-<status status="FAIL" starttime="20201103 12:25:19.817" endtime="20201103 12:25:19.845"></status>
+<status status="FAIL" starttime="20201103 12:36:38.803" endtime="20201103 12:36:38.832"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.815" endtime="20201103 12:25:19.845"></status>
+<status status="PASS" starttime="20201103 12:36:38.802" endtime="20201103 12:36:38.832"></status>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
@@ -2612,14 +2612,14 @@ match the expected outcome.</doc>
 </arguments>
 <kw name="Exit For Loop" library="BuiltIn">
 <doc>Stops executing the enclosing for loop.</doc>
-<msg timestamp="20201103 12:25:19.849" level="INFO">Exiting for loop altogether.</msg>
-<status status="PASS" starttime="20201103 12:25:19.848" endtime="20201103 12:25:19.849"></status>
+<msg timestamp="20201103 12:36:38.836" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201103 12:36:38.835" endtime="20201103 12:36:38.836"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.846" endtime="20201103 12:25:19.849"></status>
+<status status="PASS" starttime="20201103 12:36:38.833" endtime="20201103 12:36:38.837"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.814" endtime="20201103 12:25:19.850"></status>
+<status status="PASS" starttime="20201103 12:36:38.801" endtime="20201103 12:36:38.837"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.814" endtime="20201103 12:25:19.850"></status>
+<status status="PASS" starttime="20201103 12:36:38.801" endtime="20201103 12:36:38.837"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2627,13 +2627,13 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>Success</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.850" endtime="20201103 12:25:19.852"></status>
+<status status="PASS" starttime="20201103 12:36:38.838" endtime="20201103 12:36:38.839"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.812" endtime="20201103 12:25:19.852"></status>
+<status status="PASS" starttime="20201103 12:36:38.799" endtime="20201103 12:36:38.840"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.811" endtime="20201103 12:25:19.853"></status>
+<status status="PASS" starttime="20201103 12:36:38.797" endtime="20201103 12:36:38.840"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.787" endtime="20201103 12:25:19.853"></status>
+<status status="PASS" starttime="20201103 12:36:38.774" endtime="20201103 12:36:38.840"></status>
 </kw>
 <kw name="Measure Sleep Jitter">
 <doc>Run the sleep jitter benchmark</doc>
@@ -2671,18 +2671,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:19.862" endtime="20201103 12:25:26.883"></status>
+<status status="PASS" starttime="20201103 12:36:38.849" endtime="20201103 12:36:45.871"></status>
 </kw>
-<msg timestamp="20201103 12:25:26.884" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 25\r\n'], 'data': [{'bg-timer-count': '25'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:19.860" endtime="20201103 12:25:26.884"></status>
+<msg timestamp="20201103 12:36:45.872" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 25\r\n'], 'data': [{'bg-timer-count': '25'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:38.847" endtime="20201103 12:36:45.872"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.889" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 25\r\n'], 'data': [{'bg-timer-count': '25'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
-<status status="PASS" starttime="20201103 12:25:26.886" endtime="20201103 12:25:26.890"></status>
+<msg timestamp="20201103 12:36:45.877" level="INFO">${RESULT} = {'cmd': 'sleep_jitter', 'msg': ['sleep_jitter 25\r\n'], 'data': [{'bg-timer-count': '25'}, {'main-timer-interval': '100000'}, {'bg-timer-interval': '20000'}], 'result': 'Success'}</msg>
+<status status="PASS" starttime="20201103 12:36:45.874" endtime="20201103 12:36:45.877"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2690,11 +2690,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:26.891" endtime="20201103 12:25:26.894"></status>
+<status status="PASS" starttime="20201103 12:36:45.879" endtime="20201103 12:36:45.882"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.857" endtime="20201103 12:25:26.895"></status>
+<status status="PASS" starttime="20201103 12:36:38.844" endtime="20201103 12:36:45.883"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.855" endtime="20201103 12:25:26.896"></status>
+<status status="PASS" starttime="20201103 12:36:38.842" endtime="20201103 12:36:45.884"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -2704,8 +2704,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:26.901" level="INFO">${RESULT} = {'bg-timer-interval': 20000, 'main-timer-interval': 100000, 'bg-timer-count': 25}</msg>
-<status status="PASS" starttime="20201103 12:25:26.898" endtime="20201103 12:25:26.902"></status>
+<msg timestamp="20201103 12:36:45.889" level="INFO">${RESULT} = {'main-timer-interval': 100000, 'bg-timer-interval': 20000, 'bg-timer-count': 25}</msg>
+<status status="PASS" starttime="20201103 12:36:45.886" endtime="20201103 12:36:45.890"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2718,18 +2718,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.910" level="INFO">NAME: main-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:26.908" endtime="20201103 12:25:26.910"></status>
+<msg timestamp="20201103 12:36:45.897" level="INFO">NAME: main-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:45.895" endtime="20201103 12:36:45.898"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.914" level="INFO">VALUE: 100000</msg>
-<status status="PASS" starttime="20201103 12:25:26.912" endtime="20201103 12:25:26.915"></status>
+<msg timestamp="20201103 12:36:45.902" level="INFO">VALUE: 100000</msg>
+<status status="PASS" starttime="20201103 12:36:45.900" endtime="20201103 12:36:45.903"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:26.903" endtime="20201103 12:25:26.916"></status>
+<status status="PASS" starttime="20201103 12:36:45.891" endtime="20201103 12:36:45.904"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2742,18 +2742,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.924" level="INFO">NAME: bg-timer-interval</msg>
-<status status="PASS" starttime="20201103 12:25:26.921" endtime="20201103 12:25:26.924"></status>
+<msg timestamp="20201103 12:36:45.911" level="INFO">NAME: bg-timer-interval</msg>
+<status status="PASS" starttime="20201103 12:36:45.909" endtime="20201103 12:36:45.912"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.928" level="INFO">VALUE: 20000</msg>
-<status status="PASS" starttime="20201103 12:25:26.926" endtime="20201103 12:25:26.928"></status>
+<msg timestamp="20201103 12:36:45.916" level="INFO">VALUE: 20000</msg>
+<status status="PASS" starttime="20201103 12:36:45.914" endtime="20201103 12:36:45.916"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:26.917" endtime="20201103 12:25:26.930"></status>
+<status status="PASS" starttime="20201103 12:36:45.905" endtime="20201103 12:36:45.917"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2766,18 +2766,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.940" level="INFO">NAME: bg-timer-count</msg>
-<status status="PASS" starttime="20201103 12:25:26.937" endtime="20201103 12:25:26.940"></status>
+<msg timestamp="20201103 12:36:45.925" level="INFO">NAME: bg-timer-count</msg>
+<status status="PASS" starttime="20201103 12:36:45.923" endtime="20201103 12:36:45.928"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:26.944" level="INFO">VALUE: 25</msg>
-<status status="PASS" starttime="20201103 12:25:26.942" endtime="20201103 12:25:26.945"></status>
+<msg timestamp="20201103 12:36:45.932" level="INFO">VALUE: 25</msg>
+<status status="PASS" starttime="20201103 12:36:45.930" endtime="20201103 12:36:45.933"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:26.931" endtime="20201103 12:25:26.946"></status>
+<status status="PASS" starttime="20201103 12:36:45.919" endtime="20201103 12:36:45.934"></status>
 </kw>
 <kw name="API Call Should Succeed" library="api_shell.keywords">
 <doc>Fails if the given API ``call`` does not succeed.</doc>
@@ -2809,18 +2809,18 @@ match the expected outcome.</doc>
 <arg>@{args}</arg>
 <arg>&amp;{kwargs}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:26.959" endtime="20201103 12:25:27.262"></status>
+<status status="PASS" starttime="20201103 12:36:45.948" endtime="20201103 12:36:46.246"></status>
 </kw>
-<msg timestamp="20201103 12:25:27.265" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061865875, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161874111, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:26.956" endtime="20201103 12:25:27.265"></status>
+<msg timestamp="20201103 12:36:46.249" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062406972, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162414111, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:45.944" endtime="20201103 12:36:46.249"></status>
 </kw>
 <kw name="Set Suite Variable" library="BuiltIn">
 <doc>Makes a variable available everywhere within the scope of the current suite.</doc>
 <arguments>
 <arg>${RESULT}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:27.273" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.061865875, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.161874111, 'source': 'DUT_IC', 'event': 'FAL...</msg>
-<status status="PASS" starttime="20201103 12:25:27.266" endtime="20201103 12:25:27.273"></status>
+<msg timestamp="20201103 12:36:46.257" level="INFO">${RESULT} = {'cmd': 'read_trace()', 'result': 'Success', 'data': [{'time': 1.062406972, 'source': 'DUT_IC', 'event': 'RISING', 'diff': 0, 'source_diff': 0}, {'time': 1.162414111, 'source': 'DUT_IC', 'event': 'FAL...</msg>
+<status status="PASS" starttime="20201103 12:36:46.250" endtime="20201103 12:36:46.257"></status>
 </kw>
 <kw name="Should Contain" library="BuiltIn">
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
@@ -2828,11 +2828,11 @@ match the expected outcome.</doc>
 <arg>${RESULT['result']}</arg>
 <arg>${expect}</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:27.274" endtime="20201103 12:25:27.275"></status>
+<status status="PASS" starttime="20201103 12:36:46.258" endtime="20201103 12:36:46.259"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:26.950" endtime="20201103 12:25:27.276"></status>
+<status status="PASS" starttime="20201103 12:36:45.938" endtime="20201103 12:36:46.260"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:26.947" endtime="20201103 12:25:27.276"></status>
+<status status="PASS" starttime="20201103 12:36:45.935" endtime="20201103 12:36:46.260"></status>
 </kw>
 <kw name="Filter Trace" library="DutDeviceIf">
 <doc>Filter the given data from a trace</doc>
@@ -2843,8 +2843,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${FILTERED}</var>
 </assign>
-<msg timestamp="20201103 12:25:27.280" level="INFO">${FILTERED} = [{'time': 1.161874111, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000823599999986, 'source_diff': 0.10000823599999986}, {'time': 1.261881333, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
-<status status="PASS" starttime="20201103 12:25:27.277" endtime="20201103 12:25:27.280"></status>
+<msg timestamp="20201103 12:36:46.264" level="INFO">${FILTERED} = [{'time': 1.162414111, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0.10000713899999991, 'source_diff': 0.10000713899999991}, {'time': 1.262422444, 'source': 'DUT_IC', 'event': 'FALLING', 'diff': 0...</msg>
+<status status="PASS" starttime="20201103 12:36:46.261" endtime="20201103 12:36:46.264"></status>
 </kw>
 <kw name="Compress Result" library="DutDeviceIf">
 <doc>Only use with data containing dicts as follows:</doc>
@@ -2854,8 +2854,8 @@ match the expected outcome.</doc>
 <assign>
 <var>${RESULT}</var>
 </assign>
-<msg timestamp="20201103 12:25:27.293" level="INFO">${RESULT} = {'event': ['FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'FALLING', 'F...</msg>
-<status status="PASS" starttime="20201103 12:25:27.282" endtime="20201103 12:25:27.294"></status>
+<msg timestamp="20201103 12:36:46.277" level="INFO">${RESULT} = {'diff': [0.10000713899999991, 0.10000779100000012, 0.10000679200000007, 0.10000679200000007, 0.10000680500000003, 0.10000677800000002, 0.10000680599999989, 0.10000680500000003, 0.10000677800000002, 0...</msg>
+<status status="PASS" starttime="20201103 12:36:46.265" endtime="20201103 12:36:46.278"></status>
 </kw>
 <kw name="Record Property" library="util.keywords">
 <doc>Adds the given property in output</doc>
@@ -2868,18 +2868,18 @@ match the expected outcome.</doc>
 <arguments>
 <arg>NAME: ${name}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:27.298" level="INFO">NAME: trace</msg>
-<status status="PASS" starttime="20201103 12:25:27.297" endtime="20201103 12:25:27.298"></status>
+<msg timestamp="20201103 12:36:46.281" level="INFO">NAME: trace</msg>
+<status status="PASS" starttime="20201103 12:36:46.280" endtime="20201103 12:36:46.282"></status>
 </kw>
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>VALUE: ${value}</arg>
 </arguments>
-<msg timestamp="20201103 12:25:27.301" level="INFO">VALUE: [0.10000823599999986, 0.10000675000000014, 0.10000684699999995, 0.10000690299999992, 0.1000068890000001, 0.100006861, 0.10000683399999999, 0.10000691699999997, 0.10000683300000013, 0.10000690299999992, 0.1000068470000004, 0.10000688800000024, 0.10000683300000013, 0.10000691699999997, 0.10000684699999995, 0.10000690300000015, 0.10000684800000004, 0.10000690300000015, 0.10000683300000013, 0.10000698599999991, 0.10000677699999994, 0.10000690200000006, 0.10000684799999959, 0.10000691699999997, 0.10000683299999968, 0.10000691699999997, 0.10000686099999978, 0.10000690200000006, 0.10000684699999995, 0.1000069309999998, 0.10000686099999978, 0.10000688900000032, 0.10000686099999978, 0.10000691599999989, 0.10000683400000021, 0.10000693100000024, 0.10000683300000013, 0.10000691699999997, 0.10000686099999978, 0.10000690200000051, 0.10000686100000067, 0.1000069029999997, 0.1000068470000004, 0.10000691699999997, 0.10000684699999951, 0.10000694400000043, 0.10000681999999994, 0.10000691699999997, 0.10000686099999978, 0.10000691699999997]</msg>
-<status status="PASS" starttime="20201103 12:25:27.299" endtime="20201103 12:25:27.301"></status>
+<msg timestamp="20201103 12:36:46.284" level="INFO">VALUE: [0.10000713899999991, 0.10000779100000012, 0.10000679200000007, 0.10000679200000007, 0.10000680500000003, 0.10000677800000002, 0.10000680599999989, 0.10000680500000003, 0.10000677800000002, 0.10000683399999999, 0.10000677800000002, 0.10000677800000002, 0.10000681999999994, 0.10000679199999984, 0.10000677699999994, 0.10000684699999995, 0.10000680599999967, 0.1000067910000002, 0.10000680600000011, 0.10000680600000011, 0.10000679199999984, 0.1000067910000002, 0.10000680599999967, 0.10000680599999967, 0.10000683300000013, 0.10000676300000011, 0.10000679199999984, 0.10000680599999967, 0.10000680500000003, 0.10000679199999984, 0.10000681999999994, 0.1000067919999994, 0.10000680499999959, 0.1000067919999994, 0.10000683400000021, 0.10000677800000002, 0.1000067910000002, 0.10000680599999967, 0.10000683400000021, 0.10000677800000002, 0.1000067910000002, 0.10000680600000056, 0.1000068470000004, 0.10000681900000075, 0.1000067910000002, 0.10000681899999986, 0.10000679200000029, 0.10000680600000056, 0.10000680500000048, 0.10000681899999986]</msg>
+<status status="PASS" starttime="20201103 12:36:46.282" endtime="20201103 12:36:46.284"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:27.294" endtime="20201103 12:25:27.302"></status>
+<status status="PASS" starttime="20201103 12:36:46.278" endtime="20201103 12:36:46.285"></status>
 </kw>
 <kw name="Test Teardown" type="teardown">
 <kw name="Run Keyword If" library="BuiltIn">
@@ -2888,35 +2888,35 @@ match the expected outcome.</doc>
 <arg>'${KEYWORD_STATUS}' != 'PASS'</arg>
 <arg>RIOT Reset</arg>
 </arguments>
-<status status="PASS" starttime="20201103 12:25:27.305" endtime="20201103 12:25:27.307"></status>
+<status status="PASS" starttime="20201103 12:36:46.287" endtime="20201103 12:36:46.288"></status>
 </kw>
 <kw name="PHILIP Reset" library="philip.keywords">
 <doc>Reset the PHiLIP MCU</doc>
 <kw name="Reset Mcu" library="PHILIP">
 <doc>Resets the device</doc>
-<status status="PASS" starttime="20201103 12:25:27.309" endtime="20201103 12:25:27.329"></status>
+<status status="PASS" starttime="20201103 12:36:46.290" endtime="20201103 12:36:46.310"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:27.307" endtime="20201103 12:25:27.329"></status>
+<status status="PASS" starttime="20201103 12:36:46.289" endtime="20201103 12:36:46.310"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:27.303" endtime="20201103 12:25:27.330"></status>
+<status status="PASS" starttime="20201103 12:36:46.285" endtime="20201103 12:36:46.311"></status>
 </kw>
-<status status="PASS" starttime="20201103 12:25:19.854" endtime="20201103 12:25:27.330"></status>
+<status status="PASS" starttime="20201103 12:36:38.841" endtime="20201103 12:36:46.311"></status>
 </kw>
 <tags>
 <tag>APP_tests_xtimer_benchmarks</tag>
 <tag>BOARD_nucleo-f767zi</tag>
 <tag>dev</tag>
 </tags>
-<status status="PASS" starttime="20201103 12:25:19.785" endtime="20201103 12:25:27.331" critical="yes"></status>
+<status status="PASS" starttime="20201103 12:36:38.772" endtime="20201103 12:36:46.312" critical="yes"></status>
 </test>
-<status status="PASS" starttime="20201103 12:24:40.537" endtime="20201103 12:25:27.340"></status>
+<status status="PASS" starttime="20201103 12:35:59.483" endtime="20201103 12:36:46.324"></status>
 </suite>
 <metadata>
 <item name="RIOT-Application">tests_xtimer_benchmarks</item>
 <item name="RIOT-Board">nucleo-f767zi</item>
 <item name="RIOT-Version">2020.10</item>
 </metadata>
-<status status="PASS" starttime="20201103 12:24:38.311" endtime="20201103 12:25:27.367"></status>
+<status status="PASS" starttime="20201103 12:35:57.325" endtime="20201103 12:36:46.357"></status>
 </suite>
 <statistics>
 <total>
