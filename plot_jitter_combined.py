@@ -9,17 +9,27 @@ import pandas as pd
 
 from ast import literal_eval
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+# basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
+# basedir = "/home/pokgak/git/ba-plotscripts/docs/jitter/norepeat1warmup"
+
 boards = os.listdir(basedir)
 
 
-def plot_jitters(basedir, boards):
+def get_value(element, property):
+    return element.find("properties/property[@name='{}']".format(property)).get("value")
+
+
+def parse_result(basedir, boards):
     data = {
-        "bg_timer_count": [],
-        "main_timer_interval": [],
-        "i": [],
-        "sleep_duration": [],
+        "timer_count": [],
+        "timer_interval": [],
+        # "i": [],
+        "dut_start_time": [],
+        "dut_wakeup_time": [],
+        "hil_start_time": [],
+        "hil_wakeup_time": [],
         "timer_version": [],
         "board": [],
     }
@@ -29,43 +39,42 @@ def plot_jitters(basedir, boards):
         for testcase in ET.parse(inputfile).findall(
             f"testcase[@classname='tests_{version}_benchmarks.Sleep Jitter']"
         ):
-            bg_timer_count = int(
-                testcase.find("properties/property[@name='bg-timer-count']").get(
-                    "value"
-                )
-            )
-            main_timer_interval = int(
-                testcase.find("properties/property[@name='main-timer-interval']").get(
-                    "value"
-                )
-            )
-            # bg_timer_interval = int(
-            #     testcase.find("properties/property[@name='bg-timer-interval']").get(
-            #         "value"
-            #     )
-            # )
-            traces = literal_eval(
-                testcase.find("properties/property[@name='trace']").get("value")
-            )
-            # HACK: we repeat measurement for 51 times and
-            # discard the first measurement as it is most likely 0
-            # traces = traces[1:]
-            # Philip record in seconds, convert to milliseconds
-            traces = [v * 1000000 for v in traces]
+            timer_count = int(get_value(testcase, "timer-count"))
+            timer_interval = int(get_value(testcase, "timer-interval"))
 
-            data["sleep_duration"].extend(traces)
-            data['i'].extend(range(len(traces)))
-            data["bg_timer_count"].extend([bg_timer_count] * len(traces))
-            data["main_timer_interval"].extend([main_timer_interval] * len(traces))
-            data["timer_version"].extend([version] * len(traces))
-            data["board"].extend([board] * len(traces))
+            dut_start_time = literal_eval(get_value(testcase, "dut-start-time"))
+            dut_wakeup_time = literal_eval(get_value(testcase, "dut-wakeup-time"))
+
+            hil_wakeup_time = literal_eval(get_value(testcase, "hil-wakeup-time"))
+            hil_start_time = literal_eval(get_value(testcase, "hil-start-time"))
+
+            # Philip record in seconds, convert to microseconds
+            hil_start_time = hil_start_time * 1000000
+            hil_wakeup_time = [v * 1000000 for v in hil_wakeup_time]
+
+            data["hil_start_time"].extend([hil_start_time] * len(hil_wakeup_time))
+            data["dut_start_time"].extend([dut_start_time] * len(dut_wakeup_time))
+
+            data["hil_wakeup_time"].extend(hil_wakeup_time)
+            data["dut_wakeup_time"].extend(dut_wakeup_time)
+
+            data["timer_count"].extend([timer_count] * len(hil_wakeup_time))
+            data["timer_interval"].extend([timer_interval] * len(hil_wakeup_time))
+
+            data["timer_version"].extend([version] * len(hil_wakeup_time))
+            data["board"].extend([board] * len(hil_wakeup_time))
+
+    for k, v in data.items():
+        print(k, len(v))
     return pd.DataFrame(data)
 
 
-df = plot_jitters(basedir, boards)
+df = parse_result(basedir, boards)
+
+# %%
 
 # the earlier sample points might be too small to trigger
-df.drop(df[(df["i"] <= 10)].index, inplace=True)
+# df.drop(df[(df["i"] == 0)].index, inplace=True)
 
 df["diff_actual_target_duration"] = df["sleep_duration"] - (df["main_timer_interval"])
 
@@ -77,8 +86,8 @@ fig = px.box(
     facet_col="board",
     facet_col_wrap=2,
     facet_col_spacing=0.06,
-    # points="all",
-    hover_data=['i'],
+    points="all",
+    hover_data=["i"],
 )
 
 fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=16))
@@ -86,12 +95,14 @@ fig.update_yaxes(matches=None, showticklabels=True)
 fig.update_xaxes(tick0=0, dtick=5, showticklabels=True)
 
 # legend
-fig.update_layout(legend=dict(
-    title="Timer Version",
-    orientation="h",
-    x=0,
-    y=1.1,
-))
+fig.update_layout(
+    legend=dict(
+        title="Timer Version",
+        orientation="h",
+        x=0,
+        y=1.1,
+    )
+)
 # hide original title
 fig.update_yaxes(title_text="")
 fig.update_xaxes(title_text="")
@@ -115,5 +126,5 @@ fig.add_annotation(
 )
 
 fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
-fig.write_image(f"{outdir}/jitter_combined.pdf", height=900, width=900)
-print(f"{outdir}/jitter_combined.pdf")
+# fig.write_image(f"{outdir}/jitter_combined.pdf", height=900, width=900)
+# print(f"{outdir}/jitter_combined.pdf")
