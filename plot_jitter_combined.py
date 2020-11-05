@@ -82,9 +82,12 @@ def parse_result(basedir, boards):
             timer_count = get_timer_count(start)
             w = get_value(wakeup)
             w = w if result_type == "dut" else [t * 1000000 for t in w]
+            s = get_value(start)
+            s = s if result_type == "dut" else s * 1000000
+
             data["i"].extend(range(len(w)))
             data["wakeup_time"].extend(w)
-            data["start_time"].extend([get_value(start)] * len(w))
+            data["start_time"].extend([s] * len(w))
             data["result_type"].extend([result_type] * len(w))
             data["timer_count"].extend([timer_count] * len(w))
 
