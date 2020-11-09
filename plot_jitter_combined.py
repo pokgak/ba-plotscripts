@@ -36,16 +36,19 @@ def parse_result(basedir, boards):
         "i": [],
         "start_time": [],
         "start_iter": [],
-        "wakeup_time": [],
-        "result_type": [],
         "timer_version": [],
         "board": [],
+        "result_type": [],
+        "wakeup_time": [],
     }
 
     for version, board in itertools.product(["xtimer", "ztimer"], boards):
         inputfile = "{:s}/{:s}/tests_{:s}_benchmarks/xunit.xml".format(
             basedir, board, version
         )
+
+        if not os.path.isfile(inputfile):
+            print(f"{inputfile} does not exists")
 
         testcase = ET.parse(inputfile).find(
             "testcase[@classname='tests_{:s}_benchmarks.Sleep Jitter']".format(version)
@@ -104,12 +107,11 @@ def parse_result(basedir, boards):
             data["timer_version"].extend([version] * len(w))
             data["board"].extend([board] * len(w))
 
-    for k, v in data.items():
-        print(k, len(v))
+    # for k, v in data.items():
+    #     print(k, len(v))
     return pd.DataFrame(data)
 
 
-# boards=['saml10-xpro']
 df = parse_result(basedir, boards)
 
 df["calculated_target"] = (
@@ -119,22 +121,16 @@ df["diff_target_from_start"] = df["calculated_target"] - df["start_time"]
 df["diff_wakeup_from_start"] = df["wakeup_time"] - df["start_time"]
 df["diff_wakeup_from_target"] = df["wakeup_time"] - df["calculated_target"]
 
-df.drop(df[(df["i"] == 0)].index, inplace=True)
-# df.drop(df[(df["i"] < 10)].index, inplace=True)
-# df = df[df.result_type == 'dut']
+df = df[df.result_type == "hil"]
 
-fig = px.strip(
+fig = px.box(
     df,
     x="timer_count",
-    y="diff_target_from_start",
+    y="diff_wakeup_from_target",
     color="timer_version",
     hover_data=["i", "diff_wakeup_from_target"],
-    facet_row="board",
-    facet_col="result_type",
-    # facet_col="board",
-    # facet_col_wrap=2,
-    # points="all",
-    # box=True,
+    facet_col="board",
+    facet_col_wrap=2,
 )
 
 fig.update_yaxes(
