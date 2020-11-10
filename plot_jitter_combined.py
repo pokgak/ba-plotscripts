@@ -11,6 +11,7 @@ from ast import literal_eval
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 
 boards = os.listdir(basedir)
@@ -34,7 +35,6 @@ def parse_result(basedir, boards):
         "timer_interval": [],
         "i": [],
         "start_time": [],
-        "start_iter": [],
         "timer_version": [],
         "board": [],
         "result_type": [],
@@ -65,18 +65,13 @@ def parse_result(basedir, boards):
             for prop in testcase.findall(".//property")
             if prop.get("name").endswith("start-time")
         ]
-        start_iters = [
-            prop
-            for prop in testcase.findall(".//property")
-            if prop.get("name").endswith("start-iter")
-        ]
         wakeup_times = [
             prop
             for prop in testcase.findall(".//property")
             if prop.get("name").endswith("wakeup-time")
         ]
 
-        for start, iter, wakeup in zip(start_times, start_iters, wakeup_times):
+        for start, wakeup in zip(start_times, wakeup_times):
 
             if not all(
                 e == get_result_type(start)
@@ -93,12 +88,10 @@ def parse_result(basedir, boards):
             w = w if result_type == "dut" else [t * 1000000 for t in w]
             s = get_value(start)
             s = s if result_type == "dut" else s * 1000000
-            it = get_value(iter)
 
             data["i"].extend(range(len(w)))
             data["wakeup_time"].extend(w)
             data["start_time"].extend([s] * len(w))
-            data["start_iter"].extend([it] * len(w))
             data["result_type"].extend([result_type] * len(w))
             data["timer_count"].extend([timer_count] * len(w))
 
@@ -111,9 +104,7 @@ def parse_result(basedir, boards):
 
 df = parse_result(basedir, boards)
 
-df["calculated_target"] = (
-    df["start_time"] + (df["start_iter"] + df["i"]) * df["timer_interval"]
-)
+df["calculated_target"] = df["start_time"] + (df["i"] + 1) * df["timer_interval"]
 df["diff_target_from_start"] = df["calculated_target"] - df["start_time"]
 df["diff_wakeup_from_start"] = df["wakeup_time"] - df["start_time"]
 df["diff_wakeup_from_target"] = df["wakeup_time"] - df["calculated_target"]
@@ -140,8 +131,8 @@ fig.update_yaxes(
 fig.update_layout(
     legend=dict(
         title="Timer Version",
-        orientation="h",
-        x=0,
+        # orientation="h",
+        x=.9,
         y=1.1,
     )
 )
@@ -163,7 +154,7 @@ fig.add_annotation(
     textangle=270,
     xref="paper",
     yref="paper",
-    x=-0.08,
+    x=-0.1,
     y=0.5,
     showarrow=False,
 )
@@ -171,4 +162,6 @@ fig.add_annotation(
 fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
 fig.write_image(f"{outdir}/jitter_combined.pdf", height=900, width=900)
 
-fig.write_image(f"/tmp/jitter_combined.pdf", height=900, width=900)
+fig.write_image(f"/tmp/jitter_combined.pdf", height=900,
+# width=900
+)

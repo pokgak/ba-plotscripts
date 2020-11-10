@@ -74,7 +74,7 @@ for i, group in enumerate(groups):
 
     fig.update_layout(showlegend=False, font_size=16)
     # simplify column title
-    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=20))
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=22))
 
     # update yaxis title
     fig.update_yaxes(showticklabels=True, matches=None, title="")
