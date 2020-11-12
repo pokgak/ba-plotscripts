@@ -11,7 +11,8 @@ from ast import literal_eval
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
-boards = os.listdir(f"{basedir}/master")
+boards = [b for b in os.listdir(f"{basedir}/master")]
+
 
 def plot_accuracies(basedir, boards):
     data = {
@@ -37,6 +38,7 @@ def plot_accuracies(basedir, boards):
 
             target = literal_eval(name[-2])
 
+            # convert to us
             actual = [v * 1000000 for v in literal_eval(prop.get("value"))]
 
             data["actual_duration"].extend(actual)
@@ -66,10 +68,21 @@ for func in ["set", "sleep"]:
         facet_col_spacing=0.05,
         facet_col_wrap=4,
     )
-    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig.for_each_annotation(
+        lambda a: a.update(text=a.text.split("=")[-1], font_size=16)
+    )
+    # fig.update_layout(font_size=24)
 
     fig.update_yaxes(matches=None, showticklabels=True)
-
+    # legend
+    fig.update_layout(
+        legend=dict(
+            title="Timer Version",
+            # orientation="h",
+            x=0.9,
+            y=1.3,
+        )
+    )
     # hide original title
     fig.update_yaxes(title_text="")
     fig.update_xaxes(title_text="")
@@ -98,4 +111,5 @@ for func in ["set", "sleep"]:
     #     fig.update_xaxes(title_text)
 
     fig.write_image(f"{outdir}/accuracy_{func}_combined.pdf")
-    # fig.write_html("/tmp/accuracy_{func}_combined.html")
+    print(f"{outdir}/accuracy_{func}_combined.pdf")
+    fig.write_html(f"/tmp/accuracy_{func}_combined.html")
