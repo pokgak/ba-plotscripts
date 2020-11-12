@@ -15,8 +15,7 @@ from ast import literal_eval
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 
-exclude_boards = ["nucleo-f091rc", "saml10-xpro"]
-boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
+boards = [b for b in os.listdir(f"{basedir}/2020.10")]
 
 
 def get_value(property):
@@ -43,7 +42,7 @@ def parse_result(basedir, boards):
         "wakeup_time": [],
     }
 
-    for version, board in itertools.product(["master", "pr13103"], boards):
+    for version, board in itertools.product(["2020.10", "pr13103"], boards):
         inputfile = "{:s}/{:s}/{:s}/tests_xtimer_benchmarks/xunit.xml".format(
             basedir, version, board
         )

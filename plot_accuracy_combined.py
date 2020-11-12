@@ -11,7 +11,7 @@ from ast import literal_eval
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
-boards = [b for b in os.listdir(f"{basedir}/master")]
+boards = [b for b in os.listdir(f"{basedir}/2020.10")]
 
 
 def plot_accuracies(basedir, boards):
@@ -23,7 +23,7 @@ def plot_accuracies(basedir, boards):
         "board": [],
     }
 
-    for version, board in itertools.product(["master", "pr13103"], boards):
+    for version, board in itertools.product(["2020.10", "pr13103"], boards):
         inputfile = f"{basedir}/{version}/{board}/tests_xtimer_benchmarks/xunit.xml"
         for prop in ET.parse(inputfile).findall(
             f"testcase[@classname='tests_xtimer_benchmarks.Sleep Accuracy']//property"

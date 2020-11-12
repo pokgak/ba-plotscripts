@@ -37,12 +37,11 @@ def get_overhead_df(timer_version, board):
     return pd.DataFrame(bres)
 
 
-exclude_boards = ["nucleo-f091rc", "saml10-xpro"]
-boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
+boards = [b for b in os.listdir(f"{basedir}/2020.10")]
 
 df = pd.DataFrame(columns=["timer_version", "board", "test", "time", "i"])
 
-for version, board in itertools.product(["master", "pr13103"], boards):
+for version, board in itertools.product(["2020.10", "pr13103"], boards):
     df = df.append(get_overhead_df(version, board))
 if df.empty:
     raise RuntimeError("Empty dataframe")
