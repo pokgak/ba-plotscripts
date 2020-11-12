@@ -139,29 +139,29 @@ fig.update_layout(
 fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=16))
 # hide original title
 fig.update_yaxes(title_text="")
-fig.update_xaxes(title_text="")
+fig.update_xaxes(title_text="", dtick=1)
 # manually use annotations to set axis title
 fig.add_annotation(
     text="Nr. of Background Timer",
     xref="paper",
     yref="paper",
     x=0.5,
-    y=-0.08,
+    y=-0.05,
     showarrow=False,
+    font_size=16,
 )
 fig.add_annotation(
-    text="Difference Actual-Target Duration [us]",
+    text="Difference (actual - target) wakeup time [us]",
     textangle=270,
     xref="paper",
     yref="paper",
-    x=-0.1,
+    x=-.07,
     y=0.5,
     showarrow=False,
+    font_size=16,
 )
 
 fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
-fig.write_image(f"{outdir}/jitter_combined.pdf", height=900, width=900)
+fig.write_image(f"{outdir}/jitter_combined.pdf", height=1600, width=1200)
 
-fig.write_image(f"/tmp/jitter_combined.pdf", height=900,
-# width=900
-)
+fig.write_image(f"/tmp/jitter_combined.pdf", height=1600, width=1200)
