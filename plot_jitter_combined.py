@@ -15,7 +15,7 @@ from ast import literal_eval
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 
-exclude_boards = ["esp32-wroom-32", "saml10-xpro"]
+exclude_boards = ["nucleo-f091rc", "saml10-xpro"]
 boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
 
 
