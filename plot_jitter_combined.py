@@ -1,5 +1,5 @@
+# %%
 import os
-import argparse
 import itertools
 
 import xml.etree.ElementTree as ET
@@ -9,6 +9,9 @@ import pandas as pd
 
 from ast import literal_eval
 
+# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+# basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 
@@ -16,89 +19,151 @@ exclude_boards = ["esp32-wroom-32", "saml10-xpro"]
 boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
 
 
-def plot_jitters(basedir, boards):
+def get_value(property):
+    return literal_eval(property.get("value"))
+
+
+def get_result_type(property):
+    return property.get("name").split("-")[0]
+
+
+def get_timer_count(property):
+    return property.get("name").split("-")[1]
+
+
+def parse_result(basedir, boards):
     data = {
-        "bg_timer_count": [],
-        "main_timer_interval": [],
-        "sleep_duration": [],
+        "timer_count": [],
+        "timer_interval": [],
+        "i": [],
+        "start_time": [],
         "timer_version": [],
         "board": [],
+        "result_type": [],
+        "wakeup_time": [],
     }
 
     for version, board in itertools.product(["master", "pr13103"], boards):
-        inputfile = f"{basedir}/{version}/{board}/tests_xtimer_benchmarks/xunit.xml"
-        for testcase in ET.parse(inputfile).findall(
-            f"testcase[@classname='tests_xtimer_benchmarks.Sleep Jitter']"
-        ):
-            tmp = testcase.find("properties/property[@name='bg-timer-count']")
-            if tmp is None:
-                continue
-            bg_timer_count = int(tmp.get("value"))
-            main_timer_interval = int(
-                testcase.find("properties/property[@name='main-timer-interval']").get(
-                    "value"
-                )
-            )
-            # bg_timer_interval = int(
-            #     testcase.find("properties/property[@name='bg-timer-interval']").get(
-            #         "value"
-            #     )
-            # )
-            traces = literal_eval(
-                testcase.find("properties/property[@name='trace']").get("value")
-            )
-            # HACK: we repeat measurement for 51 times and
-            # discard the first measurement as it is most likely 0
-            traces = traces[1:]
-            # Philip record in seconds, convert to milliseconds
-            traces = [v * 1000000 for v in traces]
+        inputfile = "{:s}/{:s}/{:s}/tests_xtimer_benchmarks/xunit.xml".format(
+            basedir, version, board
+        )
 
-            data["sleep_duration"].extend(traces)
-            data["bg_timer_count"].extend([bg_timer_count] * len(traces))
-            data["main_timer_interval"].extend([main_timer_interval] * len(traces))
-            data["timer_version"].extend([version] * len(traces))
-            data["board"].extend([board] * len(traces))
+        if not os.path.isfile(inputfile):
+            print(f"{inputfile} does not exists")
+
+        testcase = ET.parse(inputfile).find(
+            "testcase[@classname='tests_xtimer_benchmarks.Sleep Jitter']".format(version)
+        )
+
+        if testcase is None:
+            continue
+
+        timer_interval = testcase.find(".//property[@name='timer-interval']")
+        if timer_interval is None:
+            raise RuntimeError("timer_interval not found")
+
+        start_times = [
+            prop
+            for prop in testcase.findall(".//property")
+            if prop.get("name").endswith("start-time")
+        ]
+        wakeup_times = [
+            prop
+            for prop in testcase.findall(".//property")
+            if prop.get("name").endswith("wakeup-time")
+        ]
+
+        for start, wakeup in zip(start_times, wakeup_times):
+
+            if not all(
+                e == get_result_type(start)
+                for e in [
+                    get_result_type(start),
+                    get_result_type(wakeup),
+                ]
+            ):
+                raise RuntimeError(f"Result type does not match")
+
+            result_type = get_result_type(start)
+            timer_count = get_timer_count(start)
+            w = get_value(wakeup)
+            w = w if result_type == "dut" else [t * 1000000 for t in w]
+            s = get_value(start)
+            s = s if result_type == "dut" else s * 1000000
+
+            data["i"].extend(range(len(w)))
+            data["wakeup_time"].extend(w)
+            data["start_time"].extend([s] * len(w))
+            data["result_type"].extend([result_type] * len(w))
+            data["timer_count"].extend([timer_count] * len(w))
+
+            data["timer_interval"].extend([get_value(timer_interval)] * len(w))
+            data["timer_version"].extend([version] * len(w))
+            data["board"].extend([board] * len(w))
+
     return pd.DataFrame(data)
 
 
-df = plot_jitters(basedir, boards)
-df["diff_actual_target_duration"] = df["sleep_duration"] - (df["main_timer_interval"])
+df = parse_result(basedir, boards)
 
-fig = px.violin(
+df["calculated_target"] = df["start_time"] + (df["i"] + 1) * df["timer_interval"]
+df["diff_target_from_start"] = df["calculated_target"] - df["start_time"]
+df["diff_wakeup_from_start"] = df["wakeup_time"] - df["start_time"]
+df["diff_wakeup_from_target"] = df["wakeup_time"] - df["calculated_target"]
+
+df = df[df.result_type == "hil"]
+
+fig = px.box(
     df,
-    x="bg_timer_count",
-    y="diff_actual_target_duration",
+    x="timer_count",
+    y="diff_wakeup_from_target",
     color="timer_version",
+    hover_data=["i", "diff_wakeup_from_target"],
     facet_col="board",
-    facet_col_wrap=4,
+    facet_col_wrap=2,
     facet_col_spacing=0.06,
 )
 
-fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
-fig.update_yaxes(matches=None, showticklabels=True)
-fig.update_xaxes(tick0=0, dtick=5)
+fig.update_yaxes(
+    matches=None,
+    showticklabels=True,
+)
 
+# legend
+fig.update_layout(
+    legend=dict(
+        title="Timer Version",
+        # orientation="h",
+        x=.9,
+        y=1.1,
+    )
+)
+fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=16))
 # hide original title
 fig.update_yaxes(title_text="")
-fig.update_xaxes(title_text="")
+fig.update_xaxes(title_text="", dtick=1)
 # manually use annotations to set axis title
 fig.add_annotation(
     text="Nr. of Background Timer",
     xref="paper",
     yref="paper",
     x=0.5,
-    y=-0.1,
+    y=-0.05,
     showarrow=False,
+    font_size=16,
 )
 fig.add_annotation(
-    text="Difference Actual-Target Duration [us]",
+    text="Difference (actual - target) wakeup time [us]",
     textangle=270,
     xref="paper",
     yref="paper",
-    x=-0.1,
+    x=-.07,
     y=0.5,
     showarrow=False,
+    font_size=16,
 )
 
-# fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
-fig.write_image(f"{outdir}/jitter_combined.pdf", height=900, width=900)
+fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
+fig.write_image(f"{outdir}/jitter_combined.pdf", height=1600, width=1200)
+
+fig.write_image(f"/tmp/jitter_combined.pdf", height=1600, width=1200)
