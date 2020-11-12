@@ -130,13 +130,17 @@ fig.update_yaxes(
 # legend
 fig.update_layout(
     legend=dict(
-        title="Timer Version",
+        title=dict(
+            text="Timer Version",
+            font_size=22,
+        ),
         # orientation="h",
         x=.9,
         y=1.1,
+        font_size=22,
     )
 )
-fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=16))
+fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=22))
 # hide original title
 fig.update_yaxes(title_text="")
 fig.update_xaxes(title_text="", dtick=1)
@@ -148,7 +152,7 @@ fig.add_annotation(
     x=0.5,
     y=-0.05,
     showarrow=False,
-    font_size=16,
+    font_size=22,
 )
 fig.add_annotation(
     text="Difference (actual - target) wakeup time [us]",
@@ -158,7 +162,7 @@ fig.add_annotation(
     x=-.07,
     y=0.5,
     showarrow=False,
-    font_size=16,
+    font_size=22,
 )
 
 fig.write_html("/tmp/jitter_combined.html", include_plotlyjs="cdn")
