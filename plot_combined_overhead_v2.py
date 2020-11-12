@@ -9,27 +9,14 @@ import plotly.express as px
 
 from ast import literal_eval
 
-# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-# basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
-
 outdir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/pr13103_benchmarks"
 
-if not os.path.exists(outdir):
-        os.makedirs(outdir)
-
 
 def get_overhead_df(timer_version, board):
-    bres = {"test": [], "time": [], "timer_version": [], "board": []}
+    bres = {"test": [], "time": [], "timer_version": [], "board": [], "i": []}
 
     filename = f"{basedir}/{timer_version}/{board}/tests_xtimer_benchmarks/xunit.xml"
-    # check if file exists
-    try:
-        with open(filename) as f:
-            pass
-    except IOError:
-        print(f"\"{filename}\" does not exists")
-        return
 
     tests = [
         t
@@ -43,48 +30,78 @@ def get_overhead_df(timer_version, board):
         values = [v * 1000000 for v in literal_eval(t.get("value"))]
         bres["test"].extend([" ".join(name[2:])] * len(values))
         bres["time"].extend(values)
+        bres["i"].extend(range(len(values)))
         bres["timer_version"].extend([timer_version] * len(values))
         bres["board"].extend([board] * len(values))
 
     return pd.DataFrame(bres)
 
 
-df = pd.DataFrame(columns=["timer_version", "board", "test", "time"])
+exclude_boards = ["nucleo-f091rc", "saml10-xpro"]
+boards = [b for b in os.listdir(f"{basedir}/master") if b not in exclude_boards]
 
-for version in ["master", "pr13103"]:
-    for board in os.listdir(f"{basedir}/{version}"):
-        df = df.append(get_overhead_df(version, board))
+df = pd.DataFrame(columns=["timer_version", "board", "test", "time", "i"])
+
+for version, board in itertools.product(["master", "pr13103"], boards):
+    df = df.append(get_overhead_df(version, board))
 if df.empty:
     raise RuntimeError("Empty dataframe")
 
-# use this to exclude any test
-# df.drop(df[df["test"] == "gpio"].index, inplace=True)
+df.drop(df[(df["i"] <= 5)].index, inplace=True)
 
-# use this to focus on a test
-# df = df[df['test'] == 'gpio']
+# separate figure to separate groups
+groups = [
+    ["gpio", "timer now"],
+    ["set first timer", "set middle timer", "set last timer"],
+    ["remove first timer", "remove middle timer", "remove last timer"],
+]
 
-fig = px.box(
-    df,
-    x="timer_version",
-    y="time",
-    # color="board",
-    color="timer_version",
-    facet_row="board",
-    facet_col="test",
-    facet_col_spacing=0.04,
-)
+for i, group in enumerate(groups):
+    # fetch only test in group
+    tmp = df[[b for b in df.test.isin(group)]]
 
-fig.update_layout(showlegend=False)
-# simplify column title
-fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+    fig = px.box(
+        tmp,
+        # x="timer_version",
+        y="time",
+        # color="board",
+        color="timer_version",
+        facet_row="board",
+        facet_col="test",
+        facet_col_spacing=0.06,
+        hover_data=["i"],
+        # points="all",
+    )
 
-# update yaxis title
-fig.update_yaxes(showticklabels=True, matches=None, title="")
-fig.update_yaxes(title_text="Duration [us]", row=4, col=1)
-# fig.update_yaxes(title_text="Duration [s]", row=2, col=1)
-# hide xaxis labels
-fig.update_xaxes(showticklabels=True, title="")
-# fig.show()
-# fig.write_image(f"{outdir}/{version}/overhead_combined.pdf")
-# fig.write_html(f"/tmp/overhead_combined.html", include_plotlyjs="cdn")
-fig.write_image(f"/{outdir}/overhead_combined.pdf", height=1240, width=1748)
+    fig.update_layout(
+        font_size=16,
+        legend=dict(
+            title="Timer Version",
+            # orientation="h",
+            x=0.9,
+            y=1.1,
+        ),
+    )
+    # simplify column title
+    fig.for_each_annotation(
+        lambda a: a.update(text=a.text.split("=")[-1], font_size=22)
+    )
+
+    # update yaxis title
+    fig.update_yaxes(showticklabels=True, matches=None, title="")
+    fig.add_annotation(
+        text="Duration [us]",
+        textangle=270,
+        xref="paper",
+        x=-0.06,
+        yref="paper",
+        y=0.5,
+        showarrow=False,
+    )
+
+    # hide xaxis labels
+    fig.update_xaxes(showticklabels=True, title="")
+
+    # print(f"{outdir}/overhead_combined_{i}.pdf")
+    fig.write_html(f"/tmp/overhead_combined_{i}.html", include_plotlyjs="cdn")
+    fig.write_image(f"{outdir}/overhead_combined_{i}.pdf", height=1600, width=1200)
