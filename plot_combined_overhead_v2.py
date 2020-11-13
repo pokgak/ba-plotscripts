@@ -9,8 +9,10 @@ import plotly.express as px
 
 from ast import literal_eval
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+# basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
+
+basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 
 
 def get_overhead_df(timer_version, board):
@@ -23,7 +25,7 @@ def get_overhead_df(timer_version, board):
         for t in ET.parse(filename).findall(
             f"testcase[@classname='tests_{timer_version}_benchmarks.Timer Overhead']//property"
         )
-        if "overhead" in t.get("name")
+        if ("overhead" in t.get("name") and "overhead-list" not in t.get('name'))
     ]
     for t in tests:
         name = t.get("name").split("-")
@@ -58,39 +60,33 @@ groups = [
 for i, group in enumerate(groups):
     # fetch only test in group
     tmp = df[[b for b in df.test.isin(group)]]
+    if tmp.empty:
+        continue
 
     fig = px.box(
         tmp,
         x="timer_version",
         y="time",
-        # color="board",
-        color="timer_version",
+        color="board",
+        # color="timer_version",
         facet_row="board",
         facet_col="test",
         facet_col_spacing=0.06,
+        facet_col_wrap=1,
         hover_data=["i"],
         # points="all",
     )
 
-    fig.update_layout(showlegend=False, font_size=16)
+    fig.update_layout(font_size=16)
     # simplify column title
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=22))
 
     # update yaxis title
-    fig.update_yaxes(showticklabels=True, matches=None, title="")
-    fig.add_annotation(
-        text="Duration [us]",
-        textangle=270,
-        xref="paper",
-        x=-0.09,
-        yref="paper",
-        y=0.5,
-        showarrow=False,
-    )
+    fig.update_yaxes(showticklabels=True, matches=None)
 
     # hide xaxis labels
-    fig.update_xaxes(showticklabels=True, title="")
+    fig.update_xaxes(showticklabels=True)
 
     # print(f"{outdir}/overhead_combined_{i}.pdf")
     fig.write_html(f"/tmp/overhead_combined_{i}.html", include_plotlyjs="cdn")
-    fig.write_image(f"{outdir}/overhead_combined_{i}.pdf", height=1600, width=1200)
+    # fig.write_image(f"{outdir}/overhead_combined_{i}.pdf", height=1600, width=1200)
