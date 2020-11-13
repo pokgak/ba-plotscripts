@@ -28,11 +28,14 @@ def plot_set_remove():
     }
 
     for version, board in itertools.product(["xtimer", "ztimer"], boards):
-        # df = df.append(get_overhead_df(version, board))
         filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
         root = ET.parse(filename)
         path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead']//property"
-        properties = [p for p in root.findall(path) if "overhead-list" in p.get("name")]
+        properties = [
+            p
+            for p in root.findall(path)
+            if "set" in p.get("name") or "remove" in p.get("name")
+        ]
         for prop in properties:
             name = prop.get("name").split("-")
 
@@ -67,14 +70,61 @@ def plot_set_remove():
     fig.update_yaxes(row=1, matches="y11")
     fig.update_yaxes(row=2, matches="y21")
 
-    fig.update_layout(legend=dict(title="Board", title_font_size=14))
-    fig.for_each_annotation(lambda a: a.update(font_size=22))
+    fig.update_layout(legend_title="Board")
+    # fig.for_each_annotation(lambda a: a.update(font_size=22))
     fig.update_yaxes(col=1, title_text="Duration [us]")
     fig.update_xaxes(row=1, title_text="Timer Count")
 
-    fig.write_image(
-        f"{outdir}/overhead_set_remove_combined.pdf", height=1600, width=1200
-    )
+    fig.write_image(f"{outdir}/overhead_set_remove_combined.pdf")
 
     fig.write_html("/tmp/overhead.html")
-    fig.write_image("/tmp/overhead.pdf", height=1600, width=1200)
+    fig.write_image("/tmp/overhead.pdf")
+
+
+def plot_timer_now():
+    data = {
+        "i": [],
+        "duration": [],
+        "timer_version": [],
+        "board": [],
+    }
+
+    for version, board in itertools.product(["xtimer", "ztimer"], boards):
+        filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
+        root = ET.parse(filename)
+        path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure Overhead TIMER_NOW']//property"
+        for prop in root.iterfind(path):
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            data["i"].extend(range(len(values)))
+            data["timer_version"].extend([version] * len(values))
+            data["board"].extend([board] * len(values))
+
+    df = pd.DataFrame(data)
+
+    df = df.groupby(['timer_version', 'board']).mean().reset_index()
+    # df = df.groupby(["timer_version", "board"]).describe()["duration"].reset_index()
+
+    fig = px.bar(
+        df,
+        x="board",
+        # y=["min", "mean", "max"],
+        y="duration",
+        barmode="group",
+        color="timer_version",
+        # facet_col="board"
+    )
+    fig.update_layout(
+        xaxis_title="Board",
+        legend=dict(title="Timer Version"),
+    )
+    fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
+    fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
+
+    fig.write_html("/tmp/overhead_timer_now.html")
+    fig.write_image("/tmp/overhead_timer_now.pdf")
+
+
+if __name__ == "__main__":
+    plot_timer_now()
+    plot_set_remove()
