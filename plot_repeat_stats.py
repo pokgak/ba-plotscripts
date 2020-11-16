@@ -47,7 +47,7 @@ fig.update_yaxes(matches=None, title="Sample Count")
 fig.update_xaxes(showticklabels=True, title="Timer NOW Overhead [us]")
 fig.for_each_annotation(lambda a: a.update(font_size=22))
 
-fig.write_html('/tmp/repeat_stats_timer_now.html')
+fig.write_html('/tmp/repeat_stats_timer_now.html', include_plotlyjs="cdn")
 
 # df = df.groupby(['timer_version', 'sample_size'])
 # df = df.groupby(["timer_version", "board"]).describe()["duration"].reset_index()
