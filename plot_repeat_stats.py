@@ -1,5 +1,6 @@
 # %%
 
+from __future__ import print_function
 from itertools import repeat
 import os
 import argparse
@@ -19,7 +20,13 @@ basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats/overhead"
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 repeats = os.listdir(basedir)
 boards = os.listdir(f"{basedir}/50x01")
-# boards = ["samr21-xpro"]
+# boards = [
+#     # "nucleo-f767zi",
+#     # "samr21-xpro",
+#     "saml10-xpro",
+# ]
+
+# %% timer now distribution
 
 data = {
     # "i": [],
@@ -29,68 +36,89 @@ data = {
     "sample_size": [],
 }
 
-for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, repeats):
-    filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
-    root = ET.parse(filename)
-    path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure Overhead TIMER_NOW']//property"
-    for prop in root.iterfind(path):
-        values = [v * 1000000 for v in literal_eval(prop.get("value"))]
-        data["duration"].extend(values)
-        # data["i"].extend(range(len(values)))
-        data["timer_version"].extend([version] * len(values))
-        data["board"].extend([board] * len(values))
-        data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
 
-df = pd.DataFrame(data).sort_values('sample_size')
+def timer_now_dist():
+    for version, board, repeat in itertools.product(
+        ["xtimer", "ztimer"], boards, repeats
+    ):
+        filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
+        root = ET.parse(filename)
+        path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure Overhead TIMER_NOW']//property"
+        for prop in root.iterfind(path):
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            # data["i"].extend(range(len(values)))
+            data["timer_version"].extend([version] * len(values))
+            data["board"].extend([board] * len(values))
+            data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
 
-fig = px.histogram(
-    df,
-    x="duration",
-    color="timer_version",
-    barmode="group",
-    histnorm="percent",
-    facet_row="board",
-    facet_col="sample_size",
-    # facet_col_spacing=0.06,
-    labels={"duration": "Timer Now Duration [us]"}
-)
+    df = pd.DataFrame(data).sort_values("sample_size")
 
-fig.update_yaxes(matches=None,)
-fig.update_yaxes(col=1, title="Share [%]")
-fig.update_xaxes(showticklabels=True)
-fig.update_xaxes(matches=None)
-for i in range(len(boards)):
-    row = i + 1
-    fig.update_xaxes(row=row, matches=f"x{row}1")
-fig.for_each_annotation(lambda a: a.update(font_size=18))
+    fig = px.histogram(
+        df,
+        x="duration",
+        nbins=1000,
+        color="timer_version",
+        barmode="group",
+        histnorm="percent",
+        facet_row="board",
+        # facet_row="timer_version",
+        facet_col="sample_size",
+        labels={"duration": "Timer Now Duration [us]"},
+    )
 
-fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
+    fig.update_yaxes(
+        matches=None,
+    )
+    fig.update_yaxes(col=1, title="Share [%]")
+    fig.update_xaxes(showticklabels=True)
+    fig.update_xaxes(matches=None)
+    for row in range(len(boards)):
+        rowmatch = f"x{'' if row == 0 else 1 + (row * len(df['sample_size'].unique()))}"
+        fig.update_xaxes(row=row + 1, matches=rowmatch)
+    fig.for_each_annotation(lambda a: a.update(font_size=18))
 
-# df = df.groupby(['timer_version', 'sample_size'])
-# df = df.groupby(["timer_version", "board"]).describe()["duration"].reset_index()
+    fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
+
+
+# %% set remove distribution
+
+# data = {
+#         "method": [],
+#         "duration": [],
+#         "timer_count": [],
+#         "timer_version": [],
+#         "board": [],
+#         "sample_size": [],
+#     }
+
+# for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, repeats):
+#     filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
+#     root = ET.parse(filename)
+#     path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead']//property"
+#     properties = [
+#         p
+#         for p in root.findall(path)
+#         if "set" in p.get("name") or "remove" in p.get("name")
+#     ]
+#     for prop in properties:
+#         name = prop.get("name").split("-")
+
+#         values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+#         data["duration"].extend(values)
+#         data["timer_count"].extend([int(name[2])] * len(values))
+#         data["method"].extend([name[3]] * len(values))
+#         data["timer_version"].extend([version] * len(values))
+#         data["board"].extend([board] * len(values))
+#         data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
+
+
+# df = pd.DataFrame(data).sort_values('sample_size')
+# df = df[df['timer_count'] == 25]    # observe only 25 timer
+
 
 # %%
 
-#     fig = px.bar(
-#         df,
-#         x="board",
-#         # y=["min", "mean", "max"],
-#         y="duration",
-#         barmode="group",
-#         color="timer_version",
-#         # facet_col="board"
-#     )
-#     fig.update_layout(
-#         xaxis_title="Board",
-#         legend=dict(title="Timer Version"),
-#     )
-#     fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
-#     fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
-
-#     fig.write_html("/tmp/overhead_timer_now.html")
-#     fig.write_image("/tmp/overhead_timer_now.pdf")
-
-
-# if __name__ == "__main__":
-#     plot_timer_now()
-#     plot_set_remove()
+if __name__ == "__main__":
+    timer_now_dist()
+    # set_remove_dist()
