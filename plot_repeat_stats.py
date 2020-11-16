@@ -21,7 +21,7 @@ repeats = os.listdir(basedir)
 boards = ['nucleo-f767zi']
 
 data = {
-    "i": [],
+    # "i": [],
     "duration": [],
     "timer_version": [],
     "board": [],
@@ -35,7 +35,7 @@ for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, re
     for prop in root.iterfind(path):
         values = [v * 1000000 for v in literal_eval(prop.get("value"))]
         data["duration"].extend(values)
-        data["i"].extend(range(len(values)))
+        # data["i"].extend(range(len(values)))
         data["timer_version"].extend([version] * len(values))
         data["board"].extend([board] * len(values))
         data["sample_size"].extend([int(repeat.split('x')[1]) * 50] * len(values))
@@ -45,7 +45,7 @@ df = pd.DataFrame(data).sort_values('sample_size')
 fig = px.histogram(df, x='duration', color='sample_size', barmode='overlay', facet_row='sample_size')
 fig.update_yaxes(matches=None, title="Sample Count")
 fig.update_xaxes(showticklabels=True, title="Timer NOW Overhead [us]")
-fig.for_each_annotation(lambda a: a.update(font_size=22))
+fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=22))
 
 fig.write_html('/tmp/repeat_stats_timer_now.html', include_plotlyjs="cdn")
 
