@@ -18,7 +18,7 @@ basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats/overhead"
 
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 repeats = os.listdir(basedir)
-boards = ['nucleo-f767zi']
+boards = os.listdir(f"{basedir}/50x01")
 
 data = {
     # "i": [],
@@ -38,42 +38,51 @@ for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, re
         # data["i"].extend(range(len(values)))
         data["timer_version"].extend([version] * len(values))
         data["board"].extend([board] * len(values))
-        data["sample_size"].extend([int(repeat.split('x')[1]) * 50] * len(values))
+        data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
 
-df = pd.DataFrame(data).sort_values('sample_size')
+df = pd.DataFrame(data).sort_values("sample_size")
 
-fig = px.histogram(df, x='duration', color='sample_size', barmode='overlay', facet_row='sample_size')
-fig.update_yaxes(matches=None, title="Sample Count")
-fig.update_xaxes(showticklabels=True, title="Timer NOW Overhead [us]")
-fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1], font_size=22))
+fig = px.histogram(
+    df,
+    x="duration",
+    color="board",
+    barmode="overlay",
+    histnorm="percent",
+    facet_row="sample_size",
+    # facet_col="board",
+    labels={"duration": "Timer Now Duration [us]"}
+)
+fig.update_yaxes(matches=None, title="Sample Percentage [%]")
+fig.update_xaxes(showticklabels=True, matches=None)
+fig.for_each_annotation(lambda a: a.update(font_size=18))
 
-fig.write_html('/tmp/repeat_stats_timer_now.html', include_plotlyjs="cdn")
+fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
 
 # df = df.groupby(['timer_version', 'sample_size'])
 # df = df.groupby(["timer_version", "board"]).describe()["duration"].reset_index()
 
 # %%
 
-    fig = px.bar(
-        df,
-        x="board",
-        # y=["min", "mean", "max"],
-        y="duration",
-        barmode="group",
-        color="timer_version",
-        # facet_col="board"
-    )
-    fig.update_layout(
-        xaxis_title="Board",
-        legend=dict(title="Timer Version"),
-    )
-    fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
-    fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
+#     fig = px.bar(
+#         df,
+#         x="board",
+#         # y=["min", "mean", "max"],
+#         y="duration",
+#         barmode="group",
+#         color="timer_version",
+#         # facet_col="board"
+#     )
+#     fig.update_layout(
+#         xaxis_title="Board",
+#         legend=dict(title="Timer Version"),
+#     )
+#     fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
+#     fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
 
-    fig.write_html("/tmp/overhead_timer_now.html")
-    fig.write_image("/tmp/overhead_timer_now.pdf")
+#     fig.write_html("/tmp/overhead_timer_now.html")
+#     fig.write_image("/tmp/overhead_timer_now.pdf")
 
 
-if __name__ == "__main__":
-    plot_timer_now()
-    plot_set_remove()
+# if __name__ == "__main__":
+#     plot_timer_now()
+#     plot_set_remove()
