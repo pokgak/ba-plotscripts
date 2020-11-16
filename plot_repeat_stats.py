@@ -19,6 +19,7 @@ basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats/overhead"
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 repeats = os.listdir(basedir)
 boards = os.listdir(f"{basedir}/50x01")
+# boards = ["samr21-xpro"]
 
 data = {
     # "i": [],
@@ -40,20 +41,27 @@ for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, re
         data["board"].extend([board] * len(values))
         data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
 
-df = pd.DataFrame(data).sort_values("sample_size")
+df = pd.DataFrame(data).sort_values('sample_size')
 
 fig = px.histogram(
     df,
     x="duration",
-    color="board",
-    barmode="overlay",
+    color="timer_version",
+    barmode="group",
     histnorm="percent",
-    facet_row="sample_size",
-    # facet_col="board",
+    facet_row="board",
+    facet_col="sample_size",
+    # facet_col_spacing=0.06,
     labels={"duration": "Timer Now Duration [us]"}
 )
-fig.update_yaxes(matches=None, title="Sample Percentage [%]")
-fig.update_xaxes(showticklabels=True, matches=None)
+
+fig.update_yaxes(matches=None,)
+fig.update_yaxes(col=1, title="Share [%]")
+fig.update_xaxes(showticklabels=True)
+fig.update_xaxes(matches=None)
+for i in range(len(boards)):
+    row = i + 1
+    fig.update_xaxes(row=row, matches=f"x{row}1")
 fig.for_each_annotation(lambda a: a.update(font_size=18))
 
 fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
