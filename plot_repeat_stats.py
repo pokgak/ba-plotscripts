@@ -1,6 +1,5 @@
 # %%
 
-from __future__ import print_function
 from itertools import repeat
 import os
 import argparse
@@ -25,12 +24,12 @@ boards = [
 
 
 def timer_now_dist():
-data = {
-    "duration": [],
-    "timer_version": [],
-    "board": [],
-    "sample_size": [],
-}
+    data = {
+        "duration": [],
+        "timer_version": [],
+        "board": [],
+        "sample_size": [],
+    }
     repeats = os.listdir(f"{basedir}/overhead")
     for version, board, repeat in itertools.product(
         ["xtimer", "ztimer"], boards, repeats
@@ -144,34 +143,68 @@ def set_remove_dist():
         fig.write_image(f"{outdir}/repeat_stats_timer_{method}.pdf")
 
 
-
-# for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, repeats):
-#     filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
-#     root = ET.parse(filename)
-#     path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead']//property"
-#     properties = [
-#         p
-#         for p in root.findall(path)
-#         if "set" in p.get("name") or "remove" in p.get("name")
-#     ]
-#     for prop in properties:
-#         name = prop.get("name").split("-")
-
-#         values = [v * 1000000 for v in literal_eval(prop.get("value"))]
-#         data["duration"].extend(values)
-#         data["timer_count"].extend([int(name[2])] * len(values))
-#         data["method"].extend([name[3]] * len(values))
-#         data["timer_version"].extend([version] * len(values))
-#         data["board"].extend([board] * len(values))
-#         data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
+# %% Jitter distribution
 
 
-# df = pd.DataFrame(data).sort_values('sample_size')
-# df = df[df['timer_count'] == 25]    # observe only 25 timer
+def jitter_dist():
+    data = {
+        "duration": [],
+        # "timer_version": [],
+        "timer_count": [],
+        "board": [],
+        "sample_size": [],
+    }
 
+    repeats = os.listdir(f"{basedir}/jitter")
+    for board, repeat in itertools.product(boards, repeats):
+        filename = (
+            f"{basedir}/jitter/{repeat}/{board}/tests_ztimer_benchmarks/xunit.xml"
+        )
+        root = ET.parse(filename)
+        path = "testcase[@classname='tests_ztimer_benchmarks.Sleep Jitter']//property"
+        properties = [
+            p
+            for p in root.findall(path)
+            if "hil" in p.get("name") and "wakeup-time" in p.get("name")
+        ]
+        for prop in properties:
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            data["board"].extend([board] * len(values))
+            data["sample_size"].extend([int(repeat.split("x")[1]) * 100] * len(values))
+            data["timer_count"].extend(
+                [int(prop.get("name").split("-")[1])] * len(values)
+            )
 
-# %%
+    df = pd.DataFrame(data).sort_values("sample_size")
+
+    fig = px.histogram(
+        df,
+        x="duration",
+        # nbins=2000,
+        histnorm="percent",
+        facet_col="sample_size",
+        facet_row="board",
+        facet_row_spacing=0.1,
+        title=f"Jitter sample distributions; on ztimer",
+    )
+
+    fig.update_yaxes(col=1, title="Share [%]")
+    fig.update_xaxes(
+        showticklabels=True, matches=None, tickangle=45, ticks="outside", title=""
+    )
+    for row in range(len(boards)):
+        rowmatch = f"x{'' if row == 0 else 1 + (row * len(repeats))}"
+        fig.update_xaxes(row=row + 1, matches=rowmatch)
+
+        rowmatch = f"y{'' if row == 0 else 1 + (row * len(repeats))}"
+        fig.update_yaxes(row=row + 1, matches=rowmatch)
+
+    fig.write_image("/tmp/repeat_stats_jitter.pdf")
+    fig.write_html("/tmp/repeat_stats_jitter.html", include_plotlyjs="cdn")
+
 
 if __name__ == "__main__":
-    timer_now_dist()
+    # timer_now_dist()
     # set_remove_dist()
+    jitter_dist()
