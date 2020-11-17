@@ -200,8 +200,7 @@ def jitter_dist():
         rowmatch = f"y{'' if row == 0 else 1 + (row * len(repeats))}"
         fig.update_yaxes(row=row + 1, matches=rowmatch)
 
-    fig.write_image("/tmp/repeat_stats_jitter.pdf")
-    fig.write_html("/tmp/repeat_stats_jitter.html", include_plotlyjs="cdn")
+    fig.write_image(f"{outdir}/repeat_stats_jitter.pdf")
 
 
 if __name__ == "__main__":
