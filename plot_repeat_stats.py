@@ -15,9 +15,7 @@ import plotly.express as px
 from ast import literal_eval
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats/overhead"
-
-repeats = os.listdir(basedir)
+basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats"
 boards = [
     "nucleo-f767zi",
     "arduino-due",
@@ -25,68 +23,127 @@ boards = [
 
 # %% timer now distribution
 
+
+def timer_now_dist():
 data = {
-    # "i": [],
     "duration": [],
     "timer_version": [],
     "board": [],
     "sample_size": [],
 }
-
-
-def timer_now_dist():
+    repeats = os.listdir(f"{basedir}/overhead")
     for version, board, repeat in itertools.product(
         ["xtimer", "ztimer"], boards, repeats
     ):
-        filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
+        filename = (
+            f"{basedir}/overhead/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
+        )
         root = ET.parse(filename)
         path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure Overhead TIMER_NOW']//property"
         for prop in root.iterfind(path):
             values = [v * 1000000 for v in literal_eval(prop.get("value"))]
             data["duration"].extend(values)
-            # data["i"].extend(range(len(values)))
             data["timer_version"].extend([version] * len(values))
             data["board"].extend([board] * len(values))
             data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
 
     df = pd.DataFrame(data).sort_values("sample_size")
 
-    df = df[df.timer_version == 'ztimer']
+    df = df[df.timer_version == "ztimer"]
 
     fig = px.histogram(
         df,
         x="duration",
-        nbins=100,
+        # nbins=100,
         histnorm="percent",
         facet_col="sample_size",
         facet_row="board",
         facet_row_spacing=0.1,
+        title="Timer Now sample distributions; on ztimer",
     )
 
     # fig.for_each_annotation(lambda a: a.update(font_size=18))
-    fig.update_yaxes(col=1, title="Sample Percentage [%]")
-    fig.update_xaxes(showticklabels=True, matches=None, tickangle=45, ticks="outside", title="")
+    fig.update_yaxes(col=1, title="Share [%]")
+    fig.update_xaxes(
+        showticklabels=True, matches=None, tickangle=45, ticks="outside", title=""
+    )
     for row in range(len(boards)):
         rowmatch = f"x{'' if row == 0 else 1 + (row * 5)}"
-        # print(row, rowmatch)
         fig.update_xaxes(row=row + 1, matches=rowmatch)
-        # fig.update_yaxes(row=row + 1, matches=rowmatch)
 
-    fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
-    fig.write_image("/tmp/repeat_stats_timer_now.pdf")
+    # fig.write_image("/tmp/repeat_stats_timer_now.pdf")
     fig.write_image(f"{outdir}/repeat_stats_timer_now.pdf")
 
 
 # %% set remove distribution
 
-# data = {
-#         "method": [],
-#         "duration": [],
-#         "timer_count": [],
-#         "timer_version": [],
-#         "board": [],
-#         "sample_size": [],
-#     }
+
+def get_timer_set_remove_df():
+    data = {
+        "method": [],
+        "duration": [],
+        "timer_count": [],
+        "timer_version": [],
+        "board": [],
+        "sample_size": [],
+    }
+
+    repeats = os.listdir(f"{basedir}/overhead")
+    for version, board, repeat in itertools.product(["ztimer"], boards, repeats):
+        filename = (
+            f"{basedir}/overhead/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
+        )
+        root = ET.parse(filename)
+        path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead']//property"
+        properties = [
+            p
+            for p in root.findall(path)
+            if "set" in p.get("name") or "remove" in p.get("name")
+        ]
+        for prop in properties:
+            name = prop.get("name").split("-")
+
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            data["timer_count"].extend([int(name[2])] * len(values))
+            data["method"].extend([name[3]] * len(values))
+            data["timer_version"].extend([version] * len(values))
+            data["board"].extend([board] * len(values))
+            data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
+
+    return pd.DataFrame(data).sort_values("sample_size")
+
+
+def set_remove_dist():
+    df = get_timer_set_remove_df()
+    df = df[df["timer_count"] == 25]  # observe only 25 timer
+    df = df[df.timer_version == "ztimer"]
+    for method in ["set", "remove"]:
+        tmp = df[df.method == method]
+
+        fig = px.histogram(
+            tmp,
+            x="duration",
+            nbins=500,
+            histnorm="percent",
+            facet_col="sample_size",
+            facet_row="board",
+            facet_row_spacing=0.1,
+            title=f"Timer {method} sample distributions; 25 timers on ztimer",
+        )
+
+        fig.update_yaxes(col=1, title="Share [%]")
+        fig.update_xaxes(
+            showticklabels=True, matches=None, tickangle=45, ticks="outside", title=""
+        )
+        for row in range(len(boards)):
+            rowmatch = f"x{'' if row == 0 else 1 + (row * 5)}"
+            fig.update_xaxes(row=row + 1, matches=rowmatch)
+
+        # fig.write_image(f"/tmp/repeat_stats_timer_{method}.pdf")
+        fig.write_image(f"{outdir}/repeat_stats_timer_{method}.pdf")
+
+
 
 # for version, board, repeat in itertools.product(["xtimer", "ztimer"], boards, repeats):
 #     filename = f"{basedir}/{repeat}/{board}/tests_{version}_benchmarks/xunit.xml"
