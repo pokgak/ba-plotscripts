@@ -203,7 +203,63 @@ def jitter_dist():
     fig.write_image(f"{outdir}/repeat_stats_jitter.pdf")
 
 
+def accuracy_dist():
+    data = {
+        "duration": [],
+        "target_duration": [],
+        "method": [],
+        "board": [],
+        "sample_size": [],
+    }
+
+    repeats = os.listdir(f"{basedir}/accuracy")
+    for board, repeat in itertools.product(boards, repeats):
+        filename = (
+            f"{basedir}/accuracy/{repeat}/{board}/tests_ztimer_benchmarks/xunit.xml"
+        )
+        root = ET.parse(filename)
+        path = "testcase[@classname='tests_ztimer_benchmarks.Sleep Accuracy']//property"
+        for prop in root.iterfind(path):
+            name = prop.get("name").split("-")
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            data["target_duration"].extend([int(name[2])] * len(values))
+            data["board"].extend([board] * len(values))
+            data["sample_size"].extend([int(repeat.split("x")[1]) * 50] * len(values))
+            data["method"].extend([name[1]] * len(values))
+
+    df = pd.DataFrame(data).sort_values("sample_size")
+    df = df[df.target_duration == 100]
+
+    for method in ["TIMER_SET", "TIMER_SLEEP"]:
+        tmp = df[df.method == method]
+
+        fig = px.histogram(
+            tmp,
+            x="duration",
+            histnorm="percent",
+            facet_col="sample_size",
+            facet_row="board",
+            facet_row_spacing=0.1,
+            title=f"Accuracy {method} sample distributions for target duration 100 us on ztimer",
+        )
+
+        fig.update_yaxes(col=1, title="Share [%]")
+        fig.update_xaxes(
+            showticklabels=True, matches=None, tickangle=45, ticks="outside", title=""
+        )
+        for row in range(len(boards)):
+            rowmatch = f"x{'' if row == 0 else 1 + (row * len(repeats))}"
+            fig.update_xaxes(row=row + 1, matches=rowmatch)
+
+            rowmatch = f"y{'' if row == 0 else 1 + (row * len(repeats))}"
+            fig.update_yaxes(row=row + 1, matches=rowmatch)
+
+        fig.write_image(f"{outdir}/repeat_stats_accuracy_{method}.pdf")
+
+
 if __name__ == "__main__":
     # timer_now_dist()
     # set_remove_dist()
-    jitter_dist()
+    accuracy_dist()
+    # jitter_dist()
