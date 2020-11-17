@@ -14,17 +14,14 @@ import plotly.express as px
 
 from ast import literal_eval
 
-# outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+outdir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/repeat_stats/overhead"
 
-# basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 repeats = os.listdir(basedir)
-boards = os.listdir(f"{basedir}/50x01")
-# boards = [
-#     # "nucleo-f767zi",
-#     # "samr21-xpro",
-#     "saml10-xpro",
-# ]
+boards = [
+    "nucleo-f767zi",
+    "arduino-due",
+]
 
 # %% timer now distribution
 
@@ -54,31 +51,30 @@ def timer_now_dist():
 
     df = pd.DataFrame(data).sort_values("sample_size")
 
+    df = df[df.timer_version == 'ztimer']
+
     fig = px.histogram(
         df,
         x="duration",
-        nbins=1000,
-        color="timer_version",
-        barmode="group",
+        nbins=100,
         histnorm="percent",
-        facet_row="board",
-        # facet_row="timer_version",
         facet_col="sample_size",
-        labels={"duration": "Timer Now Duration [us]"},
+        facet_row="board",
+        facet_row_spacing=0.1,
     )
 
-    fig.update_yaxes(
-        matches=None,
-    )
-    fig.update_yaxes(col=1, title="Share [%]")
-    fig.update_xaxes(showticklabels=True)
-    fig.update_xaxes(matches=None)
+    # fig.for_each_annotation(lambda a: a.update(font_size=18))
+    fig.update_yaxes(col=1, title="Sample Percentage [%]")
+    fig.update_xaxes(showticklabels=True, matches=None, tickangle=45, ticks="outside", title="")
     for row in range(len(boards)):
-        rowmatch = f"x{'' if row == 0 else 1 + (row * len(df['sample_size'].unique()))}"
+        rowmatch = f"x{'' if row == 0 else 1 + (row * 5)}"
+        # print(row, rowmatch)
         fig.update_xaxes(row=row + 1, matches=rowmatch)
-    fig.for_each_annotation(lambda a: a.update(font_size=18))
+        # fig.update_yaxes(row=row + 1, matches=rowmatch)
 
     fig.write_html("/tmp/repeat_stats_timer_now.html", include_plotlyjs="cdn")
+    fig.write_image("/tmp/repeat_stats_timer_now.pdf")
+    fig.write_image(f"{outdir}/repeat_stats_timer_now.pdf")
 
 
 # %% set remove distribution
