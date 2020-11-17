@@ -259,7 +259,7 @@ def accuracy_dist():
 
 
 if __name__ == "__main__":
-    # timer_now_dist()
-    # set_remove_dist()
+    timer_now_dist()
+    set_remove_dist()
     accuracy_dist()
-    # jitter_dist()
+    jitter_dist()
