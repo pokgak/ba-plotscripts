@@ -1,7 +1,7 @@
 {
-    "python.dataScience.jupyterServerURI": "local",
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
     "python.pythonPath": "/home/pokgak/git/ba-plotscripts/.env/bin/python3",
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "jupyter.jupyterServerType": "local"
 }
