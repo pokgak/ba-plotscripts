@@ -177,6 +177,7 @@ def jitter_dist():
             )
 
     df = pd.DataFrame(data).sort_values("sample_size")
+    df = df[df.timer_count == 10]
 
     fig = px.histogram(
         df,
@@ -186,7 +187,7 @@ def jitter_dist():
         facet_col="sample_size",
         facet_row="board",
         facet_row_spacing=0.1,
-        title=f"Jitter sample distributions; on ztimer",
+        title=f"Jitter sample distributions with 10 timers on ztimer",
     )
 
     fig.update_yaxes(col=1, title="Share [%]")
@@ -201,6 +202,7 @@ def jitter_dist():
         fig.update_yaxes(row=row + 1, matches=rowmatch)
 
     fig.write_image(f"{outdir}/repeat_stats_jitter.pdf")
+    fig.write_html(f"/tmp/repeat_stats_jitter.html", include_plotlyjs="cdn")
 
 
 def accuracy_dist():
@@ -259,7 +261,7 @@ def accuracy_dist():
 
 
 if __name__ == "__main__":
-    timer_now_dist()
-    set_remove_dist()
-    accuracy_dist()
+    # timer_now_dist()
+    # set_remove_dist()
+    # accuracy_dist()
     jitter_dist()
