@@ -42,8 +42,8 @@ def plot_set_remove():
             values = [v * 1000000 for v in literal_eval(prop.get("value"))]
             bres["i"].extend(range(len(values)))
             bres["duration"].extend(values)
-            bres["timer_count"].extend([int(name[3])] * len(values))
-            bres["method"].extend([name[4]] * len(values))
+            bres["timer_count"].extend([int(name[2])] * len(values))
+            bres["method"].extend([name[3]] * len(values))
             bres["timer_version"].extend([version] * len(values))
             bres["board"].extend([board] * len(values))
 
