@@ -176,6 +176,7 @@ def jitter_dist():
     }
 
     repeats = os.listdir(f"{basedir}/jitter")
+    repeats = [v for v in repeats if int(v.split('x')[-1]) % 2 == 0]    # only use even repeat
     for board, repeat in itertools.product(boards, repeats):
         filename = (
             f"{basedir}/jitter/{repeat}/{board}/tests_ztimer_benchmarks/xunit.xml"
@@ -312,7 +313,7 @@ def accuracy_dist():
 
 
 if __name__ == "__main__":
-    timer_now_dist()
+    # timer_now_dist()
     # set_remove_dist()
     # accuracy_dist()
-    # jitter_dist()
+    jitter_dist()
