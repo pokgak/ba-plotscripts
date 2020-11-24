@@ -70,6 +70,15 @@ def timer_now_dist():
         rowmatch = f"x{'' if row == 0 else 1 + (row * 5)}"
         fig.update_xaxes(row=row + 1, matches=rowmatch)
 
+    fig.add_annotation(
+        text="Duration [us]",
+        xref="paper",
+        yref="paper",
+        x=0.5,
+        y=-0.2,
+        showarrow=False,
+    )
+
     # fig.write_image("/tmp/repeat_stats_timer_now.pdf")
     fig.write_image(f"{outdir}/repeat_stats_timer_now.pdf")
 
@@ -303,7 +312,7 @@ def accuracy_dist():
 
 
 if __name__ == "__main__":
-    # timer_now_dist()
+    timer_now_dist()
     # set_remove_dist()
     # accuracy_dist()
-    jitter_dist()
+    # jitter_dist()
