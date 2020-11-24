@@ -123,7 +123,7 @@ def set_remove_dist():
         fig = px.histogram(
             tmp,
             x="duration",
-            nbins=500,
+            nbins=250,
             histnorm="percent",
             facet_col="sample_size",
             facet_row="board",
@@ -139,6 +139,15 @@ def set_remove_dist():
             rowmatch = f"x{'' if row == 0 else 1 + (row * 5)}"
             fig.update_xaxes(row=row + 1, matches=rowmatch)
 
+        fig.add_annotation(
+            text="Duration [us]",
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=-0.2,
+            showarrow=False,
+        )
+
         # fig.write_image(f"/tmp/repeat_stats_timer_{method}.pdf")
         fig.write_image(f"{outdir}/repeat_stats_timer_{method}.pdf")
 
@@ -148,11 +157,13 @@ def set_remove_dist():
 
 def jitter_dist():
     data = {
-        "duration": [],
-        # "timer_version": [],
+        "i": [],
+        "wakeup_time": [],
         "timer_count": [],
         "board": [],
         "sample_size": [],
+        "start_time": [],
+        "timer_interval": [],
     }
 
     repeats = os.listdir(f"{basedir}/jitter")
@@ -162,26 +173,39 @@ def jitter_dist():
         )
         root = ET.parse(filename)
         path = "testcase[@classname='tests_ztimer_benchmarks.Sleep Jitter']//property"
-        properties = [
-            p
-            for p in root.findall(path)
-            if "hil" in p.get("name") and "wakeup-time" in p.get("name")
+        properties = root.findall(path)
+
+        start_times = [
+            prop for prop in properties if prop.get("name").endswith("start-time") and "hil" in prop.get("name")
         ]
-        for prop in properties:
-            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
-            data["duration"].extend(values)
-            data["board"].extend([board] * len(values))
-            data["sample_size"].extend([int(repeat.split("x")[1]) * 100] * len(values))
+        wakeup_times = [
+            prop for prop in properties if prop.get("name").endswith("wakeup-time") and "hil" in prop.get("name")
+        ]
+
+        for start, wakeup in zip(start_times, wakeup_times):
+            w = [v * 1000000 for v in literal_eval(wakeup.get("value"))]
+            data["i"].extend(range(len(w)))
+            data["start_time"].extend([literal_eval(start.get("value")) * 1000000] * len(w))
+            data["wakeup_time"].extend(w)
+            data["board"].extend([board] * len(w))
+            data["sample_size"].extend([int(repeat.split("x")[1]) * 100] * len(w))
+            data["timer_interval"].extend([10000] * len(w))
             data["timer_count"].extend(
-                [int(prop.get("name").split("-")[1])] * len(values)
+                [int(wakeup.get("name").split("-")[1])] * len(w)
             )
 
     df = pd.DataFrame(data).sort_values("sample_size")
+
+    df["calculated_target"] = df["start_time"] + (df["i"] + 1) * df["timer_interval"]
+    df["diff_target_from_start"] = df["calculated_target"] - df["start_time"]
+    df["diff_wakeup_from_start"] = df["wakeup_time"] - df["start_time"]
+    df["diff_wakeup_from_target"] = df["wakeup_time"] - df["calculated_target"]
+
     df = df[df.timer_count == 10]
 
     fig = px.histogram(
         df,
-        x="duration",
+        x="diff_wakeup_from_target",
         # nbins=2000,
         histnorm="percent",
         facet_col="sample_size",
@@ -200,6 +224,15 @@ def jitter_dist():
 
         rowmatch = f"y{'' if row == 0 else 1 + (row * len(repeats))}"
         fig.update_yaxes(row=row + 1, matches=rowmatch)
+
+    fig.add_annotation(
+        text="Difference from target wakeup time [us]",
+        xref="paper",
+        yref="paper",
+        x=0.5,
+        y=-0.2,
+        showarrow=False,
+    )
 
     fig.write_image(f"{outdir}/repeat_stats_jitter.pdf")
     fig.write_html(f"/tmp/repeat_stats_jitter.html", include_plotlyjs="cdn")
@@ -256,6 +289,15 @@ def accuracy_dist():
 
             rowmatch = f"y{'' if row == 0 else 1 + (row * len(repeats))}"
             fig.update_yaxes(row=row + 1, matches=rowmatch)
+
+        fig.add_annotation(
+            text="Difference from target sleep duration [us]",
+            xref="paper",
+            yref="paper",
+            x=0.5,
+            y=-0.2,
+            showarrow=False,
+        )
 
         fig.write_image(f"{outdir}/repeat_stats_accuracy_{method}.pdf")
 
