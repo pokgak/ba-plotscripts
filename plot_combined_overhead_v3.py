@@ -101,6 +101,7 @@ def plot_timer_now():
             data["board"].extend([board] * len(values))
 
     df = pd.DataFrame(data)
+    df.drop(df[(df["i"] == 0)].index, inplace=True)
     df = (
         df.groupby(["timer_version", "board"])
         .describe(percentiles=[0.5, 0.90])["duration"]
@@ -110,14 +111,15 @@ def plot_timer_now():
     fig = px.bar(
         df,
         x="board",
-        y=["mean", "max"],
-        facet_row="timer_version",
+        y="mean",
+        color="timer_version",
+        text=df["mean"].round(3),
         barmode="group",
     )
 
     fig.update_layout(
-        legend_title="",
         xaxis_title="Board",
+        legend_title="Timer Version",
     )
     fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
     fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
@@ -153,13 +155,14 @@ def plot_gpio():
     fig = px.bar(
         df,
         x="board",
-        y=["mean", "max"],
-        facet_row="timer_version",
+        y="mean",
+        color="timer_version",
+        text=df["mean"].round(3),
         barmode="group",
     )
     fig.update_layout(
-        legend_title="",
         xaxis_title="Board",
+        legend_title="Timer Version",
     )
     fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
     fig.write_image(f"{outdir}/overhead_gpio_combined.pdf")
