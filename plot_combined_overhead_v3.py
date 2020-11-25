@@ -12,8 +12,8 @@ from ast import literal_eval
 
 outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
 basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
-
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
+
 boards = os.listdir(basedir)
 
 
@@ -101,30 +101,71 @@ def plot_timer_now():
             data["board"].extend([board] * len(values))
 
     df = pd.DataFrame(data)
-
-    df = df.groupby(['timer_version', 'board']).mean().reset_index()
-    # df = df.groupby(["timer_version", "board"]).describe()["duration"].reset_index()
+    df = (
+        df.groupby(["timer_version", "board"])
+        .describe(percentiles=[0.5, 0.90])["duration"]
+        .reset_index()
+    )
 
     fig = px.bar(
         df,
         x="board",
-        # y=["min", "mean", "max"],
-        y="duration",
+        y=["mean", "max"],
+        facet_row="timer_version",
         barmode="group",
-        color="timer_version",
-        # facet_col="board"
     )
+
     fig.update_layout(
+        legend_title="",
         xaxis_title="Board",
-        legend=dict(title="Timer Version"),
     )
     fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
     fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
 
-    fig.write_html("/tmp/overhead_timer_now.html")
-    fig.write_image("/tmp/overhead_timer_now.pdf")
+
+def plot_gpio():
+    data = {
+        "i": [],
+        "duration": [],
+        "timer_version": [],
+        "board": [],
+    }
+
+    for version, board in itertools.product(["xtimer", "ztimer"], boards):
+        filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
+        root = ET.parse(filename)
+        path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure GPIO']//property"
+        for prop in root.iterfind(path):
+            values = [v * 1000000 for v in literal_eval(prop.get("value"))]
+            data["duration"].extend(values)
+            data["i"].extend(range(len(values)))
+            data["timer_version"].extend([version] * len(values))
+            data["board"].extend([board] * len(values))
+
+    df = pd.DataFrame(data)
+    df.drop(df[(df["i"] == 0)].index, inplace=True)
+    df = (
+        df.groupby(["timer_version", "board"])
+        .describe(percentiles=[0.5, 0.90])["duration"]
+        .reset_index()
+    )
+
+    fig = px.bar(
+        df,
+        x="board",
+        y=["mean", "max"],
+        facet_row="timer_version",
+        barmode="group",
+    )
+    fig.update_layout(
+        legend_title="",
+        xaxis_title="Board",
+    )
+    fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
+    fig.write_image(f"{outdir}/overhead_gpio_combined.pdf")
 
 
 if __name__ == "__main__":
+    plot_gpio()
     plot_timer_now()
     plot_set_remove()
