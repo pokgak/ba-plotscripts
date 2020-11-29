@@ -93,8 +93,8 @@ def get_threshold(tmp, idx, tolerance, age):
 
 # %%
 
-outdir = "/home/pokgak/git/ba-plotscripts/docs/drift"
-basedir = "/home/pokgak/git/ba-plotscripts/docs/drift/data"
+outdir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/result"
+basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
 
 excluded_boards = ["samr21-xpro", "saml10-xpro", "frdm-kw41z"]
 # boards = [b for b in os.listdir(basedir) if b not in excluded_boards]
@@ -183,5 +183,5 @@ for col, timer in enumerate(df2["timer_version"].unique()):
 fig2.data[-1].showlegend = False  # only show one legend for threshold
 
 fig2.write_image(f"{outdir}/drift_partial.pdf")
-go.FigureWidget(fig2)
+# go.FigureWidget(fig2)
 # fig2.show()
