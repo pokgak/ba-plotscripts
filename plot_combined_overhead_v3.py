@@ -154,17 +154,17 @@ def plot_gpio():
 
     fig = px.bar(
         df,
-        x="board",
-        y="mean",
+        y="board",
+        x="mean",
         color="timer_version",
         text=df["mean"].round(3),
         barmode="group",
     )
     fig.update_layout(
-        xaxis_title="Board",
+        yaxis_title="Board",
+        xaxis_title="Duration [us]",
         legend_title="Timer Version",
     )
-    fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
     fig.write_image(f"{outdir}/overhead_gpio_combined.pdf")
 
 
