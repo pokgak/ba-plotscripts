@@ -62,7 +62,6 @@ def plot_set_remove():
         facet_col="timer_version",
         facet_col_spacing=0.06,
         facet_row="method",
-        line_dash="board",
     )
 
     # match axis by row
@@ -70,12 +69,12 @@ def plot_set_remove():
     fig.update_yaxes(row=1, matches="y11")
     fig.update_yaxes(row=2, matches="y21")
 
+    fig.for_each_annotation(lambda a: a.update(font_size=16))
     fig.update_layout(legend_title="Board")
-    # fig.for_each_annotation(lambda a: a.update(font_size=22))
     fig.update_yaxes(col=1, title_text="Duration [us]")
     fig.update_xaxes(row=1, title_text="Timer Count")
 
-    fig.write_image(f"{outdir}/overhead_set_remove_combined.pdf")
+    fig.write_image(f"{outdir}/overhead_set_remove_combined.pdf", height=900)
 
     fig.write_html("/tmp/overhead.html")
     fig.write_image("/tmp/overhead.pdf")
@@ -110,18 +109,19 @@ def plot_timer_now():
 
     fig = px.bar(
         df,
-        x="board",
-        y="mean",
+        y="board",
+        x="mean",
         color="timer_version",
         text=df["mean"].round(3),
         barmode="group",
     )
 
     fig.update_layout(
-        xaxis_title="Board",
+        xaxis_title="Duration [us]",
+        yaxis_title="Board",
         legend_title="Timer Version",
     )
-    fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
+    # fig.update_yaxes(matches=None, showticklabels=True, title="Duration [us]")
     fig.write_image(f"{outdir}/overhead_timer_now_combined.pdf")
 
 
