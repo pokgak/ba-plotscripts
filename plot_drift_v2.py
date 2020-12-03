@@ -166,7 +166,7 @@ fig2 = px.line(
     y="diff_actual_target",
     color="board",
     facet_col="timer_version",
-    title=f"Without {', '.join(excluded_boards)} boards",
+    # title=f"Without {', '.join(excluded_boards)} boards",
     labels={
         "diff_actual_target": "Duration actual - target [us]",
         "target_duration": "Target Sleep Duration [s]",
