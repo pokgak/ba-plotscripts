@@ -67,6 +67,8 @@ for func in ["set", "sleep"]:
         facet_col="board",
         facet_col_spacing=0.05,
         facet_col_wrap=4,
+        line_dash="timer_version",
+        line_dash_sequence=["solid", "dot"]
     )
     fig.for_each_annotation(
         lambda a: a.update(text=a.text.split("=")[-1], font_size=16)
