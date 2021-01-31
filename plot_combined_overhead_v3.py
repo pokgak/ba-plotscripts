@@ -15,6 +15,8 @@ basedir = "/home/pokgak/git/ba-plotscripts/docs/timer_benchmarks/data"
 # basedir = "/home/pokgak/git/RobotFW-tests/build/robot"
 
 boards = os.listdir(basedir)
+boards.remove('robot.xml')
+boards.remove('metadata.xml')
 
 
 def plot_set_remove():
@@ -29,7 +31,11 @@ def plot_set_remove():
 
     for version, board in itertools.product(["xtimer", "ztimer"], boards):
         filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
-        root = ET.parse(filename)
+        try:
+            root = ET.parse(filename)
+        except FileNotFoundError:
+            continue
+
         path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead']//property"
         properties = [
             p
@@ -90,7 +96,11 @@ def plot_timer_now():
 
     for version, board in itertools.product(["xtimer", "ztimer"], boards):
         filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
-        root = ET.parse(filename)
+        try:
+            root = ET.parse(filename)
+        except FileNotFoundError:
+            continue
+
         path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure Overhead TIMER_NOW']//property"
         for prop in root.iterfind(path):
             values = [v * 1000000 for v in literal_eval(prop.get("value"))]
@@ -135,7 +145,11 @@ def plot_gpio():
 
     for version, board in itertools.product(["xtimer", "ztimer"], boards):
         filename = f"{basedir}/{board}/tests_{version}_benchmarks/xunit.xml"
-        root = ET.parse(filename)
+        try:
+            root = ET.parse(filename)
+        except FileNotFoundError:
+            continue
+
         path = f"testcase[@classname='tests_{version}_benchmarks.Timer Overhead'][@name='Measure GPIO']//property"
         for prop in root.iterfind(path):
             values = [v * 1000000 for v in literal_eval(prop.get("value"))]
@@ -162,7 +176,7 @@ def plot_gpio():
     )
     fig.update_layout(
         yaxis_title="Board",
-        xaxis_title="Duration [us]",
+        xaxis_title="Duration [ns]",
         legend_title="Timer Version",
     )
     fig.write_image(f"{outdir}/overhead_gpio_combined.pdf")
